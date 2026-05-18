@@ -716,7 +716,7 @@ const InnothonLanding = () => {
             font-family: 'Europa';
             font-style: normal;
             font-weight: 400;
-            src: local('Europa'), url('https://fonts.googleapis.com/css?family=Times+New+Roman') format('truetype');
+            src: local('Europa');
           }
 
           .main-prizes, .additional-benefits {
