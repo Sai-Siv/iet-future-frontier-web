@@ -17,6 +17,7 @@ import AppAstral from "./pages/AppAstral";
 import InnothonLanding from "./pages/InnothonLanding";
 import Innothon from "./pages/Innothon";
 import ScrollToTop from "./components/ScrollToTop";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <TooltipProvider>
+        <SpeedInsights />
         <Toaster />
         <Sonner />
         <BrowserRouter>
