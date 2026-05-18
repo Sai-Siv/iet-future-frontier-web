@@ -5,7 +5,6 @@ import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import GallerySection from '../components/GallerySection';
 import Footer from '../components/Footer';
-import FloatingHelpButton from '../components/FloatingHelpButton';
 
 const Index = () => {
   useEffect(() => {
@@ -37,7 +36,6 @@ const Index = () => {
       <HeroSection />
       <GallerySection />
       <Footer />
-      <FloatingHelpButton />
 
       {/* Global Animation Styles matching PATN behavior but with Scroll triggering */}
       <style>{`
