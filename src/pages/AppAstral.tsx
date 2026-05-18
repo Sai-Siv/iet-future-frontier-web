@@ -344,7 +344,7 @@ const AppAstral = () => {
         message: 'Uploading registration data...'
       });
       
-      const response = await fetch('http://localhost:5000/api/appastral/register', {
+      const response = await fetch('https://iet-future-frontier-web.onrender.com/api/appastral/register', {
         method: 'POST',
         body: submitData
       });

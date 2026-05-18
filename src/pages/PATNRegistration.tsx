@@ -127,7 +127,7 @@ const PATNRegistration = () => {
 
     try {
       // Make API call to backend
-      const response = await axios.post('http://localhost:5000/api/patn/register', formData);
+      const response = await axios.post('https://iet-future-frontier-web.onrender.com/api/patn/register', formData);
       if (response.data.success) {
         setShowSuccess(true);
       } else {

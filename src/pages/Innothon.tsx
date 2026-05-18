@@ -332,7 +332,7 @@ const InnothonRegistration = () => {
       });
 
       // Make real API call to backend
-      const response = await fetch('http://localhost:5000/api/innothon/register', {
+      const response = await fetch('https://iet-future-frontier-web.onrender.com/api/innothon/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -285,7 +285,7 @@ const StartupSphere = () => {
         message: 'Submitting registration...'
       });
 
-      const response = await fetch('http://localhost:5000/api/startupsphere/register', {
+      const response = await fetch('https://iet-future-frontier-web.onrender.com/api/startupsphere/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
