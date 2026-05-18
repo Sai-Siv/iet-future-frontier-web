@@ -8,6 +8,9 @@ router.post('/register', async (req, res) => {
   try {
     console.log('Received PATN registration data:', req.body);
 
+    // Normalize naming differences between frontend (instituteName) and backend (institutionName)
+    req.body.institutionName = req.body.institutionName || req.body.instituteName;
+
     // Validate required fields
     const requiredFields = [
       'title',
