@@ -1,0 +1,47 @@
+
+/* Form Components */
+.modern-input {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 27, 89, 0.2);
+  transition: all 0.3s ease;
+}
+
+.modern-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 27, 89, 0.4);
+  box-shadow: 0 0 0 3px rgba(79, 27, 89, 0.1);
+}
+
+.ultra-modern-input {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(79, 27, 89, 0.15);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ultra-modern-input::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(79, 27, 89, 0.02), transparent);
+  transition: left 0.6s ease;
+}
+
+.ultra-modern-input:focus::before {
+  left: 100%;
+}
+
+.ultra-modern-input:focus {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border: 1px solid rgba(79, 27, 89, 0.3);
+  box-shadow: 
+    0 0 0 4px rgba(79, 27, 89, 0.08),
+    0 8px 25px -5px rgba(79, 27, 89, 0.15);
+  transform: translateY(-2px);
+}

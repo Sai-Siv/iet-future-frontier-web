@@ -1,0 +1,47 @@
+
+/* Background Gradients */
+.hero-gradient {
+  background: linear-gradient(135deg, #4F1B59 0%, #6B2C7A 25%, #8B5A96 50%, #A67BA8 75%, #C19BBB 100%);
+}
+
+.section-gradient {
+  background: linear-gradient(135deg, rgba(79, 27, 89, 0.02) 0%, rgba(139, 90, 150, 0.05) 100%);
+}
+
+.premium-gradient {
+  background: linear-gradient(135deg, #4F1B59 0%, #7B3F7E 25%, #A67BA8 50%, #D1B3CE 75%, #F3E8FF 100%);
+}
+
+.glass-gradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%);
+}
+
+.ultra-hero-gradient {
+  background: linear-gradient(135deg, 
+    #4F1B59 0%, 
+    #5D216B 15%,
+    #6B2C7A 30%, 
+    #7A3D89 45%,
+    #8B5A96 60%, 
+    #9C6FA3 75%,
+    #A67BA8 85%,
+    #C19BBB 100%);
+}
+
+.enhanced-section-gradient {
+  background: linear-gradient(135deg, 
+    rgba(79, 27, 89, 0.01) 0%, 
+    rgba(139, 90, 150, 0.03) 50%,
+    rgba(193, 155, 187, 0.02) 100%);
+}
+
+.ultra-premium-gradient {
+  background: linear-gradient(135deg, 
+    #4F1B59 0%, 
+    #6230A1 20%,
+    #7B3F7E 40%, 
+    #9254A3 60%,
+    #A67BA8 80%, 
+    #D1B3CE 90%,
+    #F3E8FF 100%);
+}

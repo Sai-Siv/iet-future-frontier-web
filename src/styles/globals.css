@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 273 70% 23%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark-nav {
+    --nav-bg: 273 70% 23%;
+    --nav-text: 0 0% 100%;
+  }
+
+  :root:not(.dark-nav) {
+    --nav-bg: 0 0% 100%;
+    --nav-text: 273 70% 23%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#6E00FF] to-[#B100FF] bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient {
+    @apply bg-gradient-to-r from-[#6E00FF] to-[#B100FF];
+  }
+  
+  .border-gradient {
+    border-image: linear-gradient(to right, #6E00FF, #B100FF) 1;
+  }
+  
+  .glow-effect {
+    @apply transition-all duration-300;
+    box-shadow: 0 0 20px rgba(110, 0, 255, 0.2);
+  }
+  
+  .glow-effect:hover {
+    box-shadow: 0 0 30px rgba(177, 0, 255, 0.4);
+  }
+  
+  .card-dark {
+    @apply bg-black/40 backdrop-blur-lg border border-white/10 hover:border-primary/50 transition-all duration-300;
+  }
+  
+  .glassmorphism {
+    @apply bg-black/30 backdrop-blur-md border border-white/10;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #6E00FF, #B100FF);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #B100FF, #6E00FF);
+} 
