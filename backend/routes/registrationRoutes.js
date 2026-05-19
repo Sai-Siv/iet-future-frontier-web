@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from '../utils/firebase.js';
 import { collection, query, where, getDocs, doc, setDoc, orderBy } from 'firebase/firestore';
+import { sendConfirmationEmail } from '../utils/emailHelper.js';
 
 const router = express.Router();
 
@@ -83,6 +84,20 @@ router.post('/register', async (req, res) => {
     console.log('PATN Registration saved successfully in Firestore:', {
       registrationId: registrationData.registrationId
     });
+
+    // Send confirmation email in background
+    sendConfirmationEmail({
+      toEmail: req.body.emailAddress,
+      leaderName: req.body.fullName,
+      eventName: 'PATN (Paper and Abstract Presentation)',
+      registrationId: registrationId,
+      details: [
+        { label: 'Category', value: req.body.category },
+        { label: 'Department', value: req.body.department },
+        { label: 'Institution Name', value: req.body.institutionName },
+        { label: 'Zonal Center', value: req.body.zoneVenue }
+      ]
+    }).catch(err => console.error('Error sending confirmation email:', err));
 
     res.status(201).json({
       success: true,
