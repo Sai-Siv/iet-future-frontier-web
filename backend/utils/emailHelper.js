@@ -1,4 +1,8 @@
 import nodemailer from 'nodemailer';
+import dns from 'dns';
+
+// Force Node.js globally to resolve domains using IPv4 first (prevents ENETUNREACH IPv6 errors on Render!)
+dns.setDefaultResultOrder('ipv4first');
 
 // Helper to initialize the Nodemailer transporter safely
 const getTransporter = () => {
