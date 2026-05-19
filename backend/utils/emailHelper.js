@@ -12,8 +12,8 @@ const getTransporter = () => {
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // false for port 587
+    port: 465,
+    secure: true, // true for port 465 SSL
     family: 4,     // Forces Nodemailer to resolve and use IPv4 instead of IPv6!
     auth: {
       user: user,
@@ -21,7 +21,10 @@ const getTransporter = () => {
     },
     tls: {
       rejectUnauthorized: false
-    }
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
   });
 
   return transporter;
@@ -223,9 +226,9 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
 
   try {
     const mailOptions = {
-      from: `"No-Reply | Future Frontier 2025" <noreply@iet-future-frontier.org>`,
+      from: `"No-Reply | Future Frontier 2025" <${process.env.EMAIL_USER}>`,
       to: toEmail,
-      replyTo: 'noreply@iet-future-frontier.org',
+      replyTo: 'noreply.futuretechconclave@gmail.com',
       subject: `Registration Confirmed: ${eventName} - Future Frontier 2025`,
       html: htmlContent,
     };
