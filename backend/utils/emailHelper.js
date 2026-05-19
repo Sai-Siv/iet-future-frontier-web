@@ -11,14 +11,17 @@ const getTransporter = () => {
   }
 
   return nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // false for port 587
     auth: {
       user: user,
       pass: pass, // Gmail App Password (16 characters)
     },
     tls: {
       rejectUnauthorized: false
-    }
+    },
+    localAddress: '0.0.0.0' // Forces Node.js to use IPv4 instead of IPv6 to prevent ENETUNREACH on Render!
   });
 };
 
