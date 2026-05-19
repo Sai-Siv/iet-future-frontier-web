@@ -16,6 +16,9 @@ const getTransporter = () => {
       user: user,
       pass: pass, // Gmail App Password (16 characters)
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 };
 
