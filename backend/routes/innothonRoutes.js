@@ -3,7 +3,6 @@ import { db } from '../utils/firebase.js';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
 import crypto from 'crypto';
-import { sendConfirmationEmail } from '../utils/emailHelper.js';
 
 const router = express.Router();
 
@@ -110,22 +109,6 @@ router.post('/register', async (req, res) => {
         console.log('Saving Innothon registration to Firestore collection...');
         await setDoc(doc(db, 'innothon-registrations', registrationId), registrationData);
         console.log('Innothon registration saved successfully:', registrationId);
-
-        // Send confirmation email to team leader in background
-        if (registrationData.teamMembers?.leader?.email) {
-            sendConfirmationEmail({
-                toEmail: registrationData.teamMembers.leader.email,
-                leaderName: registrationData.teamMembers.leader.name,
-                eventName: 'InnoThon (24-Hour Prototype Hackathon)',
-                registrationId: registrationId,
-                details: [
-                    { label: 'Team Name', value: registrationData.teamDetails.teamName },
-                    { label: 'Institution Name', value: registrationData.teamDetails.institutionName },
-                    { label: 'Problem Statement', value: registrationData.teamDetails.problemStatement },
-                    { label: 'Transaction ID', value: registrationData.paymentDetails.transactionId }
-                ]
-            }).catch(err => console.error('Error sending confirmation email:', err));
-        }
 
         res.status(200).json({
             success: true,

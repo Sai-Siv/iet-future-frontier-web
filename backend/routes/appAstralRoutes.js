@@ -4,7 +4,6 @@ import { db } from '../utils/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
 import crypto from 'crypto';
-import { sendConfirmationEmail } from '../utils/emailHelper.js';
 
 const router = express.Router();
 
@@ -112,22 +111,6 @@ router.post('/register', cpUpload, async (req, res) => {
 
         await setDoc(doc(db, 'appastral-registrations', registrationId), registrationData);
         console.log('AppAstral registration saved to Firestore:', registrationId);
-
-        // Send confirmation email to team leader in background
-        if (registrationData.teamMembers?.leader?.email) {
-            sendConfirmationEmail({
-                toEmail: registrationData.teamMembers.leader.email,
-                leaderName: registrationData.teamMembers.leader.name,
-                eventName: 'AppAstral (UI/UX Design Sprint)',
-                registrationId: registrationId,
-                details: [
-                    { label: 'Team Name', value: registrationData.teamDetails.teamName },
-                    { label: 'Institution Name', value: registrationData.teamDetails.institutionName },
-                    { label: 'Prototype Tool', value: registrationData.prototypeDetails.prototypeTool },
-                    { label: 'Transaction ID', value: registrationData.paymentDetails.transactionId }
-                ]
-            }).catch(err => console.error('Error sending confirmation email:', err));
-        }
 
         res.status(200).json({
             success: true,

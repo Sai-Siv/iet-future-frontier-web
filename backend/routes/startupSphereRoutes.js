@@ -3,7 +3,6 @@ import { db } from '../utils/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
 import crypto from 'crypto';
-import { sendConfirmationEmail } from '../utils/emailHelper.js';
 
 const router = express.Router();
 
@@ -85,22 +84,6 @@ router.post('/register', async (req, res) => {
 
         await setDoc(doc(db, 'startupsphere-registrations', registrationId), registrationData);
         console.log('StartupSphere registration saved to Firestore:', registrationId);
-
-        // Send confirmation email to team leader in background
-        if (registrationData.teamMembers?.leader?.email) {
-            sendConfirmationEmail({
-                toEmail: registrationData.teamMembers.leader.email,
-                leaderName: registrationData.teamMembers.leader.name,
-                eventName: 'StartupSphere (Pitching & Business Plan)',
-                registrationId: registrationId,
-                details: [
-                    { label: 'Team Name', value: registrationData.teamDetails.teamName },
-                    { label: 'Institution Name', value: registrationData.teamDetails.institutionName },
-                    { label: 'Startup Title', value: registrationData.startupDetails.startupTitle || 'N/A' },
-                    { label: 'Transaction ID', value: registrationData.paymentDetails.transactionId }
-                ]
-            }).catch(err => console.error('Error sending confirmation email:', err));
-        }
 
         res.status(200).json({
             success: true,

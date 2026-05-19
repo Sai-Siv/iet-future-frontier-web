@@ -4,7 +4,6 @@ import { db } from '../utils/firebase.js';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
 import crypto from 'crypto';
-import { sendConfirmationEmail } from '../utils/emailHelper.js';
 
 const router = express.Router();
 
@@ -98,22 +97,6 @@ router.post('/register', upload.single('screenshot'), async (req, res) => {
 
         await setDoc(doc(db, 'protoplanet-registrations', registrationId), registrationData);
         console.log('ProtoPlanet registration saved to Firestore:', registrationId);
-
-        // Send confirmation email to team leader in background
-        if (registrationData.teamMembers?.leader?.email) {
-            sendConfirmationEmail({
-                toEmail: registrationData.teamMembers.leader.email,
-                leaderName: registrationData.teamMembers.leader.name,
-                eventName: 'ProtoPlanet (Hardware Innovation Sprint)',
-                registrationId: registrationId,
-                details: [
-                    { label: 'Team Name', value: registrationData.teamDetails.teamName },
-                    { label: 'Institution Name', value: registrationData.teamDetails.institutionName },
-                    { label: 'Project Title', value: registrationData.projectDetails.projectTitle },
-                    { label: 'Transaction ID', value: registrationData.paymentDetails.transactionId }
-                ]
-            }).catch(err => console.error('Error sending confirmation email:', err));
-        }
 
         res.status(200).json({
             success: true,
