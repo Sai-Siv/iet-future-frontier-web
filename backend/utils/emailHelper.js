@@ -10,7 +10,7 @@ const getTransporter = () => {
   const pass = process.env.EMAIL_PASS;
 
   if (!user || !pass) {
-    console.warn('⚠️ WARNING: EMAIL_USER or EMAIL_PASS environment variables are missing. Confirmation emails will be simulated and logged in the console, but not sent.');
+    console.warn('⚠️ WARNING: EMAIL_USER or EMAIL_PASS environment variables are missing. Nodemailer SMTP will not be available.');
     return null;
   }
 
@@ -26,9 +26,9 @@ const getTransporter = () => {
     tls: {
       rejectUnauthorized: false
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000
+    connectionTimeout: 15000, // Increase slightly for slower networks
+    greetingTimeout: 15000,
+    socketTimeout: 15000
   });
 
   return transporter;
@@ -44,8 +44,6 @@ const getTransporter = () => {
  * @param {Array<{label: string, value: string}>} params.details - Key details rows to display
  */
 export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, registrationId, details = [] }) => {
-  const transporter = getTransporter();
-
   // Premium Dark-Futuristic Responsive HTML template matching Future Frontier theme
   const htmlContent = `
     <!DOCTYPE html>
@@ -219,6 +217,50 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
     </html>
   `;
 
+  // 1. Try Resend HTTP API first if RESEND_API_KEY is configured
+  // This uses HTTP/HTTPS (Port 443) which bypasses Render Free Tier's outbound SMTP blocking!
+  if (process.env.RESEND_API_KEY) {
+    if (typeof fetch === 'undefined') {
+      console.warn('⚠️ WARNING: RESEND_API_KEY is configured, but global fetch is not available in this Node version. Falling back to Nodemailer SMTP.');
+    } else {
+      console.log(`🚀 RESEND_API_KEY detected. Sending email via Resend API (HTTP/HTTPS)...`);
+      try {
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+        const senderName = process.env.RESEND_SENDER_NAME || 'No-Reply | Future Frontier 2025';
+        
+        const response = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: `"${senderName}" <${fromEmail}>`,
+            to: toEmail,
+            reply_to: 'noreply.futuretechconclave@gmail.com',
+            subject: `Registration Confirmed: ${eventName} - Future Frontier 2025`,
+            html: htmlContent,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log(`📧 Confirmation email successfully sent via Resend API to ${toEmail}. Message ID: ${data.id}`);
+          return true;
+        } else {
+          console.error(`❌ Resend API Error:`, data);
+          console.log('⚠️ Falling back to Nodemailer SMTP...');
+        }
+      } catch (resendError) {
+        console.error(`❌ Failed to send via Resend API:`, resendError.message);
+        console.log('⚠️ Falling back to Nodemailer SMTP...');
+      }
+    }
+  }
+
+  // 2. Fallback to Nodemailer SMTP (works perfectly locally, but will timeout on Render Free Tier due to SMTP block)
+  const transporter = getTransporter();
+
   if (!transporter) {
     console.log(`ℹ️ [SIMULATED EMAIL] Confirmation details to: ${toEmail}`, {
       leaderName,
@@ -238,10 +280,33 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`📧 Confirmation email successfully sent to ${toEmail}. Message ID: ${info.messageId}`);
+    console.log(`📧 Confirmation email successfully sent via Nodemailer to ${toEmail}. Message ID: ${info.messageId}`);
     return true;
   } catch (error) {
-    console.error(`❌ Failed to send confirmation email to ${toEmail}:`, error.message);
+    console.error(`❌ Failed to send confirmation email to ${toEmail} via Nodemailer SMTP:`, error.message);
+    
+    // Check if the error looks like a connection timeout or network block
+    if (
+      error.message.includes('timeout') ||
+      error.message.includes('ETIMEDOUT') ||
+      error.code === 'ETIMEDOUT' ||
+      error.message.includes('connection')
+    ) {
+      console.error(
+        `💡 TROUBLESHOOTING TIP:\n` +
+        `-------------------------------------------------------------------------------------------------\n` +
+        `If your application is hosted on Render (Free Tier), outbound SMTP traffic (ports 25, 465, and 587)\n` +
+        `is completely blocked by Render's firewall to prevent spam.\n\n` +
+        `TO FIX THIS WITHOUT PAYING:\n` +
+        `1. Create a free account at Resend (https://resend.com) - it takes 1 minute.\n` +
+        `2. Get your free API key.\n` +
+        `3. Add the 'RESEND_API_KEY' environment variable to your Render service / .env file.\n` +
+        `This will automatically switch the email helper to use Resend's HTTP API (Port 443), which works\n` +
+        `perfectly on Render Free Tier and never times out!\n` +
+        `-------------------------------------------------------------------------------------------------`
+      );
+    }
     return false;
   }
 };
+
