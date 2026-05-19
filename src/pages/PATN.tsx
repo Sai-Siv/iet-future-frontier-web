@@ -16,7 +16,7 @@ const PATN = () => {
   const { isDark } = useTheme();
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-black">
+    <div className="min-h-screen relative bg-black">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         {/* Glowing Dots */}
