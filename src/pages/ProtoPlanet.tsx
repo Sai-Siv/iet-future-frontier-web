@@ -46,12 +46,12 @@ const ProtoPlanet = () => {
 
     setTimeout(() => {
       setCurrentStep(step);
-      
+
       if (tabsRef.current) {
         const headerOffset = 120;
         const elementPosition = tabsRef.current.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-    
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'auto'
@@ -155,7 +155,7 @@ const ProtoPlanet = () => {
         alert('Please upload a PNG or JPG image');
         return;
       }
-      
+
       // Check file size (10MB = 10 * 1024 * 1024 bytes)
       if (file.size > 10 * 1024 * 1024) {
         alert('File size must be less than 10MB');
@@ -234,7 +234,7 @@ const ProtoPlanet = () => {
       };
 
       let message = 'Please fill in the following required fields:\n\n';
-      
+
       for (const [section, fields] of Object.entries(sections)) {
         if (fields.length > 0) {
           message += `${section}:\n${fields.map(f => `• ${f}`).join('\n')}\n\n`;
@@ -268,7 +268,7 @@ const ProtoPlanet = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -282,13 +282,13 @@ const ProtoPlanet = () => {
 
       // Create form data for submission
       const submitData = new FormData();
-      
+
       // Append team details
       submitData.append('teamName', formData.teamName);
       submitData.append('institutionName', formData.institutionName);
       submitData.append('cityState', formData.cityState);
       submitData.append('projectTitle', formData.projectTitle);
-      
+
       // Combine all project details into projectAbstract
       const projectAbstract = {
         track: formData.projectTrack,
@@ -298,7 +298,7 @@ const ProtoPlanet = () => {
         technologicalImpact: formData.technologicalImpact
       };
       submitData.append('projectAbstract', JSON.stringify(projectAbstract));
-      
+
       submitData.append('feeType', formData.feeType);
       submitData.append('transactionId', formData.transactionId);
       submitData.append('termsAccepted', formData.termsAccepted.toString());
@@ -348,7 +348,7 @@ const ProtoPlanet = () => {
         status: 'submitting',
         message: 'Uploading registration data...'
       });
-      
+
       const response = await fetch('https://iet-future-frontier-web.onrender.com/api/protoplan/register', {
         method: 'POST',
         body: submitData
@@ -441,7 +441,7 @@ const ProtoPlanet = () => {
           <div className="stars-medium"></div>
           <div className="stars-large"></div>
         </div>
-        
+
         {/* Floating orbs with subtle glow */}
         <div className="absolute top-20 left-10 w-2 h-2 rounded-full blur-sm animate-pulse" style={{ backgroundColor: '#a046b4', boxShadow: '0 0 15px rgba(160,70,180,0.4)' }}></div>
         <div className="absolute bottom-20 right-10 w-1.5 h-1.5 rounded-full blur-sm animate-pulse" style={{ backgroundColor: '#a046b4', boxShadow: '0 0 15px rgba(160,70,180,0.4)', animationDelay: '1s' }}></div>
@@ -456,7 +456,7 @@ const ProtoPlanet = () => {
 
           <div className="text-center mb-16 pt-8">
 
-            
+
             <div className="mb-6">
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4">
                 <span className="text-white">Proto</span>
@@ -483,11 +483,10 @@ const ProtoPlanet = () => {
           <div ref={tabsRef} className="flex items-center justify-center gap-2 mb-8 w-full">
             <button
               onClick={() => goToStep('team-details')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'team-details'
-                  ? 'text-white'
-                  : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'team-details'
+                ? 'text-white'
+                : 'bg-black/40 text-gray-400 hover:text-white'
+                }`}
               style={currentStep === 'team-details' ? { backgroundColor: '#a046b4' } : {}}
             >
               <Users className="w-6 h-6 md:w-5 md:h-5" />
@@ -504,11 +503,10 @@ const ProtoPlanet = () => {
             ></div>
             <button
               onClick={() => goToStep('team-members')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'team-members'
-                  ? 'text-white'
-                  : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'team-members'
+                ? 'text-white'
+                : 'bg-black/40 text-gray-400 hover:text-white'
+                }`}
               style={currentStep === 'team-members' ? { backgroundColor: '#a046b4' } : {}}
             >
               <UserPlus className="w-6 h-6 md:w-5 md:h-5" />
@@ -525,11 +523,10 @@ const ProtoPlanet = () => {
             ></div>
             <button
               onClick={() => goToStep('project-abstract')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'project-abstract'
-                  ? 'text-white'
-                  : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'project-abstract'
+                ? 'text-white'
+                : 'bg-black/40 text-gray-400 hover:text-white'
+                }`}
               style={currentStep === 'project-abstract' ? { backgroundColor: '#a046b4' } : {}}
             >
               <Lightbulb className="w-6 h-6 md:w-5 md:h-5" />
@@ -546,11 +543,10 @@ const ProtoPlanet = () => {
             ></div>
             <button
               onClick={() => goToStep('payment')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'payment'
-                  ? 'text-white'
-                  : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'payment'
+                ? 'text-white'
+                : 'bg-black/40 text-gray-400 hover:text-white'
+                }`}
               style={currentStep === 'payment' ? { backgroundColor: '#a046b4' } : {}}
             >
               <CreditCard className="w-6 h-6 md:w-5 md:h-5" />
@@ -560,7 +556,7 @@ const ProtoPlanet = () => {
 
           {/* Form Section */}
           <div className={`bg-[#000] backdrop-blur-sm rounded-2xl p-4 sm:p-8 md:p-12 
-  shadow-[rgba(160,70,180,0.3)_0px_19px_38px,rgba(160,70,180,0.22)_0px_15px_12px] w-full max-w-4xl mx-auto overflow-x-auto min-h-[650px] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>                      <form className="space-y-8">
+  shadow-[rgba(160,70,180,0.3)_0px_19px_38px,rgba(160,70,180,0.22)_0px_15px_12px] w-full max-w-4xl mx-auto overflow-x-auto min-h-[450px] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>                      <form className="space-y-8">
               {currentStep === 'team-details' ? (
                 <>
                   <div className="flex items-center gap-2 mb-3">
@@ -894,11 +890,10 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('projectTrack', '', 'IoT & Smart Environments')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.projectTrack === 'IoT & Smart Environments' 
-                              ? 'border-purple-500 ring-1 ring-purple-500' 
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.projectTrack === 'IoT & Smart Environments'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
                           <span className="text-sm">🌐</span>
                           IoT & Smart Environments
@@ -906,11 +901,10 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('projectTrack', '', 'Robotics & Intelligent Machines')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.projectTrack === 'Robotics & Intelligent Machines'
-                              ? 'border-purple-500 ring-1 ring-purple-500'
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.projectTrack === 'Robotics & Intelligent Machines'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
                           <span className="text-sm">🤖</span>
                           Robotics & Intelligent Machines
@@ -918,11 +912,10 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('projectTrack', '', 'HealthTech & Human Augmentation')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.projectTrack === 'HealthTech & Human Augmentation'
-                              ? 'border-purple-500 ring-1 ring-purple-500'
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.projectTrack === 'HealthTech & Human Augmentation'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
                           <span className="text-sm">🏥</span>
                           HealthTech & Human Augmentation
@@ -930,11 +923,10 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('projectTrack', '', 'Sustainable & Clean Tech')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.projectTrack === 'Sustainable & Clean Tech'
-                              ? 'border-purple-500 ring-1 ring-purple-500'
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.projectTrack === 'Sustainable & Clean Tech'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
                           <span className="text-sm">🌱</span>
                           Sustainable & Clean Tech
@@ -1020,19 +1012,18 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('feeType', '', 'IET Member Team')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.feeType === 'IET Member Team' 
-                              ? 'border-purple-500 ring-1 ring-purple-500' 
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.feeType === 'IET Member Team'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
-                          <input 
-                            type="radio" 
-                            name="feeType" 
-                            value="IET Member Team" 
+                          <input
+                            type="radio"
+                            name="feeType"
+                            value="IET Member Team"
                             checked={formData.feeType === 'IET Member Team'}
                             onChange={() => handleInputChange('feeType', '', 'IET Member Team')}
-                            className="w-4 h-4 border-purple-500/20 text-purple-500 focus:ring-purple-500 bg-white/10" 
+                            className="w-4 h-4 border-purple-500/20 text-purple-500 focus:ring-purple-500 bg-white/10"
                           />
                           <div>
                             <div className="font-medium text-white">IET Member Team - ₹300</div>
@@ -1042,19 +1033,18 @@ const ProtoPlanet = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('feeType', '', 'Non-Member Team')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.feeType === 'Non-Member Team'
-                              ? 'border-purple-500 ring-1 ring-purple-500'
-                              : 'border-purple-500/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.feeType === 'Non-Member Team'
+                            ? 'border-purple-500 ring-1 ring-purple-500'
+                            : 'border-purple-500/20'
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors text-left`}
                         >
-                          <input 
-                            type="radio" 
-                            name="feeType" 
-                            value="Non-Member Team" 
+                          <input
+                            type="radio"
+                            name="feeType"
+                            value="Non-Member Team"
                             checked={formData.feeType === 'Non-Member Team'}
                             onChange={() => handleInputChange('feeType', '', 'Non-Member Team')}
-                            className="w-4 h-4 border-purple-500/20 text-purple-500 focus:ring-purple-500 bg-white/10" 
+                            className="w-4 h-4 border-purple-500/20 text-purple-500 focus:ring-purple-500 bg-white/10"
                           />
                           <div>
                             <div className="font-medium text-white">Non-Member Team - ₹600</div>
@@ -1119,7 +1109,7 @@ const ProtoPlanet = () => {
                         <label className="block text-white font-medium mb-1">
                           Upload Transaction Screenshot <span className="text-purple-500">*</span>
                         </label>
-                        <div 
+                        <div
                           onClick={handleUploadClick}
                           className="border-2 border-dashed border-purple-500/20 rounded-lg p-8 hover:border-purple-500 transition-colors cursor-pointer bg-white/5"
                         >
@@ -1133,9 +1123,9 @@ const ProtoPlanet = () => {
                           <div className="flex flex-col items-center justify-center text-center">
                             {uploadedImage ? (
                               <div className="w-full">
-                                <img 
-                                  src={uploadedImage} 
-                                  alt="Transaction Screenshot" 
+                                <img
+                                  src={uploadedImage}
+                                  alt="Transaction Screenshot"
                                   className="max-h-48 mx-auto mb-2"
                                 />
                                 <p className="text-sm text-gray-300">Click to change image</p>
