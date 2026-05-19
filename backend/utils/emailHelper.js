@@ -1,41 +1,17 @@
-import nodemailer from 'nodemailer';
-import dns from 'dns';
+import { Resend } from 'resend';
 
-// Force Node.js globally to resolve domains using IPv4 first (prevents ENETUNREACH IPv6 errors on Render!)
-dns.setDefaultResultOrder('ipv4first');
-
-// Helper to initialize the Nodemailer transporter safely
-const getTransporter = () => {
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
-
-  if (!user || !pass) {
-    console.warn('⚠️ WARNING: EMAIL_USER or EMAIL_PASS environment variables are missing. Nodemailer SMTP will not be available.');
+// Initialize the Resend client
+const getResendClient = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('⚠️ WARNING: RESEND_API_KEY environment variable is missing. Confirmation emails will be simulated and logged in the console, but not sent.');
     return null;
   }
-
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for port 465 SSL
-    family: 4,     // Forces Nodemailer to resolve and use IPv4 instead of IPv6!
-    auth: {
-      user: user,
-      pass: pass, // Gmail App Password (16 characters)
-    },
-    tls: {
-      rejectUnauthorized: false
-    },
-    connectionTimeout: 15000, // Increase slightly for slower networks
-    greetingTimeout: 15000,
-    socketTimeout: 15000
-  });
-
-  return transporter;
+  return new Resend(apiKey);
 };
 
 /**
- * Sends a premium registration confirmation email to the participant / leader
+ * Sends a premium registration confirmation email to the participant / leader via Resend
  * @param {Object} params
  * @param {string} params.toEmail - Recipient email address
  * @param {string} params.leaderName - Name of the team leader/participant
@@ -44,6 +20,8 @@ const getTransporter = () => {
  * @param {Array<{label: string, value: string}>} params.details - Key details rows to display
  */
 export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, registrationId, details = [] }) => {
+  const resend = getResendClient();
+
   // Premium Dark-Futuristic Responsive HTML template matching Future Frontier theme
   const htmlContent = `
     <!DOCTYPE html>
@@ -217,51 +195,7 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
     </html>
   `;
 
-  // 1. Try Resend HTTP API first if RESEND_API_KEY is configured
-  // This uses HTTP/HTTPS (Port 443) which bypasses Render Free Tier's outbound SMTP blocking!
-  if (process.env.RESEND_API_KEY) {
-    if (typeof fetch === 'undefined') {
-      console.warn('⚠️ WARNING: RESEND_API_KEY is configured, but global fetch is not available in this Node version. Falling back to Nodemailer SMTP.');
-    } else {
-      console.log(`🚀 RESEND_API_KEY detected. Sending email via Resend API (HTTP/HTTPS)...`);
-      try {
-        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-        const senderName = process.env.RESEND_SENDER_NAME || 'No-Reply | Future Frontier 2025';
-        
-        const response = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-          },
-          body: JSON.stringify({
-            from: `"${senderName}" <${fromEmail}>`,
-            to: toEmail,
-            reply_to: 'noreply.futuretechconclave@gmail.com',
-            subject: `Registration Confirmed: ${eventName} - Future Frontier 2025`,
-            html: htmlContent,
-          }),
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          console.log(`📧 Confirmation email successfully sent via Resend API to ${toEmail}. Message ID: ${data.id}`);
-          return true;
-        } else {
-          console.error(`❌ Resend API Error:`, data);
-          console.log('⚠️ Falling back to Nodemailer SMTP...');
-        }
-      } catch (resendError) {
-        console.error(`❌ Failed to send via Resend API:`, resendError.message);
-        console.log('⚠️ Falling back to Nodemailer SMTP...');
-      }
-    }
-  }
-
-  // 2. Fallback to Nodemailer SMTP (works perfectly locally, but will timeout on Render Free Tier due to SMTP block)
-  const transporter = getTransporter();
-
-  if (!transporter) {
+  if (!resend) {
     console.log(`ℹ️ [SIMULATED EMAIL] Confirmation details to: ${toEmail}`, {
       leaderName,
       eventName,
@@ -271,42 +205,26 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
   }
 
   try {
-    const mailOptions = {
-      from: `"No-Reply | Future Frontier 2025" <${process.env.EMAIL_USER}>`,
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    const senderName = process.env.RESEND_SENDER_NAME || 'No-Reply | Future Frontier 2025';
+
+    console.log(`🚀 Sending email via Resend to ${toEmail}...`);
+    const response = await resend.emails.send({
+      from: `"${senderName}" <${fromEmail}>`,
       to: toEmail,
       replyTo: 'noreply.futuretechconclave@gmail.com',
       subject: `Registration Confirmed: ${eventName} - Future Frontier 2025`,
       html: htmlContent,
-    };
+    });
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`📧 Confirmation email successfully sent via Nodemailer to ${toEmail}. Message ID: ${info.messageId}`);
+    if (response.error) {
+      throw new Error(response.error.message || JSON.stringify(response.error));
+    }
+
+    console.log(`📧 Confirmation email successfully sent via Resend API to ${toEmail}. Message ID: ${response.data?.id}`);
     return true;
   } catch (error) {
-    console.error(`❌ Failed to send confirmation email to ${toEmail} via Nodemailer SMTP:`, error.message);
-    
-    // Check if the error looks like a connection timeout or network block
-    if (
-      error.message.includes('timeout') ||
-      error.message.includes('ETIMEDOUT') ||
-      error.code === 'ETIMEDOUT' ||
-      error.message.includes('connection')
-    ) {
-      console.error(
-        `💡 TROUBLESHOOTING TIP:\n` +
-        `-------------------------------------------------------------------------------------------------\n` +
-        `If your application is hosted on Render (Free Tier), outbound SMTP traffic (ports 25, 465, and 587)\n` +
-        `is completely blocked by Render's firewall to prevent spam.\n\n` +
-        `TO FIX THIS WITHOUT PAYING:\n` +
-        `1. Create a free account at Resend (https://resend.com) - it takes 1 minute.\n` +
-        `2. Get your free API key.\n` +
-        `3. Add the 'RESEND_API_KEY' environment variable to your Render service / .env file.\n` +
-        `This will automatically switch the email helper to use Resend's HTTP API (Port 443), which works\n` +
-        `perfectly on Render Free Tier and never times out!\n` +
-        `-------------------------------------------------------------------------------------------------`
-      );
-    }
+    console.error(`❌ Failed to send confirmation email to ${toEmail} via Resend:`, error.message);
     return false;
   }
 };
-
