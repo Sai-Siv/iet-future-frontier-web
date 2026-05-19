@@ -10,19 +10,21 @@ const getTransporter = () => {
     return null;
   }
 
-  return nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false, // false for port 587
+    family: 4,     // Forces Nodemailer to resolve and use IPv4 instead of IPv6!
     auth: {
       user: user,
       pass: pass, // Gmail App Password (16 characters)
     },
     tls: {
       rejectUnauthorized: false
-    },
-    localAddress: '0.0.0.0' // Forces Node.js to use IPv4 instead of IPv6 to prevent ENETUNREACH on Render!
+    }
   });
+
+  return transporter;
 };
 
 /**
