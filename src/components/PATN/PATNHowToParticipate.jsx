@@ -13,7 +13,7 @@ const PATNHowToParticipate = () => {
     <section className="participate-container">
       <style>{`
         .participate-container {
-          font-family: 'Europa', Arial, sans-serif;
+          font-family: 'Times New Roman', Times, serif;
           padding: 60px 20px;
           color: #fff;
         }
@@ -183,7 +183,7 @@ const PATNHowToParticipate = () => {
                 <div className="step-title">Video Submission</div>
               </div>
             </div>
-            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> July 20, 2025</p>
+            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> July 21, 2026</p>
             <p>Record a 3-minute video on any engineering or technology topic of your choice and upload it to YouTube as Unlisted.</p>
             <ul>
               <li>Choose any engineering/technology topic</li>
@@ -208,7 +208,7 @@ const PATNHowToParticipate = () => {
                 <div className="step-title">Zonal Round</div>
               </div>
             </div>
-            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> August 2, 2025</p>
+            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> July 31, 2026</p>
             <p>If shortlisted, present in person at your respective zonal center in front of a jury panel.</p>
             <ul>
               <li>10-minute presentation</li>
@@ -237,8 +237,8 @@ const PATNHowToParticipate = () => {
                 <div className="step-title">Grand Finale</div>
               </div>
             </div>
-            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> October 11, 2025</p>
-            <p>Finalists compete at the main event in Hyderabad for the championship title and prizes.</p>
+            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> Will be announced soon</p>
+            <p>Finalists compete at the main event (Venue will be announced soon) for the championship title and prizes.</p>
             <ul>
               <li>Showcase your skills on a bigger stage</li>
               <li>Network with industry professionals</li>

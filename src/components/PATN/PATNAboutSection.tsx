@@ -33,13 +33,13 @@ const PATNAboutSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-black" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+    <section className="py-16 bg-black" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 reveal-fade">
           <h2 className="text-white font-bold mb-4" style={{ 
             fontSize: '2.5rem', 
             textShadow: '0 1px 10px rgba(34, 187, 224, 0.2)',
-            fontFamily: "'Europa', Arial, sans-serif"
+            fontFamily: "'Times New Roman', Times, serif"
           }}>
             About PATN Competition
           </h2>
@@ -53,7 +53,7 @@ const PATNAboutSection = () => {
               shadow-[0_4px_20px_-2px_rgba(34,187,224,0.25),0_0_8px_0_rgba(34,187,224,0.1)] 
               hover:shadow-[0_8px_30px_-2px_rgba(34,187,224,0.35),0_0_12px_0_rgba(34,187,224,0.2)] 
               group before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-b before:from-[#22BBE0]/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity overflow-hidden"
-              style={{ fontFamily: "'Europa', Arial, sans-serif" }}
+              style={{ fontFamily: "'Times New Roman', Times, serif" }}
             >
               <div className="relative flex flex-col items-center text-center">
                 <div className="p-3 rounded-full bg-[#22BBE0]/10 mb-4 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_15px_rgba(34,187,224,0.2)]">

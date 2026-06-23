@@ -60,7 +60,7 @@ const PATNHeroSection = () => {
           .patn-hero-wrapper {
             position: relative;
             width: 100%;
-            font-family: 'Europa', Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             color: white;
             overflow-x: hidden;
             padding: 20px 0;
@@ -172,7 +172,7 @@ const PATNHeroSection = () => {
           }
 
           .patn-prize-subtext {
-            font-family: 'Europa', Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             font-size: 1.2rem;
             color: #fcfcfc;
@@ -211,7 +211,7 @@ const PATNHeroSection = () => {
         <div className="patn-content-container">
           <div className="patn-event-badge">
             <Trophy size={20} strokeWidth={2.5} color="black" />
-            PATN 2025
+            PATN 2026
           </div>
 
           <h1 className="patn-title-main">Present Around the Network</h1>
@@ -223,17 +223,17 @@ const PATNHeroSection = () => {
           <div className="patn-event-info">
             <div className="patn-event-info-item">
               <Calendar size={18} />
-              <span>Oct 11, 2025</span>
+              <span>Will be announced soon</span>
             </div>
             <div className="patn-event-info-item">
               <MapPin size={18} />
-              <span>T-Hub, Hyderabad</span>
+              <span>Venue will be announced soon</span>
             </div>
           </div>
 
-          <h2 className="patn-prize-title">Total Prize Money: ₹15,000</h2>
+          <h2 className="patn-prize-title">Total Prize Money: ₹8,000</h2>
           <p className="patn-prize-subtext">
-            Winner: <span style={{ color: 'white' }}>₹10,000</span> | Runner-up: <span style={{ color: 'white' }}>₹5,000</span>
+            Winner: <span style={{ color: 'white' }}>₹5,000</span> | Runner-up: <span style={{ color: 'white' }}>₹3,000</span>
           </p>
 
           <button className="patn-btn-register" onClick={() => navigate('/patn/register')}>

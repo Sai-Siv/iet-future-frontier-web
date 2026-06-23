@@ -42,10 +42,10 @@ const PATNEvaluationSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-black" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+    <section className="py-16 bg-black" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sr-fade">
-          <h2 className="text-[2.5rem] font-bold text-white mb-4 [text-shadow:_0_1px_10px_rgb(34_187_224_/_20%)]" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+          <h2 className="text-[2.5rem] font-bold text-white mb-4 [text-shadow:_0_1px_10px_rgb(34_187_224_/_20%)]" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
             Evaluation Criteria
           </h2>
         </div>
@@ -59,19 +59,19 @@ const PATNEvaluationSection = () => {
               hover:shadow-[0_8px_30px_-2px_rgba(34,187,224,0.35),0_0_12px_0_rgba(34,187,224,0.2)]
               hover:border-[#22BBE0]/40 group backdrop-blur-sm transition-all duration-500
               before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-b before:from-[#22BBE0]/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity"
-              style={{ fontFamily: "'Europa', Arial, sans-serif" }}
+              style={{ fontFamily: "'Times New Roman', Times, serif" }}
             >
               <div className="flex flex-col items-center text-center">
                 <div className="p-3 rounded-full bg-[#22BBE0]/5 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(34,187,224,0.2)]">
                   {criterion.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2 [text-shadow:_0_1px_5px_rgb(34_187_224_/_15%)]" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+                <h3 className="text-xl font-semibold text-white mb-2 [text-shadow:_0_1px_5px_rgb(34_187_224_/_15%)]" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
                   {criterion.title}
                 </h3>
-                <div className="text-2xl font-bold text-[#22BBE0] mb-3 [text-shadow:_0_1px_8px_rgb(34_187_224_/_20%)]" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+                <div className="text-2xl font-bold text-[#22BBE0] mb-3 [text-shadow:_0_1px_8px_rgb(34_187_224_/_20%)]" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
                   {criterion.percentage}
                 </div>
-                <p className="text-gray-300" style={{ fontFamily: "'Europa', Arial, sans-serif" }}>
+                <p className="text-gray-300" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
                   {criterion.description}
                 </p>
               </div>

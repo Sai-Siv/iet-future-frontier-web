@@ -29,7 +29,7 @@ const PATNCallToAction: React.FC = () => {
             margin: 2rem auto;
             max-width: 1200px;
             color: white;
-            font-family: "Europa", Times, serif;
+            font-family: "Times New Roman", Times, serif;
           }
 
           .patn-title {

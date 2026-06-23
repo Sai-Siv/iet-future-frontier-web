@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import PATNHeroSection from '../components/PATN/PATNHeroSection';
@@ -14,6 +14,10 @@ import { useTheme } from '../contexts/ThemeContext';
 
 const PATN = () => {
   const { isDark } = useTheme();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen relative bg-black">

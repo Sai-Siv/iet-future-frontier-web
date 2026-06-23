@@ -17,19 +17,19 @@ const PATNPrizesSection = () => {
     {
       icon: <Trophy className="w-8 h-8 text-[#22BBE0]" />,
       title: "First Prize",
-      amount: "₹10,000",
+      amount: "₹5,000",
       benefits: ["Certificate of Excellence", "Regional Round Entry", "Mentorship Opportunity"]
     },
     {
       icon: <Award className="w-8 h-8 text-[#22BBE0]" />,
       title: "Second Prize",
-      amount: "₹5,000",
+      amount: "₹3,000",
       benefits: ["Certificate of Merit", "Regional Round Entry", "Networking Access"]
     }
   ];
 
   return (
-    <section className="py-16 bg-black" style={{ fontFamily: '"Europa", Times, serif' }}>
+    <section className="py-16 bg-black" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-white mb-4 font-bold [font-size:2.5rem] [text-shadow:_0_1px_10px_rgb(34_187_224_/_20%)]">

@@ -31,7 +31,7 @@ const PATNTimelineSection = () => {
     <section className="timeline-container">
       <style>{`
         .timeline-container {
-           font-family: 'Europa', Arial, sans-serif;
+           font-family: 'Times New Roman', Times, serif;
           min-height: 100vh;
           font-size: 1.3rem;
           display: flex;
@@ -205,7 +205,7 @@ const PATNTimelineSection = () => {
 
       <div className="timeline-header">
         <h1>Event Timeline</h1>
-        <p>Follow these important dates to participate in PATN 2025</p>
+        <p>Follow these important dates to participate in PATN 2026</p>
       </div>
 
       <div className="timeline-main">
@@ -222,7 +222,7 @@ const PATNTimelineSection = () => {
               <h2>Registration Deadline</h2>
               <div className="timeline-date">
                 <CalendarDays size={16} />
-                <span>July 20, 2025</span>
+                <span>July 21, 2026</span>
               </div>
             </div>
             <p className="timeline-desc">
@@ -245,7 +245,7 @@ const PATNTimelineSection = () => {
               <h2>Zonal Level (Local Heats)</h2>
               <div className="timeline-date">
                 <CalendarDays size={16} />
-                <span>August 2, 2025</span>
+                <span>July 31, 2026</span>
               </div>
             </div>
             <p className="timeline-desc">
@@ -266,11 +266,11 @@ const PATNTimelineSection = () => {
               <h2>Grand Finale</h2>
               <div className="timeline-date">
                 <CalendarDays size={16} />
-                <span>October 11, 2025</span>
+                <span>Will be announced soon</span>
               </div>
             </div>
             <p className="timeline-desc">
-              Final competition at T-Hub, Hyderabad
+              Final competition venue will be announced soon
             </p>
           </div>
         </div>

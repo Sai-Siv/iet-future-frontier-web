@@ -31,7 +31,7 @@ const PATNzonalCenters = () => {
     pageHeader: {
       textAlign: 'center',
       marginBottom: '1rem',
-      fontFamily: "'Europa', Arial, sans-serif",
+      fontFamily: "'Times New Roman', Times, serif",
       padding: '0 1.5rem'
     },
     pageHeaderH1: {
@@ -41,14 +41,14 @@ const PATNzonalCenters = () => {
       background: 'linear-gradient(to right, #ffffff, #ffffff)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
-      fontFamily: "'Europa', Arial, sans-serif"
+      fontFamily: "'Times New Roman', Times, serif"
     },
     pageHeaderP: {
       fontSize: '1.125rem',
       color: '#a0aec0',
       maxWidth: '700px',
       margin: '0 auto',
-      fontFamily: "'Europa', Arial, sans-serif"
+      fontFamily: "'Times New Roman', Times, serif"
     },
     eventDate: {
       display: 'inline-flex',
@@ -57,7 +57,7 @@ const PATNzonalCenters = () => {
       color: '#22BBE0',
       fontWeight: 'bold',
       marginTop: '1rem',
-      fontFamily: "'Europa', Arial, sans-serif"
+      fontFamily: "'Times New Roman', Times, serif"
     },
     zonalCenters: {
       display: 'flex',
@@ -75,7 +75,7 @@ const PATNzonalCenters = () => {
       width: '100%',
       maxWidth: '360px',
       boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)',
-      fontFamily: "'Europa', Arial, sans-serif",
+      fontFamily: "'Times New Roman', Times, serif",
       transition: 'transform 0.3s ease, box-shadow 0.3s ease'
     },
     zoneHeader: {
@@ -200,10 +200,10 @@ const PATNzonalCenters = () => {
     <div style={styles.container}>
       <div className="page-header" style={styles.pageHeader}>
         <h1 style={styles.pageHeaderH1}>Zonal Centers</h1>
-        <p style={styles.pageHeaderP}>Local heats will be conducted at these regional centers for PATN 2025</p>
+        <p style={styles.pageHeaderP}>Local heats will be conducted at these regional centers for PATN 2026</p>
         <div style={styles.eventDate}>
           <FaCalendarAlt />
-          <span>August 2, 2025</span>
+          <span>July 31, 2026</span>
         </div>
       </div>
 
@@ -219,8 +219,8 @@ const PATNzonalCenters = () => {
             <div style={styles.location}>
               <FaBuilding style={styles.iconStyle} />
               <div style={styles.locationDetails}>
-                <div style={styles.locationName}>National Institute of Technology Warangal</div>
-                <div style={styles.locationAddress}>Warangal, Telangana</div>
+                <div style={styles.locationName}>Muffakham Jah College of Engineering &amp; Technology (MJCET)</div>
+                <div style={styles.locationAddress}>Hyderabad, Telangana</div>
               </div>
             </div>
 
@@ -234,7 +234,7 @@ const PATNzonalCenters = () => {
                 <div style={styles.coordinatorInfo}>
                   Assistant Professor<br />
                   Department of Electrical Engineering<br />
-                  NIT Warangal
+                  MJCET
                 </div>
 
                 <div style={{ marginTop: '1rem' }}>
@@ -242,7 +242,7 @@ const PATNzonalCenters = () => {
                   <div style={styles.coordinatorInfo}>
                     Assistant Professor<br />
                     Department of Electrical Engineering<br />
-                    NIT Warangal
+                    MJCET
                   </div>
                 </div>
               </div>
@@ -290,16 +290,7 @@ const PATNzonalCenters = () => {
               </div>
             </div>
 
-            <div style={styles.divider}></div>
 
-            <div style={styles.coordinator}>
-              <FaUserTie style={styles.iconStyle} />
-              <div style={styles.coordinatorDetails}>
-                <div style={styles.coordinatorTitle}>Event Coordinator</div>
-                <div style={styles.coordinatorName}>Lavanya Tiwari</div>
-                <div style={styles.coordinatorInfo}>📞 +91 6264906510</div>
-              </div>
-            </div>
 
             <div style={styles.divider}></div>
 
@@ -320,7 +311,7 @@ const PATNzonalCenters = () => {
       </div>
 
       {/* Contact Info */}
-      <div style={{ textAlign: 'center', margin: '2rem 0', fontFamily: "'Europa', Arial, sans-serif", color: 'white', fontWeight: 'bold', fontSize: '1.1rem' }}>
+      <div style={{ textAlign: 'center', margin: '2rem 0', fontFamily: "'Times New Roman', Times, serif", color: 'white', fontWeight: 'bold', fontSize: '1.1rem' }}>
         For any queries: <a href="mailto:yp@iethlnevents.in" style={{ color: '#22BBE0', textDecoration: 'none', fontWeight: 'bold' }}>yp@iethlnevents.in</a>
       </div>
 

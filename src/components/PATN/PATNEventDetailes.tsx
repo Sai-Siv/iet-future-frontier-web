@@ -33,7 +33,7 @@ const PATNEventDetails = () => {
       margin: '2rem auto',
       maxWidth: '1200px',
       color: 'white',
-      fontFamily: 'Europa, serif'
+      fontFamily: "'Times New Roman', Times, serif"
     },
     title: {
       textAlign: 'center',
@@ -153,11 +153,11 @@ const PATNEventDetails = () => {
   return (
     <section
       id="details"
-      style={{ backgroundColor: '#000000', padding: '2rem 1rem', fontFamily: 'Europa, serif' }}
+      style={{ backgroundColor: '#000000', padding: '2rem 1rem', fontFamily: "'Times New Roman', Times, serif" }}
     >
       <div style={styles.container}>
         <h1 style={styles.title}>Event Details</h1>
-        <p style={styles.subtitle}>Everything you need to know about PATN 2025</p>
+        <p style={styles.subtitle}>Everything you need to know about PATN 2026</p>
 
         <div style={styles.row}>
           {/* Eligibility Criteria */}
@@ -222,11 +222,10 @@ const PATNEventDetails = () => {
           </div>
         </div>
 
-        {/* Why Participate Section */}
         <div style={styles.whyParticipate}>
           <h2 style={styles.whyTitle}>
             <FontAwesomeIcon icon={faUserGraduate} style={styles.infoListIcon} />
-            Why Participate in PATN 2025?
+            Why Participate in PATN 2026?
           </h2>
           <div style={styles.whyList}>
             <div style={styles.whyListCol}>
