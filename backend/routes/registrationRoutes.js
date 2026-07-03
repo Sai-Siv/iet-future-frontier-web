@@ -16,13 +16,11 @@ router.post('/register', async (req, res) => {
     const requiredFields = [
       'title',
       'fullName',
-      'category',
       'department',
       'institutionName',
       'isIETMember',
       'mobileNumber',
       'emailAddress',
-      'zoneVenue',
       'youtubeLink'
     ];
 
@@ -57,7 +55,6 @@ router.post('/register', async (req, res) => {
       participantDetails: {
         title: req.body.title,
         fullName: req.body.fullName,
-        category: req.body.category,
         department: req.body.department,
         institutionName: req.body.institutionName,
         isIETMember: req.body.isIETMember,
@@ -67,7 +64,6 @@ router.post('/register', async (req, res) => {
 
       // Step 2: Presentation Details
       presentationDetails: {
-        zoneVenue: req.body.zoneVenue,
         youtubeLink: req.body.youtubeLink
       },
 
@@ -92,10 +88,8 @@ router.post('/register', async (req, res) => {
       eventName: 'PATN (Paper and Abstract Presentation)',
       registrationId: registrationId,
       details: [
-        { label: 'Category', value: req.body.category },
         { label: 'Department', value: req.body.department },
-        { label: 'Institution Name', value: req.body.institutionName },
-        { label: 'Zonal Center', value: req.body.zoneVenue }
+        { label: 'Institution Name', value: req.body.institutionName }
       ]
     }).catch(err => console.error('Error sending confirmation email:', err));
 

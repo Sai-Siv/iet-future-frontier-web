@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { User, Phone, Clock } from 'lucide-react';
+import { User, Phone, Clock,Mail } from 'lucide-react';
 
 const PATNEventCoordinator = () => {
   useEffect(() => {
@@ -32,6 +32,7 @@ const PATNEventCoordinator = () => {
             <p>IET HLN</p>
             <div className="pt-2 flex flex-col space-y-2">
               <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-[#22BBE0]" /> +91 97057 28615</p>
+              <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-[#22BBE0]" /> iethyderabadftc@gmail.com</p>
               <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#22BBE0]" /> 6:00 PM to 8:00 PM</p>
             </div>
           </div>
