@@ -76,7 +76,7 @@ router.post('/register', async (req, res) => {
     // Save to Firestore doc
     const docRef = doc(db, 'patn-registrations', registrationId);
     await setDoc(docRef, registrationData);
-    
+
     console.log('PATN Registration saved successfully in Firestore:', {
       registrationId: registrationData.registrationId
     });
@@ -85,7 +85,7 @@ router.post('/register', async (req, res) => {
     sendConfirmationEmail({
       toEmail: req.body.emailAddress,
       leaderName: req.body.fullName,
-      eventName: 'PATN (Paper and Abstract Presentation)',
+      eventName: 'PATN (Present Around The Network)',
       registrationId: registrationId,
       details: [
         { label: 'Department', value: req.body.department },
@@ -122,7 +122,7 @@ router.get('/registrations', async (req, res) => {
     const patnCollection = collection(db, 'patn-registrations');
     const q = query(patnCollection, orderBy('submittedAt', 'desc'));
     const querySnapshot = await getDocs(q);
-    
+
     const registrations = [];
     querySnapshot.forEach(docSnapshot => {
       registrations.push(docSnapshot.data());

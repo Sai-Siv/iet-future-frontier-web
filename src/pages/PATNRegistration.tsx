@@ -335,8 +335,6 @@ const PATNRegistration = () => {
                       <option value="">Title</option>
                       <option value="Mr">Mr</option>
                       <option value="Ms">Ms</option>
-                      <option value="Dr">Dr</option>
-                      <option value="Prof">Prof</option>
                     </select>
                     <input
                       type="text"
