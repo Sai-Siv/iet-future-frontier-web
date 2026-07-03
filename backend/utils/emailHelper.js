@@ -29,7 +29,7 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Registration Confirmed - Future Frontier 2025</title>
+        <title>Registration Confirmed - Future Frontier 2026</title>
         <style>
           body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -143,12 +143,12 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
         <div class="email-container">
           <div class="header-banner">
             <h1>REGISTRATION CONFIRMED</h1>
-            <p>IET Future Frontier 2025</p>
+            <p>IET Future Frontier 2026</p>
           </div>
           <div class="content-body">
             <div class="greeting">Hello ${leaderName || 'Participant'},</div>
             <div class="intro-text">
-              We are absolutely thrilled to confirm your registration for <strong>${eventName}</strong> at IET Hyderabad's flagship <strong>Future Technology Conclave 2025</strong>! 🚀
+              We are absolutely thrilled to confirm your registration for <strong>${eventName}</strong> at IET Hyderabad's flagship <strong>Future Technology Conclave 2026</strong>! 🚀
               <br><br>
               Your registration has been successfully recorded in our database. Below are the key details of your entry:
             </div>
@@ -183,9 +183,9 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
             </div>
           </div>
           <div class="footer-section">
-            <div class="footer-logo">FUTURE FRONTIER 2025</div>
+            <div class="footer-logo">FUTURE FRONTIER 2026</div>
             <div class="footer-text">
-              Organized by IET Hyderabad Local Network & NIT Warangal
+              Organized by IET Hyderabad Local Network
               <br>
               Venue: T-Hub, Hyderabad
             </div>
@@ -206,14 +206,14 @@ export const sendConfirmationEmail = async ({ toEmail, leaderName, eventName, re
 
   try {
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    const senderName = process.env.RESEND_SENDER_NAME || 'No-Reply | Future Frontier 2025';
+    const senderName = process.env.RESEND_SENDER_NAME || 'No-Reply | Future Frontier 2026';
 
     console.log(`🚀 Sending email via Resend to ${toEmail}...`);
     const response = await resend.emails.send({
       from: `"${senderName}" <${fromEmail}>`,
       to: toEmail,
       replyTo: 'noreply.futuretechconclave@gmail.com',
-      subject: `Registration Confirmed: ${eventName} - Future Frontier 2025`,
+      subject: `Registration Confirmed: ${eventName} - Future Frontier 2026`,
       html: htmlContent,
     });
 

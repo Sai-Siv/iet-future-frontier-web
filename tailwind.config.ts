@@ -19,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Europa', 'Arial', 'sans-serif'],
+				sans: ['"Times New Roman"', 'Times', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

@@ -167,7 +167,7 @@ const PATNHowToParticipate = () => {
 
       <div className="participate-header">
         <h1>How to Participate</h1>
-        <p>Follow these three simple steps to showcase your technical expertise</p>
+        <p>Follow these two simple steps to showcase your technical expertise</p>
       </div>
 
       <div className="steps">
@@ -200,45 +200,16 @@ const PATNHowToParticipate = () => {
         <div className="step-section">
           <div className="step-content">
             <div className="step-header">
-              <div className="step-icon" style={{ backgroundColor: '#22BBE0' }}>
-                <FontAwesomeIcon icon={faChalkboardTeacher} />
-              </div>
-              <div>
-                <span className="step-label">Step 02</span>
-                <div className="step-title">Zonal Round</div>
-              </div>
-            </div>
-            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> July 31, 2026</p>
-            <p>If shortlisted, present in person at your respective zonal center in front of a jury panel.</p>
-            <ul>
-              <li>10-minute presentation</li>
-              <li>5-minute Q&amp;A session</li>
-              <li>Present at your regional center</li>
-              <li>Physical certificates awarded</li>
-            </ul>
-          </div>
-          <div className="arrow"><FontAwesomeIcon icon={faArrowRight} /></div>
-          <div className="step-number">02</div>
-        </div>
-
-        <div className="line-connector"></div>
-
-        {/* Step 3 */}
-        <div className="step-section">
-          <div className="step-number">03</div>
-          <div className="arrow"><FontAwesomeIcon icon={faArrowLeft} /></div>
-          <div className="step-content">
-            <div className="step-header">
               <div className="step-icon" style={{ backgroundColor: '#f44336' }}>
                 <FontAwesomeIcon icon={faTrophy} />
               </div>
               <div>
-                <span className="step-label">Step 03</span>
+                <span className="step-label">Step 02</span>
                 <div className="step-title">Grand Finale</div>
               </div>
             </div>
-            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> Will be announced soon</p>
-            <p>Finalists compete at the main event (Venue will be announced soon) for the championship title and prizes.</p>
+            <p className="step-date"><FontAwesomeIcon icon={faCalendarAlt} /> July 31, 2026</p>
+            <p>Finalists compete at the main event @Muffakham Jah College of Engineering and Technology, Hyderabad for the championship title and prizes.</p>
             <ul>
               <li>Showcase your skills on a bigger stage</li>
               <li>Network with industry professionals</li>
@@ -246,6 +217,8 @@ const PATNHowToParticipate = () => {
               <li>Enhance your professional portfolio</li>
             </ul>
           </div>
+          <div className="arrow"><FontAwesomeIcon icon={faArrowRight} /></div>
+          <div className="step-number">02</div>
         </div>
       </div>
     </section>

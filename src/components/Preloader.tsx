@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const Preloader = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
 
-    // Total duration is 3 seconds, then unmount the preloader
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
-
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    // Only show preloader if we are navigating to the home page OR on initial load
+    if (location.pathname === '/') {
+      setIsVisible(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      // If we land on a different page on refresh, we can either hide it instantly
+      // or still show it once. The user wants it on home page specifically.
+      // We will let the initial load trigger it once (since state defaults to true),
+      // and hide it quickly, or hide it after the timer.
+      // To keep it simple, we just set a standard timer.
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname]);
 
   return (
     <AnimatePresence>
@@ -100,40 +117,6 @@ const Preloader = () => {
               </motion.span>
             </motion.div>
 
-            {/* NIT Warangal Logo - Moves Right or Bottom */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7, x: 0, y: 0 }}
-              animate={{ opacity: 1, scale: 1, x: isMobile ? 0 : 160, y: isMobile ? 80 : 0 }}
-              transition={{
-                opacity: { delay: 1.3, duration: 0.4 },
-                x: { delay: 1.2, duration: 1.1, ease: [0.25, 0.9, 0.4, 1] },
-                y: { delay: 1.2, duration: 1.1, ease: [0.25, 0.9, 0.4, 1] },
-                scale: { delay: 1.3, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }
-              }}
-              className="absolute z-0 flex flex-col items-center gap-2"
-            >
-              <div className="relative">
-                {/* Glow behind NIT logo */}
-                <motion.div
-                  animate={{ opacity: [0.15, 0.35, 0.15] }}
-                  transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
-                  className="absolute inset-0 bg-[#A046B4]/25 rounded-full blur-[35px] -z-10"
-                />
-                <img
-                  src="/nit2.jpg"
-                  alt="NIT Warangal Logo"
-                  className="h-16 md:h-20 object-contain rounded-lg"
-                />
-              </div>
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 0.7, y: 0 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-                className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-light"
-              >
-                NIT Warangal
-              </motion.span>
-            </motion.div>
           </div>
 
           {/* Elegant Coming Soon / Tagline Text */}

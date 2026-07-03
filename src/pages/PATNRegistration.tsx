@@ -9,14 +9,12 @@ const PATNRegistration = () => {
   const [formData, setFormData] = useState({
     title: '',
     fullName: '',
-    category: '',
     department: '',
     instituteName: '',
     isIETMember: 'no',
     ietMembershipId: '',
     mobileNumber: '',
     emailAddress: '',
-    zoneVenue: '',
     youtubeLink: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -26,7 +24,7 @@ const PATNRegistration = () => {
   useEffect(() => {
     document.body.style.backgroundColor = '#121212';
     document.body.style.color = '#e0e0e0';
-    document.body.style.fontFamily = "'Europa', Arial, sans-serif";
+    document.body.style.fontFamily = "'Times New Roman', Times, serif";
     document.body.style.minHeight = '100vh';
     document.body.style.display = 'flex';
     document.body.style.flexDirection = 'column';
@@ -79,7 +77,6 @@ const PATNRegistration = () => {
 
     if (!formData.title) newErrors.title = 'Please select a title';
     if (!formData.fullName.trim()) newErrors.fullName = 'Please enter your full name';
-    if (!formData.category) newErrors.category = 'Please select your category';
     if (!formData.department.trim()) newErrors.department = 'Please enter your department';
     if (!formData.instituteName.trim()) newErrors.instituteName = 'Please enter your institute name';
     if (!formData.isIETMember) newErrors.isIETMember = 'Please select an option';
@@ -101,8 +98,6 @@ const PATNRegistration = () => {
     } else if (!emailRegex.test(formData.emailAddress)) {
       newErrors.emailAddress = 'Please enter a valid email address';
     }
-
-    if (!formData.zoneVenue) newErrors.zoneVenue = 'Please select a zone/venue';
 
     const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
     if (!formData.youtubeLink.trim()) {
@@ -309,7 +304,7 @@ const PATNRegistration = () => {
                 gap: '1rem',
                 marginBottom: '0.4rem'
               }}>
-                <div style={{ gridColumn: 'span 1' }}>
+                <div style={{ gridColumn: 'span 2' }}>
                   <label style={{
                     display: 'block',
                     fontWeight: '600',
@@ -373,47 +368,7 @@ const PATNRegistration = () => {
                     </div>
                   )}
                 </div>
-                <div style={{ gridColumn: 'span 1' }}>
-                  <label style={{
-                    display: 'block',
-                    fontWeight: '600',
-                    color: '#b0b0b0',
-                    fontSize: '0.75rem',
-                    marginBottom: '0.25rem'
-                  }}>
-                    Category *
-                  </label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    style={{
-                      width: '100%',
-                      borderRadius: '0.375rem',
-                      padding: '0.5rem 0.75rem',
-                      fontSize: '0.75rem',
-                      backgroundColor: '#2d2d2d',
-                      border: errors.category ? '1px solid #ff4444' : '1px solid #3d3d3d',
-                      color: '#e0e0e0',
-                      outline: 'none',
-                      transition: 'all 0.3s ease, transform 0.2s ease'
-                    }}
-                    required
-                  >
-                    <option value="">Select your category</option>
-                    <option value="student">Student</option>
-                    <option value="young-professional">Young Professional</option>
-                  </select>
-                  {errors.category && (
-                    <div style={{
-                      color: '#ff4444',
-                      fontSize: '0.7rem',
-                      marginTop: '0.25rem'
-                    }}>
-                      {errors.category}
-                    </div>
-                  )}
-                </div>
+
               </div>
               <div style={{
                 display: 'grid',
@@ -710,51 +665,10 @@ const PATNRegistration = () => {
               </h3>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: '1fr',
                 gap: '1rem'
               }}>
-                <div>
-                  <label style={{
-                    display: 'block',
-                    fontWeight: '600',
-                    color: '#b0b0b0',
-                    fontSize: '0.75rem',
-                    marginBottom: '0.25rem'
-                  }}>
-                    Zone/Venue *
-                  </label>
-                  <select
-                    name="zoneVenue"
-                    value={formData.zoneVenue}
-                    onChange={handleChange}
-                    style={{
-                      width: '100%',
-                      borderRadius: '0.375rem',
-                      padding: '0.5rem 0.75rem',
-                      fontSize: '0.75rem',
-                      backgroundColor: '#2d2d2d',
-                      border: errors.zoneVenue ? '1px solid #ff4444' : '1px solid #3d3d3d',
-                      color: '#e0e0e0',
-                      outline: 'none',
-                      transition: 'all 0.3s ease, transform 0.2s ease'
-                    }}
-                    required
-                  >
-                    <option value="">Select your preferred zone</option>
-                    <option value="zone1">Zone 1 (NIT Warangal Telangana)</option>
-                    <option value="zone2">Zone 2 (VIT-AP university)</option>
-                    <option value="zone3">Zone 3 (Kalinga university Raipur)</option>
-                  </select>
-                  {errors.zoneVenue && (
-                    <div style={{
-                      color: '#ff4444',
-                      fontSize: '0.7rem',
-                      marginTop: '0.25rem'
-                    }}>
-                      {errors.zoneVenue}
-                    </div>
-                  )}
-                </div>
+
                 <div>
                   <label style={{
                     display: 'block',

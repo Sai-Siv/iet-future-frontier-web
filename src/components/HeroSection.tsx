@@ -33,15 +33,6 @@ const HeroSection = () => {
               <h2 className="text-xs sm:text-sm font-bold text-white tracking-wider drop-shadow-md">
                 IET Hyderabad Local Network
               </h2>
-              <span className="hidden md:inline text-white/30">•</span>
-              <span className="text-[10px] sm:text-xs text-white/50 italic tracking-widest uppercase">
-                In Association With
-              </span>
-              <span className="hidden md:inline text-white/30">•</span>
-              <div className="flex items-center gap-2">
-                <img src="/nit2.jpg" alt="NIT Warangal Logo" className="h-5 w-5 sm:h-6 sm:w-6 object-contain rounded-full bg-white p-0.5" />
-                <span className="text-xs sm:text-sm font-semibold text-white/90">NIT Warangal</span>
-              </div>
             </div>
 
             {/* Main Title */}
@@ -49,7 +40,7 @@ const HeroSection = () => {
               <span className="text-white drop-shadow-2xl">Future Technology</span>
               <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#A046B4] via-[#7B5CC6] to-[#22BBE0] drop-shadow-xl inline-block mt-1">
-                Conclave 2025
+                Conclave 2026
               </span>
             </h1>
 

@@ -23,12 +23,12 @@ const PATNAboutSection = () => {
     {
       icon: <Users className="w-6 h-6 text-[#22BBE0]" />,
       title: "Who Can Participate",
-      description: "Open to students and young professionals under 35 years old. Showcase your research, projects, or innovative ideas in technology."
+      description: "Open to all years, and all streams  of Engineering from an AICTE/UGC approved institution."
     },
     {
       icon: <Trophy className="w-6 h-6 text-[#22BBE0]" />,
       title: "Benefits",
-      description: "Gain recognition, enhance your presentation skills, network with industry experts, and win exciting prizes. Top performers advance to regional and global rounds."
+      description: "Gain recognition, enhance your presentation skills, network with industry experts, and win exciting prizes."
     }
   ];
 
@@ -36,8 +36,8 @@ const PATNAboutSection = () => {
     <section className="py-16 bg-black" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 reveal-fade">
-          <h2 className="text-white font-bold mb-4" style={{ 
-            fontSize: '2.5rem', 
+          <h2 className="text-white font-bold mb-4" style={{
+            fontSize: '2.5rem',
             textShadow: '0 1px 10px rgba(34, 187, 224, 0.2)',
             fontFamily: "'Times New Roman', Times, serif"
           }}>

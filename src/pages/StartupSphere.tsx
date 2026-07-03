@@ -45,13 +45,13 @@ const StartupSphere = () => {
     // Wait for the 300ms fade-out transition to complete
     setTimeout(() => {
       setCurrentStep(step); // Swap content while invisible
-      
+
       // Instantly jump to the top of the tabs while invisible
       if (tabsRef.current) {
         const headerOffset = 120;
         const elementPosition = tabsRef.current.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-    
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'auto'
@@ -245,7 +245,7 @@ const StartupSphere = () => {
       };
 
       let message = 'Please fill in the following required fields:\n\n';
-      
+
       for (const [section, fields] of Object.entries(sections)) {
         if (fields.length > 0) {
           message += `${section}:\n${fields.map(f => `• ${f}`).join('\n')}\n\n`;
@@ -273,7 +273,7 @@ const StartupSphere = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -410,7 +410,7 @@ const StartupSphere = () => {
 
           <div className="text-center mb-16 pt-8">
 
-            
+
             <div className="mb-6">
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4">
                 <span className="text-white">Startup</span>
@@ -437,11 +437,10 @@ const StartupSphere = () => {
           <div ref={tabsRef} className="flex items-center justify-center gap-2 mb-8 w-full">
             <button
               onClick={() => goToStep('team-details')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'team-details'
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'team-details'
                   ? 'text-white'
                   : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+                }`}
               style={currentStep === 'team-details' ? { backgroundColor: '#EE7520' } : {}}
             >
               <Users className="w-6 h-6 md:w-5 md:h-5" />
@@ -458,11 +457,10 @@ const StartupSphere = () => {
             ></div>
             <button
               onClick={() => goToStep('team-members')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'team-members'
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'team-members'
                   ? 'text-white'
                   : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+                }`}
               style={currentStep === 'team-members' ? { backgroundColor: '#EE7520' } : {}}
             >
               <UserPlus className="w-6 h-6 md:w-5 md:h-5" />
@@ -479,11 +477,10 @@ const StartupSphere = () => {
             ></div>
             <button
               onClick={() => goToStep('startup-details')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'startup-details'
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'startup-details'
                   ? 'text-white'
                   : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+                }`}
               style={currentStep === 'startup-details' ? { backgroundColor: '#EE7520' } : {}}
             >
               <Smartphone className="w-6 h-6 md:w-5 md:h-5" />
@@ -500,11 +497,10 @@ const StartupSphere = () => {
             ></div>
             <button
               onClick={() => goToStep('payment')}
-              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${
-                currentStep === 'payment'
+              className={`flex items-center justify-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg transition-colors ${currentStep === 'payment'
                   ? 'text-white'
                   : 'bg-black/40 text-gray-400 hover:text-white'
-              }`}
+                }`}
               style={currentStep === 'payment' ? { backgroundColor: '#EE7520' } : {}}
             >
               <CreditCard className="w-6 h-6 md:w-5 md:h-5" />
@@ -850,11 +846,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'AI & ML-Driven Solutions')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'AI & ML-Driven Solutions' 
-                              ? 'border-[#EE7520] ring-1 ring-[#EE7520]' 
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'AI & ML-Driven Solutions'
+                              ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🤖</span>
                           AI & ML-Driven Solutions
@@ -862,11 +857,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'IoT & Smart Systems')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'IoT & Smart Systems'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'IoT & Smart Systems'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🌐</span>
                           IoT & Smart Systems
@@ -874,11 +868,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'Blockchain & FinTech')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'Blockchain & FinTech'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'Blockchain & FinTech'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🔗</span>
                           Blockchain & FinTech
@@ -886,11 +879,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'HealthTech & BioTech')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'HealthTech & BioTech'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'HealthTech & BioTech'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🏥</span>
                           HealthTech & BioTech
@@ -898,11 +890,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'SpaceTech & Robotics')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'SpaceTech & Robotics'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'SpaceTech & Robotics'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🚀</span>
                           SpaceTech & Robotics
@@ -910,11 +901,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'EdTech & Digital Learning')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'EdTech & Digital Learning'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'EdTech & Digital Learning'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">📚</span>
                           EdTech & Digital Learning
@@ -922,11 +912,10 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('track', '', 'GreenTech & Sustainability')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.track === 'GreenTech & Sustainability'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.track === 'GreenTech & Sustainability'
                               ? 'border-[#EE7520] ring-1 ring-[#EE7520]'
                               : 'border-[#EE7520]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#EE7520] focus:ring-1 focus:ring-[#EE7520] transition-colors text-left`}
                         >
                           <span className="text-sm">🌱</span>
                           GreenTech & Sustainability
@@ -1043,19 +1032,18 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('feeType', '', 'IET Member Team')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.feeType === 'IET Member Team' 
-                              ? 'border-[#671F20] ring-1 ring-[#671F20]' 
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.feeType === 'IET Member Team'
+                              ? 'border-[#671F20] ring-1 ring-[#671F20]'
                               : 'border-[#671F20]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#671F20] focus:ring-1 focus:ring-[#671F20] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#671F20] focus:ring-1 focus:ring-[#671F20] transition-colors text-left`}
                         >
-                          <input 
-                            type="radio" 
-                            name="feeType" 
-                            value="IET Member Team" 
+                          <input
+                            type="radio"
+                            name="feeType"
+                            value="IET Member Team"
                             checked={formData.feeType === 'IET Member Team'}
                             onChange={() => handleInputChange('feeType', '', 'IET Member Team')}
-                            className="w-4 h-4 border-[#671F20]/20 text-[#671F20] focus:ring-[#671F20] bg-white/10" 
+                            className="w-4 h-4 border-[#671F20]/20 text-[#671F20] focus:ring-[#671F20] bg-white/10"
                           />
                           <div>
                             <div className="font-medium text-white">IET Member Team - ₹500</div>
@@ -1065,19 +1053,18 @@ const StartupSphere = () => {
                         <button
                           type="button"
                           onClick={() => handleInputChange('feeType', '', 'Non-Member Team')}
-                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${
-                            formData.feeType === 'Non-Member Team'
+                          className={`w-full px-3 py-2 flex items-center gap-2 bg-white/10 border ${formData.feeType === 'Non-Member Team'
                               ? 'border-[#671F20] ring-1 ring-[#671F20]'
                               : 'border-[#671F20]/20'
-                          } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#671F20] focus:ring-1 focus:ring-[#671F20] transition-colors text-left`}
+                            } rounded-lg text-white hover:bg-white/20 focus:outline-none focus:border-[#671F20] focus:ring-1 focus:ring-[#671F20] transition-colors text-left`}
                         >
-                          <input 
-                            type="radio" 
-                            name="feeType" 
-                            value="Non-Member Team" 
+                          <input
+                            type="radio"
+                            name="feeType"
+                            value="Non-Member Team"
                             checked={formData.feeType === 'Non-Member Team'}
                             onChange={() => handleInputChange('feeType', '', 'Non-Member Team')}
-                            className="w-4 h-4 border-[#671F20]/20 text-[#671F20] focus:ring-[#671F20] bg-white/10" 
+                            className="w-4 h-4 border-[#671F20]/20 text-[#671F20] focus:ring-[#671F20] bg-white/10"
                           />
                           <div>
                             <div className="font-medium text-white">Non-Member Team - ₹750</div>
@@ -1145,7 +1132,7 @@ const StartupSphere = () => {
                       <label className="block text-white font-medium mb-1">
                         Upload Transaction Screenshot <span style={{ color: '#EE7520' }}>*</span>
                       </label>
-                      <div 
+                      <div
                         onClick={handleUploadClick}
                         className="border-2 border-dashed border-[#EE7520]/20 rounded-lg p-8 hover:border-[#EE7520] transition-colors cursor-pointer bg-white/5"
                       >
@@ -1159,9 +1146,9 @@ const StartupSphere = () => {
                         <div className="flex flex-col items-center justify-center text-center">
                           {uploadedImage ? (
                             <div className="w-full">
-                              <img 
-                                src={uploadedImage} 
-                                alt="Transaction Screenshot" 
+                              <img
+                                src={uploadedImage}
+                                alt="Transaction Screenshot"
                                 className="max-h-48 mx-auto mb-2"
                               />
                               <p className="text-sm text-gray-300">Click to change image</p>

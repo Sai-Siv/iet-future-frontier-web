@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import PATNHeroSection from '../components/PATN/PATNHeroSection';
+import PATNMediaSection from '../components/PATN/PATNMediaSection';
 import PATNAboutSection from '../components/PATN/PATNAboutSection';
 import PATNTimelineSection from '../components/PATN/PATNTimelineSection';
 import PATNEvaluationSection from '../components/PATN/PATNEvaluationSection';
@@ -9,7 +10,7 @@ import PATNPrizesSection from '../components/PATN/PATNPrizesSection';
 import PATNHowToParticipate from '../components/PATN/PATNHowToParticipate';
 import PATNCallToAction from '@/components/PATN/PATNCallToAction';
 import PATNEventDetails from '@/components/PATN/PATNEventDetailes';
-import PATNzonalCenters from '../components/PATN/PATNzonalCenters';
+import PATNEventCoordinator from '../components/PATN/PATNEventCoordinator';
 import { useTheme } from '../contexts/ThemeContext';
 
 const PATN = () => {
@@ -50,10 +51,12 @@ const PATN = () => {
         <PATNEvaluationSection />
         <PATNTimelineSection />
         <PATNHowToParticipate />
-        <PATNzonalCenters />
+        <PATNEventCoordinator />
         <PATNEventDetails />
         <PATNPrizesSection />
+        <PATNMediaSection />
         <PATNCallToAction />
+
         <Footer />
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { CalendarDays, Video,Presentation, Trophy, Clock } from 'lucide-react';
+import { CalendarDays, Video, Presentation, Trophy, Clock } from 'lucide-react';
 
 const PATNTimelineSection = () => {
   useEffect(() => {
@@ -235,29 +235,6 @@ const PATNTimelineSection = () => {
         <div className="timeline-event">
           <div className="timeline-icon-wrapper">
             <div className="timeline-icon timeline-yellow">
-            <Presentation />
-              
-            </div>
-            <div className="timeline-connector"></div>
-          </div>
-          <div className="timeline-content">
-            <div className="timeline-title">
-              <h2>Zonal Level (Local Heats)</h2>
-              <div className="timeline-date">
-                <CalendarDays size={16} />
-                <span>July 31, 2026</span>
-              </div>
-            </div>
-            <p className="timeline-desc">
-              Present in person at your respective zonal center
-            </p>
-          </div>
-        </div>
-
-        {/* Event 3 */}
-        <div className="timeline-event">
-          <div className="timeline-icon-wrapper">
-            <div className="timeline-icon timeline-yellow">
               <Trophy />
             </div>
           </div>
@@ -266,25 +243,22 @@ const PATNTimelineSection = () => {
               <h2>Grand Finale</h2>
               <div className="timeline-date">
                 <CalendarDays size={16} />
-                <span>Will be announced soon</span>
+                <span>July 31, 2026</span>
               </div>
             </div>
-            <p className="timeline-desc">
-              Final competition venue will be announced soon
-            </p>
           </div>
         </div>
 
         {/* Presentation Format Box */}
         <div className="presentation-format-box">
-  <div className="icon-container">
-    <Clock />
-  </div>
-  <h2>Presentation Format</h2>
-  <p><span className="highlight">10 minutes</span> presentation</p>
-  <p><span className="highlight">5 minutes</span> Q&amp;A session</p>
-  <p>Present on any engineering or technology topic of your choice</p>
-</div>
+          <div className="icon-container">
+            <Clock />
+          </div>
+          <h2>Presentation Format</h2>
+          <p><span className="highlight">10 minutes</span> presentation</p>
+          <p><span className="highlight">5 minutes</span> Q&amp;A session</p>
+          <p>Present on any engineering or technology topic of your choice</p>
+        </div>
       </div>
     </section>
   );

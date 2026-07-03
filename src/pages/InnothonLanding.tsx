@@ -197,7 +197,7 @@ const InnothonLanding = () => {
             opacity: 0;
             transform: translateY(-50px);
             transition: all 1s ease-out;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .header-content.animated {
@@ -206,7 +206,7 @@ const InnothonLanding = () => {
           }
 
           h1, h2, h3, h4, h5, h6 {
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h1 {
@@ -214,7 +214,7 @@ const InnothonLanding = () => {
             font-size: 4.5rem;
             line-height: 1.1;
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h2 {
@@ -224,7 +224,7 @@ const InnothonLanding = () => {
             margin: 0.5rem 0;
             color: white;
             white-space: nowrap;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .highlight {
@@ -264,7 +264,7 @@ const InnothonLanding = () => {
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(10px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-box.animated {
@@ -297,14 +297,14 @@ const InnothonLanding = () => {
             text-align: center;
             border-bottom: 2px solid #AAC81E;
             padding-bottom: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-text {
             color: white;
             line-height: 1.6;
             font-size: 1.1rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list {
@@ -312,7 +312,7 @@ const InnothonLanding = () => {
             padding-left: 1.5rem;
             line-height: 1.6;
             font-size: 1.2rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list li {
@@ -322,7 +322,7 @@ const InnothonLanding = () => {
             margin-bottom: 0.5rem;
             display: flex;
             align-items: flex-start;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list.animated li {
@@ -381,24 +381,24 @@ const InnothonLanding = () => {
 
           .info-text {
             text-align: left;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text p {
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .label {
             font-size: 0.875rem;
             color: #d1d5db;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .value {
             font-weight: bold;
             color: white;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-heading.no-border {
@@ -415,7 +415,7 @@ const InnothonLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-card.animated {
@@ -432,7 +432,7 @@ const InnothonLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .level-card.animated {
@@ -447,7 +447,7 @@ const InnothonLanding = () => {
             display: flex;
             align-items: center;
             font-size: 1.3rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .level-title svg {
@@ -464,7 +464,7 @@ const InnothonLanding = () => {
             align-items: center;
             font-size: 1.3rem;
             gap: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-title svg {
@@ -479,7 +479,7 @@ const InnothonLanding = () => {
             border-radius: 0.25rem;
             font-size: 0.8rem;
             margin-left: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .timeline-date {
@@ -684,7 +684,7 @@ const InnothonLanding = () => {
             width: fit-content;
             text-decoration: none;
             font-weight: bold;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -713,10 +713,10 @@ const InnothonLanding = () => {
           }
 
           @font-face {
-            font-family: 'Europa';
+            font-family: 'Times New Roman', Times, serif;
             font-style: normal;
             font-weight: 400;
-            src: local('Europa');
+            
           }
 
           .main-prizes, .additional-benefits {
@@ -789,7 +789,7 @@ const InnothonLanding = () => {
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             font-size: 1rem;
             display: flex;
             align-items: center;
@@ -820,7 +820,7 @@ const InnothonLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-content.active {
@@ -849,7 +849,7 @@ const InnothonLanding = () => {
             gap: 0.5rem;
             margin-bottom: 2rem;
             padding: 1rem 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .breadcrumb-item {

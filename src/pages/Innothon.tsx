@@ -49,13 +49,13 @@ const InnothonRegistration = () => {
     // Wait for the 300ms fade-out transition to complete
     setTimeout(() => {
       setCurrentStep(step); // Swap content while invisible
-      
+
       // Instantly jump to the top of the tabs while invisible
       if (tabsRef.current) {
         const headerOffset = 120;
         const elementPosition = tabsRef.current.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-    
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'auto' // 'auto' means instant, no smooth scroll animation
@@ -575,19 +575,17 @@ const InnothonRegistration = () => {
                                 type="button"
                                 key={statement.name}
                                 onClick={() => handleInputChange('problemStatement', '', statement.name)}
-                                className={`text-left p-4 rounded-xl border transition-all duration-300 relative overflow-hidden group ${
-                                  isSelected
+                                className={`text-left p-4 rounded-xl border transition-all duration-300 relative overflow-hidden group ${isSelected
                                     ? 'border-[#AAC81E] bg-[#AAC81E]/10 ring-1 ring-[#AAC81E] shadow-[0_0_15px_rgba(170,200,30,0.15)]'
                                     : 'border-[#AAC81E]/20 bg-white/5 hover:border-[#AAC81E]/40 hover:bg-white/10'
-                                }`}
+                                  }`}
                               >
                                 {/* Subtle Track Color Glow */}
                                 <div className={`absolute inset-0 bg-gradient-to-br ${statement.bgGlow} opacity-30 transition-opacity duration-300 pointer-events-none`} />
-                                
+
                                 <div className="flex items-start gap-3 relative z-10">
-                                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl bg-white/10 group-hover:scale-110 transition-transform ${
-                                    isSelected ? 'bg-[#AAC81E]/20 text-[#AAC81E]' : 'text-gray-300'
-                                  }`}>
+                                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl bg-white/10 group-hover:scale-110 transition-transform ${isSelected ? 'bg-[#AAC81E]/20 text-[#AAC81E]' : 'text-gray-300'
+                                    }`}>
                                     {statement.icon}
                                   </div>
                                   <div className="flex-1">
@@ -606,11 +604,11 @@ const InnothonRegistration = () => {
                             );
                           })}
                         </div>
-                        <input 
-                          type="hidden" 
-                          name="problemStatement" 
-                          value={formData.problemStatement} 
-                          required 
+                        <input
+                          type="hidden"
+                          name="problemStatement"
+                          value={formData.problemStatement}
+                          required
                         />
                       </div>
                     </div>

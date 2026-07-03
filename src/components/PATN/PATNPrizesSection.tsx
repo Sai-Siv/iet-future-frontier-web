@@ -17,14 +17,14 @@ const PATNPrizesSection = () => {
     {
       icon: <Trophy className="w-8 h-8 text-[#22BBE0]" />,
       title: "First Prize",
-      amount: "₹5,000",
-      benefits: ["Certificate of Excellence", "Regional Round Entry", "Mentorship Opportunity"]
+      amount: "Cash Prize",
+      benefits: ["Certificate of Excellence"]
     },
     {
       icon: <Award className="w-8 h-8 text-[#22BBE0]" />,
       title: "Second Prize",
-      amount: "₹3,000",
-      benefits: ["Certificate of Merit", "Regional Round Entry", "Networking Access"]
+      amount: "Cash Prize",
+      benefits: ["Certificate of Excellence"]
     }
   ];
 

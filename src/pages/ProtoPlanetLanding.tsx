@@ -20,22 +20,22 @@ const ProtoPlanetLanding = () => {
   const handleBackToTop = () => {
     setIsScrollingToTop(true);
     setShowBackToTop(false); // Hide button immediately when clicked
-    
+
     const startingY = window.pageYOffset;
     const duration = 800; // Animation duration in ms
     const startTime = performance.now();
-    
+
     const easeInOutCubic = (t) => {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     };
-    
+
     const scrollStep = (timestamp) => {
       const currentTime = timestamp - startTime;
       const progress = Math.min(currentTime / duration, 1);
       const easedProgress = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, startingY * (1 - easedProgress));
-      
+
       if (currentTime < duration) {
         requestAnimationFrame(scrollStep);
       } else {
@@ -48,7 +48,7 @@ const ProtoPlanetLanding = () => {
         }, 1000);
       }
     };
-    
+
     requestAnimationFrame(scrollStep);
   };
 
@@ -137,11 +137,11 @@ const ProtoPlanetLanding = () => {
     trackTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const targetTrack = tab.getAttribute('data-track');
-        
+
         // Remove active class from all tabs and contents
         trackTabs.forEach(t => t.classList.remove('active'));
         trackContents.forEach(c => c.classList.remove('active'));
-        
+
         // Add active class to clicked tab and corresponding content
         tab.classList.add('active');
         const targetContent = document.getElementById(targetTrack);
@@ -182,7 +182,7 @@ const ProtoPlanetLanding = () => {
     <>
       <Navigation />
       <div className="proto-planet-landing">
-        
+
         {/* Breadcrumb Navigation */}
         <div className="breadcrumb">
           <Link to="/" className="breadcrumb-item">
@@ -223,7 +223,7 @@ const ProtoPlanetLanding = () => {
             opacity: 0;
             transform: translateY(-50px);
             transition: all 1s ease-out;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .header-content.animated {
@@ -232,7 +232,7 @@ const ProtoPlanetLanding = () => {
           }
 
           h1, h2, h3, h4, h5, h6 {
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h1 {
@@ -240,7 +240,7 @@ const ProtoPlanetLanding = () => {
             font-size: 4.5rem;
             line-height: 1.1;
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h2 {
@@ -250,7 +250,7 @@ const ProtoPlanetLanding = () => {
             margin: 0.5rem 0;
             color: white;
             white-space: nowrap;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .highlight {
@@ -290,7 +290,7 @@ const ProtoPlanetLanding = () => {
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(10px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-box.animated {
@@ -323,14 +323,14 @@ const ProtoPlanetLanding = () => {
             text-align: center;
             border-bottom: 2px solid #a046b4;
             padding-bottom: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-text {
             color: white;
             line-height: 1.6;
             font-size: 1.1rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list {
@@ -338,7 +338,7 @@ const ProtoPlanetLanding = () => {
             padding-left: 1.5rem;
             line-height: 1.6;
             font-size: 1.2rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list li {
@@ -348,7 +348,7 @@ const ProtoPlanetLanding = () => {
             margin-bottom: 0.5rem;
             display: flex;
             align-items: flex-start;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list.animated li {
@@ -407,24 +407,24 @@ const ProtoPlanetLanding = () => {
 
           .info-text {
             text-align: left;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text p {
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .label {
             font-size: 0.875rem;
             color: #d1d5db;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .value {
             font-weight: bold;
             color: white;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-heading.no-border {
@@ -441,7 +441,7 @@ const ProtoPlanetLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-card.animated {
@@ -458,7 +458,7 @@ const ProtoPlanetLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .level-card.animated {
@@ -473,7 +473,7 @@ const ProtoPlanetLanding = () => {
             display: flex;
             align-items: center;
             font-size: 1.3rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .level-title svg {
@@ -490,7 +490,7 @@ const ProtoPlanetLanding = () => {
             align-items: center;
             font-size: 1.3rem;
             gap: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-title svg {
@@ -505,7 +505,7 @@ const ProtoPlanetLanding = () => {
             border-radius: 0.25rem;
             font-size: 0.8rem;
             margin-left: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .timeline-date {
@@ -710,7 +710,7 @@ const ProtoPlanetLanding = () => {
             width: fit-content;
             text-decoration: none;
             font-weight: bold;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -739,10 +739,10 @@ const ProtoPlanetLanding = () => {
           }
 
           @font-face {
-            font-family: 'Europa';
+            font-family: 'Times New Roman', Times, serif;
             font-style: normal;
             font-weight: 400;
-            src: local('Europa');
+            
           }
 
           .main-prizes, .additional-benefits {
@@ -815,7 +815,7 @@ const ProtoPlanetLanding = () => {
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             font-size: 1rem;
             display: flex;
             align-items: center;
@@ -846,7 +846,7 @@ const ProtoPlanetLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .track-content.active {
@@ -875,7 +875,7 @@ const ProtoPlanetLanding = () => {
             gap: 0.5rem;
             margin-bottom: 2rem;
             padding: 1rem 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .breadcrumb-item {
@@ -1053,7 +1053,7 @@ const ProtoPlanetLanding = () => {
             {/* Grand Finale */}
             <div className="level-card animate-section animate-delay-3">
               <div className="level-title">
-                <Trophy size={20} /> Grand Finale: Future Technology Conclave 2025
+                <Trophy size={20} /> Grand Finale: Future Technology Conclave 2026
                 <div className="timeline-date">
                   <CalendarDays size={16} />
                   <span>October 11, 2025</span>
@@ -1086,7 +1086,7 @@ const ProtoPlanetLanding = () => {
                   <Leaf size={20} /> Sustainable & Clean Tech
                 </button>
               </div>
-              
+
               <div className="track-content active" id="iot">
                 <div className="track-title">
                   <Wifi size={20} /> IoT & Smart Environments
@@ -1101,7 +1101,7 @@ const ProtoPlanetLanding = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="track-content" id="robotics">
                 <div className="track-title">
                   <Rocket size={20} /> Robotics & Intelligent Machines
@@ -1116,7 +1116,7 @@ const ProtoPlanetLanding = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="track-content" id="healthtech">
                 <div className="track-title">
                   <HeartPulse size={20} /> HealthTech & Human Augmentation
@@ -1131,7 +1131,7 @@ const ProtoPlanetLanding = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="track-content" id="cleantech">
                 <div className="track-title">
                   <Leaf size={20} /> Sustainable & Clean Tech
@@ -1170,14 +1170,14 @@ const ProtoPlanetLanding = () => {
             <div className="content-heading">Registration Fee</div>
             <div className="two-column">
               <div className="animate-section animate-left">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem',fontSize:'24px'}}>IET Member Team</h4>
+                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>IET Member Team</h4>
                 <ul className="content-list">
                   <li><span className="bullet-point"><strong>Fee:</strong> ₹300</span></li>
                   <li><span className="bullet-point"><em>(At least one team member must be a current IET student member to avail this rate)</em></span></li>
                 </ul>
               </div>
               <div className="animate-section animate-right">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem',fontSize:'24px' }}>Non-Member Team</h4>
+                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>Non-Member Team</h4>
                 <ul className="content-list">
                   <li><span className="bullet-point"><strong>Fee:</strong> ₹600</span></li>
                 </ul>
@@ -1202,7 +1202,7 @@ const ProtoPlanetLanding = () => {
                 <h4 className="additional-benefits" style={{ color: '#a046b4', marginBottom: '0.5rem' }}>Additional Benefits</h4>
                 <ul className="content-list">
                   <li><span className="bullet-point">All finalists receive Certificates of Merit from IET Hyderabad LN</span></li>
-                  <li><span className="bullet-point">Top teams will present at the Future Technology Conclave 2025</span></li>
+                  <li><span className="bullet-point">Top teams will present at the Future Technology Conclave 2026</span></li>
                 </ul>
               </div>
             </div>
@@ -1261,8 +1261,8 @@ const ProtoPlanetLanding = () => {
         </button>
 
         {/* Back to Top Button */}
-        <button 
-          onClick={handleBackToTop} 
+        <button
+          onClick={handleBackToTop}
           className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
           aria-label="Back to top"
         >

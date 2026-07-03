@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Facebook, Instagram, Linkedin, Menu, X, Bell, Calendar, Trophy, Mic } from 'lucide-react';
+import { ChevronDown, Twitter, Instagram, Linkedin, Menu, X, Bell, Calendar, Trophy, Mic } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
@@ -88,29 +88,21 @@ const Navigation = () => {
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Agenda', href: '#agenda' },
+    { name: 'Agenda', href: '/agenda' },
     {
       name: 'Events',
       href: '#events',
       hasDropdown: true,
       dropdownItems: [
         { name: 'PATN', href: '/patn' },
-        {
-          name: 'Innoverse',
-          href: '#events',
-          subItems: [
-            { name: 'InnoThon', href: '/innothon' },
-            { name: 'ProtoPlanet', href: '/protoplanet' },
-            { name: 'StartupSphere', href: '/startupsphere' },
-            { name: 'AppAstral', href: '/appastral' }
-          ]
-        }
+        { name: 'InnoThon', href: '/innothon' },
+        { name: 'ProtoPlanet', href: '/protoplanet' },
+        { name: 'AppAstral', href: '/appastral' }
       ]
     },
-    { name: 'Registration', href: '#register' },
-    { name: 'Awards', href: '#awards' },
-    { name: 'Committee', href: '#committee' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Awards', href: '/awards' },
+    { name: 'Committee', href: '/committee' },
+    { name: 'Contact', href: '/contact' }
   ];
 
   const announcements = [
@@ -126,7 +118,7 @@ const Navigation = () => {
       {/* Social Bar & Announcements */}
       <div className="w-full bg-[#050505] border-b border-white/5 py-2 px-4 z-40 relative">
         <div className="container mx-auto w-[95%] lg:w-[80%] flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 text-sm">
-          
+
           {/* Announcements Ticker */}
           <div className="w-full sm:w-auto flex-1 overflow-hidden relative flex items-center bg-white/5 rounded-full px-3 py-1 border border-white/5">
             <div className="flex items-center gap-2 mr-2 sm:mr-4 shrink-0 z-10 pl-1 pr-2 rounded-full">
@@ -136,7 +128,7 @@ const Navigation = () => {
               </div>
               <span className="text-[10px] sm:text-xs font-bold text-white tracking-wider">NEWS:</span>
             </div>
-            
+
             <div className="flex-1 overflow-hidden relative mask-fade-edges">
               <div className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center">
                 {marqueeItems.map((item, idx) => (
@@ -155,19 +147,19 @@ const Navigation = () => {
           <div className="flex items-center gap-3 shrink-0 mt-1 sm:mt-0">
             <span className="text-white/90 font-semibold tracking-wide text-[10px] sm:text-xs">Stay Updated With Us</span>
             <div className="flex items-center gap-3">
-              <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
-                <Facebook size={14} className="sm:w-4 sm:h-4" />
+              <a href="https://www.linkedin.com/in/iet-hyderabad-local-network-9446b92b2/" target="_blank" rel="noopener noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
+                <Linkedin size={14} className="sm:w-4 sm:h-4" />
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
+              <a href="https://www.instagram.com/iet_hyderabad/" target="_blank" rel="noopener noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
                 <Instagram size={14} className="sm:w-4 sm:h-4" />
               </a>
-              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
-                <Linkedin size={14} className="sm:w-4 sm:h-4" />
+              <a href="https://x.com/IET_HYDERABAD" target="_blank" rel="noopener noreferrer" className={`text-white/80 ${theme.textHover} transition-colors`}>
+                <Twitter size={14} className="sm:w-4 sm:h-4" />
               </a>
             </div>
           </div>
         </div>
-        
+
         <style>{`
           @keyframes marquee {
             0% { transform: translateX(0%); }
@@ -187,149 +179,104 @@ const Navigation = () => {
       <div className="sticky top-0 z-50 w-full bg-black">
         <header className={`transition-all duration-300 w-[95%] xl:w-[90%] mx-auto pb-2 ${isScrolled ? 'pt-0' : 'pt-2'}`}>
           <div className={`${theme.shadow} rounded-b-lg`}>
-          {/* Gradient Top Border */}
-          <div className={`h-[6px] w-full bg-gradient-to-r ${theme.gradient} rounded-t-lg`}></div>
+            {/* Gradient Top Border */}
+            <div className={`h-[6px] w-full bg-gradient-to-r ${theme.gradient} rounded-t-lg`}></div>
 
-          <nav className="bg-[#050505] text-white rounded-b-lg px-4 lg:px-6 relative">
-            <div className="flex items-center justify-between h-[65px] gap-8">
-              {/* Logos */}
-              <Link to="/" className="flex items-center gap-3 shrink-0 pr-4">
-                <img
-                  src={theme.logoSrc}
-                  alt="IET Logo"
-                  className="h-10 w-auto object-contain drop-shadow-md"
-                />
-                <div className="h-8 w-px bg-white/20 hidden sm:block"></div>
-                <img
-                  src="/nit2.jpg"
-                  alt="NIT Warangal Logo"
-                  className="h-10 w-auto object-contain bg-white rounded-md shadow-sm"
-                />
-              </Link>
+            <nav className="bg-[#050505] text-white rounded-b-lg px-4 lg:px-6 relative">
+              <div className="flex items-center justify-between h-[65px] gap-8">
+                {/* Logos */}
+                <Link to="/" className="flex items-center gap-3 shrink-0 pr-4">
+                  <img
+                    src={theme.logoSrc}
+                    alt="IET Logo"
+                    className="h-10 w-auto object-contain drop-shadow-md"
+                  />
+                </Link>
 
-              {/* Desktop Nav */}
-              <div className="hidden lg:flex items-center gap-3 xl:gap-6">
-                {navItems.map((item) => (
-                  <div key={item.name} className="relative">
-                    {item.hasDropdown ? (
-                      <div
-                        className="relative"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <button className={`flex items-center gap-1 text-base font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}>
-                          <span>{item.name}</span>
-                          <ChevronDown
-                            className={`w-4 h-4 transform transition-transform duration-300 ${isEventsDropdownOpen ? 'rotate-180' : ''
-                              }`}
-                          />
-                        </button>
-
-                        {/* Main Dropdown */}
+                {/* Desktop Nav */}
+                <div className="hidden lg:flex items-center gap-3 xl:gap-6">
+                  {navItems.map((item) => (
+                    <div key={item.name} className="relative">
+                      {item.hasDropdown ? (
                         <div
-                          className={`absolute top-full left-0 mt-4 w-40 border border-white/10 rounded-lg shadow-xl py-2 bg-[#0a0a0a] transform transition-all duration-300 ease-in-out ${isEventsDropdownOpen
-                            ? 'opacity-100 translate-y-0 visible'
-                            : 'opacity-0 -translate-y-2 invisible pointer-events-none'
-                            }`}
+                          className="relative"
                           onMouseEnter={handleMouseEnter}
                           onMouseLeave={handleMouseLeave}
                         >
-                          {item.dropdownItems?.map((dropdownItem) => (
-                            <div key={dropdownItem.name}>
-                              {dropdownItem.subItems ? (
-                                <div
-                                  className="group relative"
-                                  onMouseEnter={() => setIsInnoverseOpen(true)}
-                                  onMouseLeave={() => setIsInnoverseOpen(false)}
-                                >
-                                  <a
-                                    href={dropdownItem.href}
-                                    className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium hover:bg-white/5 ${theme.textHover} transition-all duration-200`}
-                                  >
-                                    <span>{dropdownItem.name}</span>
-                                    <ChevronDown
-                                      className={`w-4 h-4 transform transition-transform duration-300 ${isInnoverseOpen ? `rotate-90 ${theme.text}` : '-rotate-90'
-                                        }`}
-                                    />
-                                  </a>
+                          <button className={`flex items-center gap-1 text-base font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}>
+                            <span>{item.name}</span>
+                            <ChevronDown
+                              className={`w-4 h-4 transform transition-transform duration-300 ${isEventsDropdownOpen ? 'rotate-180' : ''
+                                }`}
+                            />
+                          </button>
 
-                                  {/* Innoverse Submenu */}
-                                  <div
-                                    className={`absolute left-full top-0 w-44 ml-1 border border-white/10 rounded-lg shadow-xl py-2 bg-[#0a0a0a] transform transition-all duration-300 ease-in-out ${isInnoverseOpen
-                                      ? 'opacity-100 translate-x-0 visible'
-                                      : 'opacity-0 -translate-x-2 invisible pointer-events-none'
-                                      }`}
-                                  >
-                                    {dropdownItem.subItems.map((subItem) => (
-                                      <a
-                                        key={subItem.name}
-                                        href={subItem.href}
-                                        className={`block px-4 py-2 text-sm font-medium hover:bg-white/5 ${theme.textHover} transition-all duration-200`}
-                                      >
-                                        {subItem.name}
-                                      </a>
-                                    ))}
-                                  </div>
-                                </div>
-                              ) : (
-                                <a
-                                  href={dropdownItem.href}
+                          {/* Main Dropdown */}
+                          <div
+                            className={`absolute top-full left-0 mt-4 w-40 border border-white/10 rounded-lg shadow-xl py-2 bg-[#0a0a0a] transform transition-all duration-300 ease-in-out ${isEventsDropdownOpen
+                              ? 'opacity-100 translate-y-0 visible'
+                              : 'opacity-0 -translate-y-2 invisible pointer-events-none'
+                              }`}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                          >
+                            {item.dropdownItems?.map((dropdownItem) => (
+                              <div key={dropdownItem.name}>
+                                <Link
+                                  to={dropdownItem.href}
                                   className={`block px-4 py-2.5 text-sm font-medium hover:bg-white/5 ${theme.textHover} transition-all duration-200`}
                                 >
                                   {dropdownItem.name}
-                                </a>
-                              )}
-                            </div>
-                          ))}
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ) : item.name === 'Home' ? (
-                      <Link
-                        to={item.href}
-                        className={`font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}
-                      >
-                        {item.name}
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className={`font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}
-                      >
-                        {item.name}
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
+                      ) : item.name === 'Home' ? (
+                        <Link
+                          to={item.href}
+                          className={`font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}
+                        >
+                          {item.name}
+                        </Link>
+                      ) : (
+                        <Link
+                          to={item.href}
+                          className={`font-semibold ${theme.textHover} transition-colors duration-200 uppercase tracking-wide text-sm`}
+                        >
+                          {item.name}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
 
-              {/* Mobile Menu Button */}
-              <button
-                className="lg:hidden p-2 text-white/80 hover:text-white transition-colors"
-                onClick={() => setIsMenuOpen(true)}
-              >
-                <Menu size={28} />
-              </button>
-            </div>
-          </nav>
+                {/* Mobile Menu Button */}
+                <button
+                  className="lg:hidden p-2 text-white/80 hover:text-white transition-colors"
+                  onClick={() => setIsMenuOpen(true)}
+                >
+                  <Menu size={28} />
+                </button>
+              </div>
+            </nav>
           </div>
 
           {/* Mobile Navigation Menu */}
           {/* Overlay */}
-          <div 
-            className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 lg:hidden ${
-              isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+          <div
+            className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 lg:hidden ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
             onClick={() => setIsMenuOpen(false)}
           ></div>
 
           {/* Menu Panel */}
-          <div 
-            className={`fixed top-0 right-0 h-full w-[85vw] sm:w-[350px] bg-[#050505] z-50 transform transition-transform duration-300 ease-out lg:hidden flex flex-col ${theme.mobileMenuShadow} ${
-              isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+          <div
+            className={`fixed top-0 right-0 h-full w-[85vw] sm:w-[350px] bg-[#050505] z-50 transform transition-transform duration-300 ease-out lg:hidden flex flex-col ${theme.mobileMenuShadow} ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
           >
             <div className={`h-[6px] w-full bg-gradient-to-r ${theme.gradient}`}></div>
-            
+
             <div className="flex flex-col h-full overflow-hidden">
               {/* Menu Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
@@ -378,13 +325,13 @@ const Navigation = () => {
                                     ))}
                                   </>
                                 ) : (
-                                  <a
-                                    href={dropdownItem.href}
+                                  <Link
+                                    to={dropdownItem.href}
                                     className={`block px-3 py-2 text-sm text-white/80 ${theme.textHover} hover:bg-white/5 rounded-md transition-all`}
                                     onClick={() => setIsMenuOpen(false)}
                                   >
                                     {dropdownItem.name}
-                                  </a>
+                                  </Link>
                                 )}
                               </div>
                             ))}
@@ -400,13 +347,13 @@ const Navigation = () => {
                         {item.name}
                       </Link>
                     ) : (
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-white/90 hover:bg-white/5 ${theme.textHover} rounded-lg transition-colors`}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 ))}

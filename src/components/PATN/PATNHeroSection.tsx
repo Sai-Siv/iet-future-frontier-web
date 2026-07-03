@@ -217,25 +217,19 @@ const PATNHeroSection = () => {
           <h1 className="patn-title-main">Present Around the Network</h1>
 
           <p className="patn-description">
-            A prestigious platform for students and young professionals to showcase their technical knowledge and presentation skills.
+            A prestigious platform for students to showcase their technical knowledge and presentation skills.
           </p>
 
           <div className="patn-event-info">
             <div className="patn-event-info-item">
               <Calendar size={18} />
-              <span>Will be announced soon</span>
+              <span>July 31, 2026</span>
             </div>
             <div className="patn-event-info-item">
               <MapPin size={18} />
-              <span>Venue will be announced soon</span>
+              <span> Muffakham Jah College of Engineering and Technology, Hyderabad </span>
             </div>
           </div>
-
-          <h2 className="patn-prize-title">Total Prize Money: ₹8,000</h2>
-          <p className="patn-prize-subtext">
-            Winner: <span style={{ color: 'white' }}>₹5,000</span> | Runner-up: <span style={{ color: 'white' }}>₹3,000</span>
-          </p>
-
           <button className="patn-btn-register" onClick={() => navigate('/patn/register')}>
             Register Now - Free Entry
           </button>

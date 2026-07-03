@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
-  Calendar, Users, Smartphone, ClipboardCheck, ShieldCheck, 
+  Calendar, Users, Smartphone, ClipboardCheck, ShieldCheck,
   Phone, Mail, Instagram, Twitter, ArrowRight, Wifi, Award,
   Bookmark, Cpu, Gauge, Lightbulb, Network, Trophy, Gift,
   RefreshCw, Layout, Bell, UserCheck, List, CalendarDays,
@@ -22,22 +22,22 @@ const AppAstralLanding = () => {
   const handleBackToTop = () => {
     setIsScrollingToTop(true);
     setShowBackToTop(false); // Hide button immediately when clicked
-    
+
     const startingY = window.pageYOffset;
     const duration = 800; // Animation duration in ms
     const startTime = performance.now();
-    
+
     const easeInOutCubic = (t) => {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     };
-    
+
     const scrollStep = (timestamp) => {
       const currentTime = timestamp - startTime;
       const progress = Math.min(currentTime / duration, 1);
       const easedProgress = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, startingY * (1 - easedProgress));
-      
+
       if (currentTime < duration) {
         requestAnimationFrame(scrollStep);
       } else {
@@ -50,7 +50,7 @@ const AppAstralLanding = () => {
         }, 1000);
       }
     };
-    
+
     requestAnimationFrame(scrollStep);
   };
 
@@ -167,7 +167,7 @@ const AppAstralLanding = () => {
     <>
       <Navigation />
       <div className="app-astral-landing">
-        
+
         {/* Breadcrumb Navigation */}
         <div className="breadcrumb">
           <Link to="/" className="breadcrumb-item">
@@ -208,7 +208,7 @@ const AppAstralLanding = () => {
             opacity: 0;
             transform: translateY(-50px);
             transition: all 1s ease-out;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .header-content.animated {
@@ -217,7 +217,7 @@ const AppAstralLanding = () => {
           }
 
           h1, h2, h3, h4, h5, h6 {
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h1 {
@@ -225,7 +225,7 @@ const AppAstralLanding = () => {
             font-size: 4.5rem;
             line-height: 1.1;
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           h2 {
@@ -235,7 +235,7 @@ const AppAstralLanding = () => {
             margin: 0.5rem 0;
             color: white;
             white-space: nowrap;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .highlight {
@@ -266,7 +266,7 @@ const AppAstralLanding = () => {
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(10px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-box.animated {
@@ -301,14 +301,14 @@ const AppAstralLanding = () => {
             text-align: center;
             border-bottom: 2px solid #22BBE0;
             padding-bottom: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-text {
             color: white;
             line-height: 1.6;
             font-size: 1.1rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
@@ -325,7 +325,7 @@ const AppAstralLanding = () => {
             padding-left: 1.5rem;
             line-height: 1.6;
             font-size: 1.2rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list li {
@@ -335,7 +335,7 @@ const AppAstralLanding = () => {
             margin-bottom: 0.5rem;
             display: flex;
             align-items: flex-start;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-list.animated li {
@@ -390,24 +390,24 @@ const AppAstralLanding = () => {
 
           .info-text {
             text-align: left;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text p {
             margin: 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .label {
             font-size: 0.875rem;
             color: #d1d5db;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .info-text .value {
             font-weight: bold;
             color: white;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .content-heading.no-border {
@@ -424,7 +424,7 @@ const AppAstralLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             cursor: pointer;
             position: relative;
           }
@@ -449,7 +449,7 @@ const AppAstralLanding = () => {
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(30px);
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .stage-card.animated {
@@ -464,7 +464,7 @@ const AppAstralLanding = () => {
             display: flex;
             align-items: center;
             font-size: 1.3rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .stage-title svg {
@@ -481,7 +481,7 @@ const AppAstralLanding = () => {
             align-items: center;
             font-size: 1.3rem;
             gap: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             position: relative;
             transition: color 0.3s ease;
             white-space: nowrap;
@@ -538,7 +538,7 @@ const AppAstralLanding = () => {
             border-radius: 0.25rem;
             font-size: 0.8rem;
             margin-left: 0.5rem;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .animate-left {
@@ -729,7 +729,7 @@ const AppAstralLanding = () => {
             width: fit-content;
             text-decoration: none;
             font-weight: bold;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -746,10 +746,10 @@ const AppAstralLanding = () => {
           }
 
           @font-face {
-            font-family: 'Europa';
+            font-family: 'Times New Roman', Times, serif;
             font-style: normal;
             font-weight: 400;
-            src: local('Europa');
+            
           }
 
           .social-icon {
@@ -850,7 +850,7 @@ const AppAstralLanding = () => {
             gap: 0.5rem;
             margin-bottom: 2rem;
             padding: 1rem 0;
-            font-family: 'Europa', Arial, sans-serif !important;
+            font-family: 'Times New Roman', Times, serif !important;
           }
 
           .breadcrumb-item {
@@ -1034,7 +1034,7 @@ const AppAstralLanding = () => {
                   Synchronization with the IET Hyderabad LN website for upcoming events and announcements.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-2">
                 <div className="feature-title" data-tooltip="Admins update content once on the website and changes appear instantly on both platforms">
                   Unified Updates ✅
@@ -1043,7 +1043,7 @@ const AppAstralLanding = () => {
                   Admins can post updates once on the website, which automatically reflect in the app.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-1">
                 <div className="feature-title" data-tooltip="Maintains consistent IET branding across all interface elements">
                   Consistent Branding 🎨
@@ -1052,7 +1052,7 @@ const AppAstralLanding = () => {
                   Unified branding and consistent user experience across platforms.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-2">
                 <div className="feature-title" data-tooltip="Instant mobile alerts when new content is published on the website">
                   Push Notifications 🔔
@@ -1061,7 +1061,7 @@ const AppAstralLanding = () => {
                   Mobile push notifications triggered by website updates.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-1">
                 <div className="feature-title" data-tooltip="Seamless transition to web pages for complex forms or payment processing">
                   Web Redirection 🔗
@@ -1087,7 +1087,7 @@ const AppAstralLanding = () => {
                   Comprehensive, filterable listing of all upcoming IET HLN events with detailed info.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-2">
                 <div className="feature-title" data-tooltip="Simplified sign-up process with form pre-filling for registered users">
                   Event Registration 📝
@@ -1096,7 +1096,7 @@ const AppAstralLanding = () => {
                   In-app event registration forms integrated or linked to website portals.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-1">
                 <div className="feature-title" data-tooltip="Centralized hub for all official communications and competition results">
                   Announcements 📢
@@ -1105,7 +1105,7 @@ const AppAstralLanding = () => {
                   Dynamic display of competition results, winner announcements, and official news.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-2">
                 <div className="feature-title" data-tooltip="One-time password verification for secure account creation">
                   User Registration 👤
@@ -1114,7 +1114,7 @@ const AppAstralLanding = () => {
                   Secure, personalized login using OTP verification.
                 </div>
               </div>
-              
+
               <div className="feature-card animate-section animate-delay-1">
                 <div className="feature-title" data-tooltip="Customizable alerts for event reminders, deadlines, and important updates">
                   Notifications 🔔
@@ -1201,7 +1201,7 @@ const AppAstralLanding = () => {
                 <h4 className="additional-benefits" style={{ color: '#22bbe0', marginBottom: '0.5rem' }}>Additional Benefits 🎁</h4>
                 <ul className="content-list">
                   <li><span className="bullet-point">All finalists receive Certificates of Merit from IET Hyderabad LN</span></li>
-                  <li><span className="bullet-point">Top teams will present at the Future Technology Conclave 2025</span></li>
+                  <li><span className="bullet-point">Top teams will present at the Future Technology Conclave 2026</span></li>
                 </ul>
               </div>
             </div>
@@ -1262,7 +1262,7 @@ const AppAstralLanding = () => {
             <div className="content-heading">Registration Fee</div>
             <div className="two-column">
               <div className="animate-section animate-left">
-                <h4 style={{ color: '#22BBE0', marginBottom: '0.5rem', fontSize: '24px'}}>IET Member Team</h4>
+                <h4 style={{ color: '#22BBE0', marginBottom: '0.5rem', fontSize: '24px' }}>IET Member Team</h4>
                 <ul className="content-list">
                   <li><span className="bullet-point"><strong>Fee:</strong> ₹300.</span></li>
                   <li><span className="bullet-point"><em>(At least one member must be a current IET student member).</em></span></li>
@@ -1321,8 +1321,8 @@ const AppAstralLanding = () => {
         </button>
 
         {/* Back to Top Button */}
-        <button 
-          onClick={handleBackToTop} 
+        <button
+          onClick={handleBackToTop}
           className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
           aria-label="Back to top"
         >
