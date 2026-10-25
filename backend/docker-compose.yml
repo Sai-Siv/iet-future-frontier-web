@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - PROTOPLANET_SERVICE_URL=http://protoplanet-service:5001
+      - PATN_SERVICE_URL=http://patn-service:5002
+      - STARTUPSPHERE_SERVICE_URL=http://startupsphere-service:5003
+      - APPASTRAL_SERVICE_URL=http://appastral-service:5004
+      - INNOTHON_SERVICE_URL=http://innothon-service:5005
+      - AWARDS_SERVICE_URL=http://awards-service:5006
+    env_file:
+      - .env
+    depends_on:
+      - protoplanet-service
+      - patn-service
+      - startupsphere-service
+      - appastral-service
+      - innothon-service
+      - awards-service
+
+  protoplanet-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/protoplanet-service/server.js
+    ports:
+      - "5001:5001"
+    environment:
+      - PROTOPLANET_SERVICE_PORT=5001
+    env_file:
+      - .env
+
+  patn-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/patn-service/server.js
+    ports:
+      - "5002:5002"
+    environment:
+      - PATN_SERVICE_PORT=5002
+    env_file:
+      - .env
+
+  startupsphere-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/startupsphere-service/server.js
+    ports:
+      - "5003:5003"
+    environment:
+      - STARTUPSPHERE_SERVICE_PORT=5003
+    env_file:
+      - .env
+
+  appastral-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/appastral-service/server.js
+    ports:
+      - "5004:5004"
+    environment:
+      - APPASTRAL_SERVICE_PORT=5004
+    env_file:
+      - .env
+
+  innothon-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/innothon-service/server.js
+    ports:
+      - "5005:5005"
+    environment:
+      - INNOTHON_SERVICE_PORT=5005
+    env_file:
+      - .env
+
+  awards-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_ENTRY: services/awards-service/server.js
+    ports:
+      - "5006:5006"
+    environment:
+      - AWARDS_SERVICE_PORT=5006
+    env_file:
+      - .env

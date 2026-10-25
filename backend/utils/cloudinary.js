@@ -20,7 +20,7 @@ console.log('Cloudinary configured for cloud:', process.env.CLOUDINARY_CLOUD_NAM
  */
 export async function uploadToCloudinary(buffer, folder, mimetype) {
   return new Promise((resolve, reject) => {
-    const resourceType = mimetype === 'application/pdf' ? 'raw' : 'image';
+    const resourceType = 'auto';
 
     const uploadStream = cloudinary.uploader.upload_stream(
       {

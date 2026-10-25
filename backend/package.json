@@ -1,20 +1,30 @@
 {
   "name": "IET Hyderabad Local network-backend",
   "version": "1.0.0",
-  "description": "Backend for IET Hyderabad Local network Future Frontier",
+  "description": "Backend for IET 360° - IET Hyderabad Local Network & VIT-AP University",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "dev:all": "concurrently -k -n \"GATEWAY,PROTOPLAN,PATN,STARTUP,APPASTRAL,INNOTHON,AWARDS\" -c \"cyan,green,yellow,blue,magenta,red,white\" \"node gateway/server.js\" \"node services/protoplanet-service/server.js\" \"node services/patn-service/server.js\" \"node services/startupsphere-service/server.js\" \"node services/appastral-service/server.js\" \"node services/innothon-service/server.js\" \"node services/awards-service/server.js\"",
+    "dev:gateway": "node gateway/server.js",
+    "dev:protoplanet": "node services/protoplanet-service/server.js",
+    "dev:patn": "node services/patn-service/server.js",
+    "dev:startupsphere": "node services/startupsphere-service/server.js",
+    "dev:appastral": "node services/appastral-service/server.js",
+    "dev:innothon": "node services/innothon-service/server.js",
+    "dev:awards": "node services/awards-service/server.js"
   },
   "dependencies": {
     "cloudinary": "^2.10.0",
+    "concurrently": "^10.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
     "firebase": "^10.8.0",
+    "http-proxy-middleware": "^4.2.0",
     "multer": "^1.4.5-lts.1",
     "resend": "^6.12.3"
   },

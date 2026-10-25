@@ -23,7 +23,7 @@ const Footer = () => {
                 />
               </div>
               <p className="text-white/70 text-base leading-relaxed mb-6 max-w-sm">
-                Empowering the next generation of technologists and innovators at the Future Technology Conclave 2026.
+                One Platform. Infinite Possibilities. Empowering innovators, researchers, and engineers at IET 360° (IET 360 Degree).
               </p>
               <div className="flex space-x-4">
                 <a href="https://www.linkedin.com/in/iet-hyderabad-local-network-9446b92b2/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 hover:border-white/30 transition-all duration-300 hover:-translate-y-1 group">
@@ -45,7 +45,7 @@ const Footer = () => {
                 {[
                   { name: 'Home', href: '/' },
                   { name: 'Agenda', href: '/agenda' },
-                  { name: 'Committee', href: '/committee' },
+                  { name: 'Events', href: '/#events' },
                   { name: 'Awards', href: '/awards' },
                   { name: 'Contact', href: '/contact' }
                 ].map((link) => (
@@ -61,11 +61,11 @@ const Footer = () => {
             <div className="md:col-span-3">
               <h3 className="font-semibold text-white mb-6 text-lg tracking-wide">Contact Us</h3>
               <div className="space-y-4">
-                <a href="mailto:iethyderabadftc@gmail.com" className="flex items-start space-x-3 text-white/70 hover:text-white transition-colors group">
+                <a href="mailto:ietln.hyderabad@gmail.com" className="flex items-start space-x-3 text-white/70 hover:text-white transition-colors group">
                   <div className="mt-1 p-2 bg-white/5 rounded-lg border border-white/10 group-hover:border-white/30 transition-colors">
                     <Mail className="w-4 h-4 text-cyan-400" />
                   </div>
-                  <span className="text-sm leading-relaxed">iethyderabadftc@gmail.com</span>
+                  <span className="text-sm leading-relaxed">ietln.hyderabad@gmail.com</span>
                 </a>
               </div>
             </div>
@@ -75,7 +75,7 @@ const Footer = () => {
           <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div className="flex flex-col text-center md:text-left">
               <p className="text-white/60 text-sm">
-                © 2026 Future Technology Conclave | Hyderabad Local Network
+                © 2026 IET 360° | IET Hyderabad Local Network & VIT-AP University
               </p>
               <p className="text-white/40 text-[10px] mt-2">
                 © The Institution of Engineering and Technology

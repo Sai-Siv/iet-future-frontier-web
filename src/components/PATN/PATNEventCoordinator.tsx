@@ -25,22 +25,16 @@ const PATNEventCoordinator = () => {
         </div>
 
         <div className="pl-2 md:pl-9 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="coordinator-item flex gap-2">
-            <h3 className="text-lg md:text-xl font-bold mb-2">1.</h3>
-            <div>
-              <h3 className="text-lg md:text-xl font-bold mb-2">Ms. Leela Bhargavi</h3>
-              <div className="text-white/80 space-y-1 text-sm md:text-base">
-                <p>YP Member IET HLN</p>
-              </div>
+          <div className="coordinator-item">
+            <h3 className="text-lg md:text-xl font-bold mb-2">1. Ms. Leela Bhargavi</h3>
+            <div className="text-white/80 space-y-1 text-sm md:text-base">
+              <p> YP Member IET HLN</p>
             </div>
           </div>
-          <div className="coordinator-item flex gap-2">
-            <h3 className="text-lg md:text-xl font-bold mb-2">2.</h3>
-            <div>
-              <h3 className="text-lg md:text-xl font-bold mb-2">Ms. M Hemalatha</h3>
-              <div className="text-white/80 space-y-1 text-sm md:text-base">
-                <p>YP Member IET HLN</p>
-              </div>
+          <div className="coordinator-item">
+            <h3 className="text-lg md:text-xl font-bold mb-2">2. Ms. M Hemalatha</h3>
+            <div className="text-white/80 space-y-1 text-sm md:text-base">
+              <p> YP Member IET HLN</p>
             </div>
           </div>
         </div>

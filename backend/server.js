@@ -1,68 +1,26 @@
+/**
+ * IET 360° - Microservices Orchestrator Entrypoint
+ * Boots the API Gateway along with all MVC Microservices.
+ */
 
-import express from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
-import protoPlanRoutes from './routes/protoPlanRoutes.js';
-import patn from './routes/registrationRoutes.js';
-import startupSphereRoutes from './routes/startupSphereRoutes.js';
-import appAstralRoutes from './routes/appAstralRoutes.js';
-import innothonRoutes from './routes/innothonRoutes.js';
-
 dotenv.config();
 
-const app = express();
+console.log('====================================================');
+console.log(' 🚀 Starting IET 360° Microservices Stack 🚀');
+console.log('====================================================');
 
-// CORS configuration - Updated to include production domains
-const corsOptions = {
-    origin: [
-        'http://localhost:8081', 
-        'http://localhost:8080', 
-        'http://localhost:3000',
-        'https://iet-future-frontier-web.vercel.app'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    exposedHeaders: ['Content-Type'],
-    credentials: true
-};
+// Start individual MVC microservices
+await import('./services/protoplanet-service/server.js');
+await import('./services/patn-service/server.js');
+await import('./services/startupsphere-service/server.js');
+await import('./services/appastral-service/server.js');
+await import('./services/innothon-service/server.js');
+await import('./services/awards-service/server.js');
 
-// Middleware
-app.use(cors(corsOptions));
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// Start API Gateway (Port 5000)
+await import('./gateway/server.js');
 
-// Routes
-app.get('/', (req, res) => {
-    res.json({
-        service: "Future Tech Conclave Backend API",
-        status: "online",
-        database: "connected (Firestore)",
-        cloudinary: "active",
-        timestamp: new Date().toISOString()
-    });
-});
-
-app.use('/api/protoplan', protoPlanRoutes);
-app.use('/api/patn', patn);
-app.use('/api/startupsphere', startupSphereRoutes);
-app.use('/api/appastral', appAstralRoutes);
-app.use('/api/innothon', innothonRoutes);
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error('Server error:', {
-        message: err.message,
-        stack: err.stack,
-        timestamp: new Date().toISOString()
-    });
-    res.status(500).json({
-        success: false,
-        message: 'Something went wrong!',
-        error: err.message
-    });
-});
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+console.log('====================================================');
+console.log(' ✅ All Microservices & API Gateway Active');
+console.log('====================================================');

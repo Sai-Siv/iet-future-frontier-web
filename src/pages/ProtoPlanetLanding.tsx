@@ -1,1276 +1,909 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import {
-  Cpu, Rocket, BrainCircuit, Leaf, Wifi, HeartPulse, Trophy, Calendar, Users, IndianRupee, Flag, Laptop,
-  Mail, Instagram, Twitter, ArrowRight, Network, Smartphone, Gauge, Lightbulb, Award, Bookmark,
-  ShieldCheck, ClipboardCheck, Phone, CalendarDays, ChevronRight, ArrowUp, Home
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import {
+  Calendar, MapPin, Users, Trophy, Clock,
+  Settings, ClipboardCheck, Smartphone, Zap,
+  MonitorSmartphone, ShieldCheck, Mail, Phone, LifeBuoy,
+  ArrowUp, Download, CheckCircle2, ChevronRight,
+  FileText, Megaphone, Lock, Bell, Code, MessageSquare, Play, Lightbulb, Presentation, MonitorPlay,
+  Cpu, HeartPulse, Network, Leaf, IndianRupee, Flag, Laptop, Instagram
+} from 'lucide-react';
 
 const ProtoPlanetLanding = () => {
-  const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [isScrollingToTop, setIsScrollingToTop] = useState(false);
 
-  const handleRegister = () => {
-    navigate('/protoplanet/register');
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      setShowBackToTop(window.scrollY > 300);
 
-  const handleBackToTop = () => {
-    setIsScrollingToTop(true);
-    setShowBackToTop(false); // Hide button immediately when clicked
-
-    const startingY = window.pageYOffset;
-    const duration = 800; // Animation duration in ms
-    const startTime = performance.now();
-
-    const easeInOutCubic = (t) => {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const sections = document.querySelectorAll('.animate-on-scroll');
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (sectionTop < windowHeight * 0.85) {
+          section.classList.add('visible');
+        }
+      });
     };
 
-    const scrollStep = (timestamp) => {
-      const currentTime = timestamp - startTime;
-      const progress = Math.min(currentTime / duration, 1);
-      const easedProgress = easeInOutCubic(progress);
+    window.addEventListener('scroll', handleScroll);
+    // Initial check
+    setTimeout(handleScroll, 100);
 
-      window.scrollTo(0, startingY * (1 - easedProgress));
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-      if (currentTime < duration) {
-        requestAnimationFrame(scrollStep);
-      } else {
-        setIsScrollingToTop(false);
-        // Show button again after a delay if user has scrolled down
-        setTimeout(() => {
-          if (window.pageYOffset > 300) {
-            setShowBackToTop(true);
-          }
-        }, 1000);
-      }
-    };
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
 
-    requestAnimationFrame(scrollStep);
-  };
-
-  const handleScroll = () => {
-    if (!isScrollingToTop) {
-      const scrollTop = window.pageYOffset;
-      setShowBackToTop(scrollTop > 300);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
-  useEffect(() => {
-    // Typing effect for the header
-    const words = [
-      { id: "hardware", text: "Hardware " },
-      { id: "innovation", text: "Innovation " },
-      { id: "sprint", text: "Challenge" }
-    ];
-
-    const typingSpeed = 150;
-    const erasingSpeed = 100;
-    const delayBetweenWords = 400;
-    const delayBeforeErase = 1500;
-
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isErasing = false;
-
-    let currentText = {
-      hardware: "",
-      innovation: "",
-      sprint: ""
-    };
-
-    const type = () => {
-      const currentWord = words[wordIndex];
-      const el = document.getElementById(currentWord.id);
-
-      if (!isErasing) {
-        if (charIndex < currentWord.text.length) {
-          currentText[currentWord.id] += currentWord.text.charAt(charIndex);
-          el.textContent = currentText[currentWord.id];
-          charIndex++;
-          setTimeout(type, typingSpeed);
-        } else {
-          wordIndex++;
-          charIndex = 0;
-          if (wordIndex < words.length) {
-            setTimeout(type, delayBetweenWords);
-          } else {
-            setTimeout(() => {
-              isErasing = true;
-              wordIndex = words.length - 1;
-              charIndex = currentText[words[wordIndex].id].length;
-              type();
-            }, delayBeforeErase);
-          }
-        }
-      } else {
-        if (charIndex > 0) {
-          currentText[words[wordIndex].id] = currentText[words[wordIndex].id].substring(0, charIndex - 1);
-          document.getElementById(words[wordIndex].id).textContent = currentText[words[wordIndex].id];
-          charIndex--;
-          setTimeout(type, erasingSpeed);
-        } else {
-          wordIndex--;
-          if (wordIndex >= 0) {
-            charIndex = currentText[words[wordIndex].id].length;
-            setTimeout(type, erasingSpeed);
-          } else {
-            isErasing = false;
-            wordIndex = 0;
-            charIndex = 0;
-            currentText = { hardware: "", innovation: "", sprint: "" };
-            setTimeout(type, typingSpeed);
-          }
-        }
-      }
-    };
-
-    setTimeout(type, 1000);
-
-    // Tab switching functionality
-    const trackTabs = document.querySelectorAll('.track-tab');
-    const trackContents = document.querySelectorAll('.track-content');
-
-    trackTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const targetTrack = tab.getAttribute('data-track');
-
-        // Remove active class from all tabs and contents
-        trackTabs.forEach(t => t.classList.remove('active'));
-        trackContents.forEach(c => c.classList.remove('active'));
-
-        // Add active class to clicked tab and corresponding content
-        tab.classList.add('active');
-        const targetContent = document.getElementById(targetTrack);
-        if (targetContent) {
-          targetContent.classList.add('active');
-        }
-      });
-    });
-
-    // Animation on scroll
-    const animateOnScroll = () => {
-      const elements = document.querySelectorAll('.animate-section');
-      elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-
-        if (elementTop < windowHeight - 100) {
-          element.classList.add('animated');
-
-          // Animate list items if present
-          const lists = element.querySelectorAll('.content-list');
-          lists.forEach(list => list.classList.add('animated'));
-        }
-      });
-    };
-
-    window.addEventListener('scroll', animateOnScroll);
-    window.addEventListener('scroll', handleScroll);
-    animateOnScroll(); // Run once on load
-
-    return () => {
-      window.removeEventListener('scroll', animateOnScroll);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <>
-      <Navigation />
-      <div className="proto-planet-landing">
+    <div className="protoplanet-container">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap');
 
-        {/* Breadcrumb Navigation */}
-        <div className="breadcrumb">
-          <Link to="/" className="breadcrumb-item">
-            <Home size={16} />
-            <span>Home</span>
-          </Link>
-          <ChevronRight size={16} className="breadcrumb-separator" />
-          <Link to="/events" className="breadcrumb-item">
-            <span>Events</span>
-          </Link>
-          <ChevronRight size={16} className="breadcrumb-separator" />
-          <span className="breadcrumb-item active">
-            <span>ProtoPlanet</span>
-          </span>
-        </div>
+        .protoplanet-container {
+          background-color: #000000;
+          min-height: 100vh;
+          color: white;
+          font-family: 'Times New Roman', Times, serif !important;
+          overflow-x: hidden;
+          line-height: 1.6;
+        }
 
-        <style>{`
-          html, body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background-color: #000000 !important;
-          }
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Times New Roman', Times, serif !important;
+          margin: 0;
+        }
 
-          .proto-planet-landing {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-           
-            padding: 1rem;
-            padding-bottom: 50px;
-            box-sizing: border-box;
-          }
+        .section-container {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 20px 24px;
+        }
 
-          .header-content {
-            text-align: left;
-            margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(-50px);
-            transition: all 1s ease-out;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
+        /* Buttons */
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 52px;
+          padding: 0 28px;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+          font-family: 'Times New Roman', Times, serif !important;
+        }
+        .btn:hover {
+          transform: scale(1.03);
+        }
+        .btn-primary {
+          background: #a046b4;
+          color: white;
+          border: none;
+          box-shadow: 0 0 20px rgba(160, 70, 180, 0.4);
+        }
+        .btn-primary:hover {
+          background: #a046b4;
+          box-shadow: 0 0 30px rgba(160, 70, 180, 0.6);
+        }
+        .btn-outline {
+          background: transparent;
+          color: white;
+          border: 1px solid rgba(160, 70, 180, 0.5);
+        }
+        .btn-outline:hover {
+          border-color: #a046b4;
+          background: rgba(160, 70, 180, 0.1);
+        }
 
-          .header-content.animated {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* Glass Card Base */
+        .glass-card {
+          background: #151518;
+          border: 1px solid rgba(160, 70, 180, 0.25);
+          border-radius: 16px;
+          padding: 24px;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        .glass-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 40px rgba(160, 70, 180, 0.15);
+          border-color: rgba(160, 70, 180, 0.5);
+        }
+        
+        /* Typography */
+        .section-title-wrapper {
+          text-align: center;
+          margin-top: 120px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .section-title {
+          font-size: 32px;
+          font-weight: 800;
+          color: white;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          position: relative;
+          display: inline-block;
+          margin-bottom: 16px;
+        }
+        .section-subtitle {
+          color: #A0A0A0;
+          font-size: 16px;
+          max-width: 600px;
+          text-align: center;
+        }
+        .section-divider {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 48px;
+          justify-content: center;
+        }
+        .divider-line {
+          height: 1px;
+          width: 60px;
+          background: linear-gradient(90deg, transparent, rgba(160, 70, 180, 0.5), transparent);
+        }
+        .divider-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #a046b4;
+          box-shadow: 0 0 10px #a046b4;
+        }
 
-          h1, h2, h3, h4, h5, h6 {
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          h1 {
-            font-weight: 800;
-            font-size: 4.5rem;
-            line-height: 1.1;
-            margin: 0;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          h2 {
-            margin-top: 0.5rem;
-            font-weight: 800;
-            font-size: 1.875rem;
-            margin: 0.5rem 0;
-            color: white;
-            white-space: nowrap;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .highlight {
-            color: #a046b4;
-          }
-
-          .typing-wrapper-container {
-            display: inline-block;
-            min-width: 260px;
-            max-width: 100%;
-            overflow-wrap: break-word;
-            white-space: normal;
-            line-height: 1.4;
-          }
-
-          .info-box-container {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 60px;
-            margin-bottom: 60px;
-          }
-
-          .info-box {
-            margin-top: 1rem;
-            max-width: 50rem;
-            width: 100%;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 1.5rem;
-            box-shadow: 0 0 20px 2px #a046b4;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(10px);
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .info-box.animated {
-            opacity: 1;
-            transform: scale(1);
-          }
-
-          .content-box {
-            margin-top: 1rem;
-            max-width: 50rem;
-            width: 100%;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 0 20px 2px #a046b4;
-            opacity: 0;
-            transition: all 0.8s ease-out;
-            transform: translateY(30px);
-          }
-
-          .content-box.animated {
-            opacity: 1;
-            transform: translateY(0) translateX(0);
-          }
-
-          .content-heading {
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-align: center;
-            border-bottom: 2px solid #a046b4;
-            padding-bottom: 0.5rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .content-text {
-            color: white;
-            line-height: 1.6;
-            font-size: 1.1rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .content-list {
-            color: white;
-            padding-left: 1.5rem;
-            line-height: 1.6;
-            font-size: 1.2rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .content-list li {
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.4s ease-out;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: flex-start;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .content-list.animated li {
-            opacity: 1;
-            transform: translateX(0);
-          }
-
-          .content-list.animated li:nth-child(1) { transition-delay: 0.1s; }
-          .content-list.animated li:nth-child(2) { transition-delay: 0.2s; }
-          .content-list.animated li:nth-child(3) { transition-delay: 0.3s; }
-          .content-list.animated li:nth-child(4) { transition-delay: 0.4s; }
-          .content-list.animated li:nth-child(5) { transition-delay: 0.5s; }
-          .content-list.animated li:nth-child(6) { transition-delay: 0.6s; }
-
-          .two-column {
-            display: grid;
+        /* Hero */
+        .hero-section {
+          min-height: calc(100vh - 120px);
+          display: flex;
+          align-items: center;
+          padding-top: 0;
+          position: relative;
+        }
+        .hero-bg {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+        .hero-glow-1 {
+          position: absolute;
+          top: 20%;
+          right: 10%;
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, rgba(160, 70, 180,0.15) 0%, transparent 70%);
+          filter: blur(60px);
+        }
+        .hero-glow-2 {
+          position: absolute;
+          bottom: 10%;
+          left: 10%;
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, rgba(160, 70, 180,0.1) 0%, transparent 70%);
+          filter: blur(60px);
+        }
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 60px;
+          align-items: center;
+          position: relative;
+          z-index: 10;
+        }
+        @media (min-width: 992px) {
+          .hero-grid {
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
           }
+        }
+        .hero-title {
+          font-size: 4.2rem;
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 8px;
+          background: white;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #a046b4;
+          margin-bottom: 16px;
+          line-height: 1.2;
+        }
+        .hero-desc {
+          font-size: 16px;
+          color: #A0A0A0;
+          margin-bottom: 32px;
+          max-width: 540px;
+        }
+        .hero-buttons {
+          display: flex;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+        
+        /* Hero Illustration (Lightbulb) */
+        .phone-illustration {
+          position: relative;
+          width: 100%;
+          max-width: 300px;
+          margin: 0 auto;
+          perspective: 1000px;
+        }
+        .phone-body {
+          background: linear-gradient(145deg, #1A1A1E, #0D0D0F);
+          border: 2px solid rgba(160, 70, 180,0.4);
+          border-radius: 50%;
+          padding: 10px;
+          width: 300px;
+          height: 300px;
+          box-shadow: 0 0 50px rgba(160, 70, 180,0.2), inset 0 0 20px rgba(160, 70, 180,0.1);
+          transform: rotateY(-15deg) rotateX(10deg);
+          transform-style: preserve-3d;
+          animation: float 6s ease-in-out infinite;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .phone-screen {
+          background: #000;
+          border-radius: 50%;
+          width: 260px;
+          height: 260px;
+          border: 1px solid rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .phone-screen::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(160, 70, 180,0.2) 0%, transparent 60%);
+        }
+        .phone-icon-center {
+          color: #a046b4;
+          filter: drop-shadow(0 0 15px rgba(160, 70, 180,0.8));
+          z-index: 2;
+        }
+        .circuit-lines {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            linear-gradient(rgba(160, 70, 180,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(160, 70, 180,0.1) 1px, transparent 1px);
+          background-size: 40px 40px;
+          background-position: center center;
+          opacity: 0.5;
+          z-index: 1;
+        }
+        @keyframes float {
+          0% { transform: translateY(0px) rotateY(-15deg) rotateX(10deg); }
+          50% { transform: translateY(-20px) rotateY(-10deg) rotateX(15deg); }
+          100% { transform: translateY(0px) rotateY(-15deg) rotateX(10deg); }
+        }
 
-          .three-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1.5rem;
+        /* 5 Column Grid (Event Details & Theme) */
+        .grid-5 {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 24px;
+        }
+        @media (min-width: 992px) {
+          .grid-5 {
+            grid-template-columns: repeat(5, 1fr);
           }
+        }
+        .stat-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 32px 20px;
+        }
+        .stat-icon {
+          color: #a046b4;
+          margin-bottom: 16px;
+          background: rgba(160, 70, 180, 0.1);
+          padding: 16px;
+          border-radius: 50%;
+          box-shadow: 0 0 20px rgba(160, 70, 180,0.15);
+          box-sizing: content-box;
+        }
+        .stat-title {
+          font-size: 14px;
+          color: #A0A0A0;
+          margin-bottom: 8px;
+          font-weight: 500;
+        }
+        .stat-value {
+          font-size: 16px;
+          font-weight: 600;
+          color: white;
+        }
 
-          .four-column {
-            display: grid;
+        /* Guidelines */
+        .guidelines-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 40px;
+          align-items: center;
+        }
+        @media (min-width: 992px) {
+          .guidelines-grid {
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
           }
+        }
+        .checklist {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .checklist li {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 24px;
+          background: rgba(21, 21, 24, 0.6);
+          padding: 16px;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          transition: all 0.3s ease;
+        }
+        .checklist li:hover {
+          background: #151518;
+          border-color: rgba(160, 70, 180,0.3);
+        }
+        .checklist-icon {
+          color: #a046b4;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+        .clipboard-illustration {
+          position: relative;
+          width: 100%;
+          max-width: 400px;
+          margin: 0 auto;
+          aspect-ratio: 3/4;
+          background: #151518;
+          border: 2px solid rgba(160, 70, 180,0.3);
+          border-radius: 20px;
+          display: flex;
+          flex-direction: column;
+          padding: 40px;
+          box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .clipboard-clip {
+          position: absolute;
+          top: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 120px;
+          height: 30px;
+          background: #2A2A30;
+          border-radius: 15px;
+          border: 2px solid rgba(160, 70, 180,0.5);
+        }
+        .clipboard-shield {
+          position: absolute;
+          bottom: -20px;
+          right: -20px;
+          background: #0D0D0F;
+          border-radius: 50%;
+          padding: 10px;
+        }
 
-          .info-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        /* Banner (PPT & Winners) */
+        .horizontal-banner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          padding: 40px;
+        }
+        @media (min-width: 768px) {
+          .horizontal-banner {
+            flex-direction: row;
           }
+        }
+        .banner-content {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+        }
+        .banner-icon {
+          background: rgba(160, 70, 180,0.1);
+          color: #a046b4;
+          padding: 20px;
+          border-radius: 16px;
+        }
 
-          .icon-container {
-            background-color: #6b7280;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            color: black;
-            font-size: 1.25rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #a046b4 0%, #6a0dad 100%);
-          }
+        /* Grand Finale / Structure */
+        .grid-3 {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 24px;
+        }
 
-          .icon-container svg {
-            width: 1.5rem;
-            height: 1.5rem;
-            color: white;
-          }
-
-          .info-text {
-            text-align: left;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .info-text p {
-            margin: 0;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .info-text .label {
-            font-size: 0.875rem;
-            color: #d1d5db;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .info-text .value {
-            font-weight: bold;
-            color: white;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .content-heading.no-border {
-            border-bottom: none !important;
-            padding-bottom: 0 !important;
-          }
-
-          .track-card {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #a046b4;
-            transition: all 0.6s ease-out;
-            opacity: 0;
-            transform: translateY(30px);
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .track-card.animated {
-            opacity: 1;
-            transform: translateY(0);
-          }
-
-          .level-card {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-top: 4px solid #a046b4;
-            transition: all 0.6s ease-out;
-            opacity: 0;
-            transform: translateY(30px);
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .level-card.animated {
-            opacity: 1;
-            transform: translateY(0);
-          }
-
-          .level-title {
-            color: #a046b4;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            font-size: 1.3rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .level-title svg {
-            margin-right: 0.5rem;
-            width: 1.2rem;
-            height: 1.2rem;
-          }
-
-          .track-title {
-            color: #a046b4;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            font-size: 1.3rem;
-            gap: 0.5rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .track-title svg {
-            width: 1.2rem;
-            height: 1.2rem;
-          }
-
-          .date-badge {
-            background-color: #a046b4;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
-
-          .timeline-date {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: auto;
-            font-size: 0.8rem;
-            color: #a0aec0;
-            border: 1px solid #374151;
-            border-radius: 9999px;
-            padding: 0.25rem 0.75rem;
-          }
-
-          .timeline-date svg {
-            color: #6b7280;
-          }
-
-          .timeline-desc {
-            margin-top: 0.5rem;
-            font-size: 1rem;
-            color: #a0aec0;
-            line-height: 1.6;
-          }
-
-          .animate-left {
-            transform: translateX(-50px) !important;
-          }
-
-          .animate-left.animated {
-            transform: translateX(0) !important;
-          }
-
-          .animate-right {
-            transform: translateX(50px) !important;
-          }
-
-          .animate-right.animated {
-            transform: translateX(0) !important;
-          }
-
-          .animate-top {
-            transform: translateY(-50px) !important;
-          }
-
-          .animate-bottom {
-            transform: translateY(50px) !important;
-          }
-
-          .animate-delay-1 {
-            transition-delay: 0.2s !important;
-          }
-
-          .animate-delay-2 {
-            transition-delay: 0.4s !important;
-          }
-
-          .animate-delay-3 {
-            transition-delay: 0.6s !important;
-          }
-
-          .list-icon {
-            margin-right: 0.5rem;
-            color: #a046b4;
-            min-width: 1.2rem;
-          }
-
-          @media (max-width: 992px) {
-            h1 {
-              font-size: 3.5rem;
-            }
-
-            h2 {
-              font-size: 1.5rem;
-            }
-
-            .two-column, .three-column, .four-column {
-              grid-template-columns: 1fr;
-            }
-          }
-
-          @media (max-width: 768px) {
-            h1 {
-              font-size: 2.5rem;
-            }
-
-            h2 {
-              font-size: 1.25rem;
-            }
-
-            h3 {
-              font-size: 1rem;
-            }
-
-            .header-content {
-              text-align: center;
-            }
-
-            .info-box {
-              flex-direction: column;
-              align-items: flex-start;
-              gap: 1rem;
-              padding: 1rem;
-            }
-
-            .info-item {
-              width: 100%;
-            }
-
-            .content-heading {
-              font-size: 1.6rem;
-            }
-
-            .track-title, .level-title {
-              font-size: 1.4rem;
-            }
-          }
-
-          @media (max-width: 576px) {
-            h1 {
-              font-size: 2.5rem !important;
-            }
-
-            h2 {
-              font-size: 1.1rem !important;
-              text-align: center;
-            }
-
-            .info-text .label {
-              font-size: 0.75rem;
-            }
-
-            .info-text .value {
-              font-size: 0.875rem;
-            }
-
-            .content-heading {
-              font-size: 1.4rem;
-            }
-
-            .track-title, .level-title {
-              font-size: 1.2rem;
-            }
-          }
-
-          .typing-wrapper-container {
-            display: inline-block;
-            min-width: 26ch;
-            white-space: nowrap;
-            vertical-align: bottom;
-          }
-
-          footer {
-            background-color: #000 !important;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-          }
-
-          body {
-            display: flex;
+        /* Winners */
+        .winners-banner {
+          background: linear-gradient(135deg, rgba(30, 0, 40, 0.9) 0%, rgba(10, 0, 20, 0.9) 100%);
+          border: 1px solid rgba(160, 70, 180, 0.15);
+          border-radius: 16px;
+          padding: 40px 48px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          backdrop-filter: blur(10px);
+          gap: 40px;
+        }
+        .winners-left-icon {
+          flex-shrink: 0;
+          background: rgba(255, 215, 0, 0.08);
+          padding: 24px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 215, 0, 0.2);
+          box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
+        }
+        .winners-center {
+          flex: 1;
+          text-align: left;
+          z-index: 2;
+        }
+        .winners-title {
+          color: white;
+          font-size: 32px;
+          font-weight: 800;
+          margin: 0 0 12px 0;
+          letter-spacing: 2px;
+          text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .winners-desc {
+          color: #A0A0A0;
+          font-size: 16px;
+          margin: 0;
+          max-width: 450px;
+          line-height: 1.6;
+        }
+        .winners-highlight {
+          color: #a046b4;
+          font-weight: 600;
+        }
+        .winners-right {
+          position: absolute;
+          right: 0;
+          bottom: -10px;
+          opacity: 0.08;
+          pointer-events: none;
+          display: flex;
+          align-items: flex-end;
+          z-index: 1;
+        }
+        @media (max-width: 768px) {
+          .winners-banner {
             flex-direction: column;
-            min-height: 100vh;
-          }
-
-          .content-container {
-            flex: 1;
-          }
-
-          footer {
-            margin-top: auto;
-          }
-
-          #header-placeholder {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: transform 0.3s ease-in-out;
-          }
-
-          #header-placeholder.hidden {
-            transform: translateY(-100%);
-          }
-
-
-
-          .register-btn {
-            background-color: #a046b4;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(160, 70, 180, 0.4);
-            display: block;
-            margin: 40px auto;
             text-align: center;
-            width: fit-content;
-            text-decoration: none;
-            font-weight: bold;
-            font-family: 'Times New Roman', Times, serif !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            padding: 40px 24px;
           }
-
-          .register-btn:hover {
-            background-color: #8a3ab9;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(160, 70, 180, 0.6);
-          }
-
-          .register-btn:active {
-            transform: translateY(1px);
-          }
-
-          .bullet-point {
-            display: inline-flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-          }
-
-          .bullet-point::before {
-            content: "•";
-            color: white;
-            margin-right: 0.5rem;
-          }
-
-          @font-face {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: normal;
-            font-weight: 400;
-            
-          }
-
-          .main-prizes, .additional-benefits {
-            font-size: 1.5rem !important;
-          }
-
-          .spacing {
-            margin-top: 50px;
-          }
-
-          .social-icon {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-          }
-
-          .social-icon svg {
-            min-width: 24px;
-          }
-
-          /* Section-specific margins */
-          .about-event-section {
-            margin: 1.5rem 0;
-          }
-
-          .competition-structure-section {
-            margin: 1rem 0;
-          }
-
-          .thematic-tracks-section {
-            margin-top: 8rem
-          }
-
-          .eligibility-criteria-section {
-            margin: 4.5rem 0;
-          }
-
-          .registration-fee-section {
-            margin: 2rem 0;
-          }
-
-          .awards-recognition-section {
-            margin: 2rem 0;
-          }
-
-          .contact-information-section {
-            margin-top: 8rem
-          }
-
-          /* Interactive Tabs Styles */
-          .tracks-container {
-            margin-top: 2rem;
-          }
-
-          .tracks-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-          }
-
-          .track-tab {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #a046b4;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Times New Roman', Times, serif !important;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
+          .winners-center {
             text-align: center;
-            min-height: 60px;
           }
-
-          .track-tab:hover {
-            background: rgba(160, 70, 180, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(160, 70, 180, 0.3);
+          .winners-desc {
+            margin: 0 auto;
           }
+        }
 
-          .track-tab.active {
-            background: linear-gradient(135deg, #a046b4 0%, #6a0dad 100%);
-            border-color: #a046b4;
-            box-shadow: 0 4px 15px rgba(160, 70, 180, 0.5);
-          }
+        /* Animations */
+        .animate-on-scroll {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
 
-          .track-content {
-            display: none;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            border-left: 4px solid #a046b4;
-            transition: all 0.6s ease-out;
-            opacity: 0;
-            transform: translateY(30px);
-            font-family: 'Times New Roman', Times, serif !important;
-          }
 
-          .track-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* Back to Top Button */
+        .back-to-top {
+          position: fixed;
+          bottom: 2rem;
+          right: 2rem;
+          background: linear-gradient(135deg, #a046b4 0%, #6a0dad 100%);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 3.5rem;
+          height: 3.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(20px) scale(0.9);
+          box-shadow: 0 4px 15px rgba(160, 70, 180, 0.4);
+          z-index: 1000;
+        }
 
-          @media (max-width: 768px) {
-            .tracks-tabs {
-              grid-template-columns: 1fr;
-              gap: 0.75rem;
-            }
+        .back-to-top.visible {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0) scale(1);
+        }
 
-            .track-tab {
-              width: 100%;
-              min-height: 50px;
-              padding: 0.75rem 1rem;
-            }
-          }
+        .back-to-top:hover {
+          background: linear-gradient(135deg, #8a3ab9 0%, #5a0b9d 100%);
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 7px 20px rgba(160, 70, 180, 0.6);
+        }
 
-          /* Breadcrumb Navigation */
-          .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            padding: 1rem 0;
-            font-family: 'Times New Roman', Times, serif !important;
-          }
+        .back-to-top:active {
+          transform: translateY(1px) scale(0.98);
+        }
 
-          .breadcrumb-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #a0aec0;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.9rem;
-          }
-
-          .breadcrumb-item:hover {
-            color: #a046b4;
-          }
-
-          .breadcrumb-item.active {
-            color: white;
-            font-weight: 500;
-          }
-
-          .breadcrumb-separator {
-            color: #6b7280;
-            font-size: 0.8rem;
-          }
-
-          /* Back to Top Button */
+        @media (max-width: 768px) {
           .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: linear-gradient(135deg, #a046b4 0%, #6a0dad 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 3.5rem;
-            height: 3.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px) scale(0.9);
-            box-shadow: 0 4px 15px rgba(160, 70, 180, 0.4);
-            z-index: 1000;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 3rem;
           }
+        }
+      `}</style>
 
-          .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-          }
+      {/* Navigation */}
+      <Navigation />
 
-          .back-to-top:hover {
-            background: linear-gradient(135deg, #8a3ab9 0%, #5a0b9d 100%);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 7px 20px rgba(160, 70, 180, 0.6);
-          }
-
-          .back-to-top:active {
-            transform: translateY(1px) scale(0.98);
-          }
-
-          @media (max-width: 768px) {
-            .back-to-top {
-              bottom: 1.5rem;
-              right: 1.5rem;
-              width: 3rem;
-              height: 3rem;
-            }
-
-            .breadcrumb {
-              font-size: 0.8rem;
-              margin-bottom: 2.5rem;
-            }
-          }
-        `}</style>
-
-        <div className="header-content animate-section animate-top">
-          <h1 style={{ fontSize: '8vw', fontSizeAdjust: '4.5rem', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
-            <b style={{ color: 'white' }}>ProtoPlanet</b>
-          </h1>
-          <h2 style={{ fontSize: '3vw', fontWeight: 800, margin: '0.5rem 0', color: 'white', lineHeight: 1.4 }}>
-            <span className="typing-wrapper-container">
-              <span id="hardware" className="typing-wrapper" style={{ color: 'white' }}></span>
-              <span id="innovation" className="typing-wrapper" style={{ color: '#a046b4' }}></span>
-              <span id="sprint" className="typing-wrapper" style={{ color: 'white' }}></span>
-            </span>
-          </h2>
+      {/* Hero Section */}
+      <section id="home" className="hero-section section-container">
+        <div className="hero-bg">
+          <div className="hero-glow-1"></div>
+          <div className="hero-glow-2"></div>
         </div>
-
-        {/* Basic Info Box */}
-        <div className="info-box-container">
-          <div className="info-box animate-section animate-delay-1">
-            <div className="info-item">
-              <div className="icon-container">
-                <Users size={24} />
-              </div>
-              <div className="info-text">
-                <p className="label">Team Size</p>
-                <p className="value">2-3 Members</p>
-              </div>
-            </div>
-            <div className="info-item">
-              <div className="icon-container">
-                <IndianRupee size={24} />
-              </div>
-              <div className="info-text">
-                <p className="label">Registration Fee</p>
-                <p className="value">₹300-600</p>
-              </div>
-            </div>
-            <div className="info-item">
-              <div className="icon-container">
-                <Calendar size={24} />
-              </div>
-              <div className="info-text">
-                <p className="label">Date</p>
-                <p className="value">August-October 2025</p>
-              </div>
+        <div className="hero-grid">
+          <div className="hero-content animate-on-scroll visible">
+            <h1 className="hero-title">PROTOPLANET<br />2026</h1>
+            <h2 className="hero-subtitle">Makethon for Sustainability Application.</h2>
+            <p className="hero-desc">
+              A hardware innovation competition designed to empower engineering students to develop and demonstrate impactful solutions using emerging and future technologies. Build what the future needs today.
+            </p>
+            <div className="hero-buttons">
+              <Link to="/protoplanet/register" className="btn btn-primary">REGISTER NOW</Link>
+              <a href="#" download className="btn btn-outline">
+                <Download size={18} style={{ marginRight: '8px' }} /> DOWNLOAD PPT TEMPLATE
+              </a>
             </div>
           </div>
-        </div>
 
-        {/* About the Event */}
-        <div className="info-box-container about-event-section">
-          <div className="content-box animate-section animate-left">
-            <div className="content-heading">About the Event</div>
-            <div className="content-text">
-              ProtoPlanet is a regional-level hardware innovation competition designed to empower undergraduate engineering students to develop and demonstrate impactful solutions using emerging and future technologies. The competition emphasizes innovation, functionality, and societal relevance—encouraging teams to build what the future needs today.
-            </div>
-          </div>
-        </div>
-
-        {/* Competition Structure */}
-        <div className="info-box-container competition-structure-section">
-          <div className="content-box animate-section animate-bottom">
-            <div className="content-heading no-border">Competition Structure</div>
-            {/* Level 1 */}
-            <div className="level-card animate-section animate-delay-1">
-              <div className="level-title">
-                <Flag size={20} /> Level 1: Online Abstract Submission
-                <div className="timeline-date">
-                  <CalendarDays size={16} />
-                  <span>August 9, 2025</span>
-                </div>
-              </div>
-              <div className="content-text">
-                Teams must submit a brief proposal outlining:
-                <ul className="content-list">
-                  <li><span className="bullet-point">Problem Statement</span></li>
-                  <li><span className="bullet-point">Proposed Solution</span></li>
-                  <li><span className="bullet-point">Basic System Architecture</span></li>
-                  <li><span className="bullet-point">Expected Technological and Social Impact</span></li>
-                </ul>
-                <p>Shortlisted teams will be notified and invited to the next round.</p>
-              </div>
-            </div>
-            {/* Level 2 */}
-            <div className="level-card animate-section animate-delay-2">
-              <div className="level-title">
-                <Laptop size={20} /> Level 2: Regional Prototype Presentation
-                <div className="timeline-date">
-                  <CalendarDays size={16} />
-                  <span>August 23, 2025</span>
-                </div>
-              </div>
-              <div className="content-text">
-                Shortlisted teams will be invited to showcase their working prototypes at a regional in-person event.
-                <p><strong>Venue:</strong> VIT-AP University (Tentative)</p>
-              </div>
-            </div>
-            {/* Grand Finale */}
-            <div className="level-card animate-section animate-delay-3">
-              <div className="level-title">
-                <Trophy size={20} /> Grand Finale: Future Technology Conclave 2026
-                <div className="timeline-date">
-                  <CalendarDays size={16} />
-                  <span>October 11, 2025</span>
-                </div>
-              </div>
-              <div className="content-text">
-                Top-performing teams will pitch their innovations at IET Hyderabad's flagship event.
-                <p><strong>Venue:</strong> T-Hub, Hyderabad</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Thematic Tracks */}
-        <div className="info-box-container thematic-tracks-section">
-          <div className="content-box animate-section animate-right">
-            <div className="content-heading">Thematic Tracks (Based on Future Technologies)</div>
-            <div className="tracks-container">
-              <div className="tracks-tabs">
-                <button className="track-tab active" data-track="iot">
-                  <Wifi size={20} /> IoT & Smart Environments
-                </button>
-                <button className="track-tab" data-track="robotics">
-                  <Rocket size={20} /> Robotics & Intelligent Machines
-                </button>
-                <button className="track-tab" data-track="healthtech">
-                  <HeartPulse size={20} /> HealthTech & Human Augmentation
-                </button>
-                <button className="track-tab" data-track="cleantech">
-                  <Leaf size={20} /> Sustainable & Clean Tech
-                </button>
-              </div>
-
-              <div className="track-content active" id="iot">
-                <div className="track-title">
-                  <Wifi size={20} /> IoT & Smart Environments
-                </div>
-                <div className="content-text">
-                  Connected devices and intelligent systems for smart homes, cities, agriculture, and industries.
-                  <p><strong>Examples:</strong></p>
-                  <ul className="content-list">
-                    <li><span className="bullet-point">Smart energy and water tracking systems</span></li>
-                    <li><span className="bullet-point">IoT-enabled agriculture solutions</span></li>
-                    <li><span className="bullet-point">Smart waste or pollution monitoring systems</span></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="track-content" id="robotics">
-                <div className="track-title">
-                  <Rocket size={20} /> Robotics & Intelligent Machines
-                </div>
-                <div className="content-text">
-                  Hardware innovations using robotics, embedded systems, or automation.
-                  <p><strong>Examples:</strong></p>
-                  <ul className="content-list">
-                    <li><span className="bullet-point">Assistive robots or exoskeletons</span></li>
-                    <li><span className="bullet-point">Autonomous service bots</span></li>
-                    <li><span className="bullet-point">Intelligent embedded control systems</span></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="track-content" id="healthtech">
-                <div className="track-title">
-                  <HeartPulse size={20} /> HealthTech & Human Augmentation
-                </div>
-                <div className="content-text">
-                  Next-gen tools for healthcare, rehabilitation, and accessibility.
-                  <p><strong>Examples:</strong></p>
-                  <ul className="content-list">
-                    <li><span className="bullet-point">Health monitoring wearables</span></li>
-                    <li><span className="bullet-point">Smart assistive technologies</span></li>
-                    <li><span className="bullet-point">Rehabilitation support systems</span></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="track-content" id="cleantech">
-                <div className="track-title">
-                  <Leaf size={20} /> Sustainable & Clean Tech
-                </div>
-                <div className="content-text">
-                  Technological solutions to promote sustainability and resource efficiency.
-                  <p><strong>Examples:</strong></p>
-                  <ul className="content-list">
-                    <li><span className="bullet-point">Solar-powered devices</span></li>
-                    <li><span className="bullet-point">Smart irrigation controllers</span></li>
-                    <li><span className="bullet-point">Green energy or eco-monitoring systems</span></li>
-                  </ul>
+          <div className="hero-image animate-on-scroll delay-2 visible">
+            <div className="phone-illustration">
+              <div className="phone-body">
+                <div className="phone-screen">
+                  <div className="circuit-lines"></div>
+                  <Lightbulb size={120} strokeWidth={1.5} className="phone-icon-center" />
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Eligibility Criteria */}
-        <div className="info-box-container eligibility-criteria-section">
-          <div className="content-box animate-section animate-left">
-            <div className="content-heading">Eligibility Criteria</div>
-            <ul className="content-list">
-              <li><span className="bullet-point">Open to undergraduate students (any year) from any branch of engineering</span></li>
-              <li><span className="bullet-point">Institutions must be located in Telangana, Andhra Pradesh, or Chhattisgarh</span></li>
-              <li><span className="bullet-point">Teams must consist of 2 to 3 members (no solo participation allowed)</span></li>
-              <li><span className="bullet-point">At least two members from each team must attend both offline rounds in person</span></li>
-              <li><span className="bullet-point">All projects must be original and developed solely by the participating team</span></li>
+      {/* Event Details */}
+      <section id="details" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <h2 className="section-title">EVENT DETAILS</h2>
+          <div className="section-divider" style={{ marginTop: '24px' }}>
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
+          </div>
+        </div>
+
+        <div className="grid-5">
+          <div className="glass-card stat-card">
+            <Calendar className="stat-icon" size={32} />
+            <h3 className="stat-title">Event Date</h3>
+            <p className="stat-value">August 22, 2026</p>
+          </div>
+          <div className="glass-card stat-card">
+            <MapPin className="stat-icon" size={32} />
+            <h3 className="stat-title">Venue</h3>
+            <p className="stat-value">VIT-AP University, Amaravati</p>
+          </div>
+          <div className="glass-card stat-card">
+            <Users className="stat-icon" size={32} />
+            <h3 className="stat-title">Team Size</h3>
+            <p className="stat-value">Maximum 3 Members</p>
+          </div>
+          <div className="glass-card stat-card">
+            <IndianRupee className="stat-icon" size={32} />
+            <h3 className="stat-title">Registration Fee</h3>
+            <p className="stat-value">₹200 / Team</p>
+          </div>
+          <div className="glass-card stat-card">
+            <Clock className="stat-icon" size={32} />
+            <h3 className="stat-title">Time</h3>
+            <p className="stat-value">10:00 AM - 4:00 PM</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Tracks Section */}
+      <section id="theme" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <h2 className="section-title">THEMATIC TRACKS</h2>
+          <p className="section-subtitle">Develop your hardware solutions based on one of the following tracks:</p>
+          <div className="section-divider" style={{ marginTop: '24px' }}>
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
+          </div>
+        </div>
+
+        <div className="grid-5">
+          <div className="glass-card">
+            <Cpu size={40} color="#a046b4" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>1. AI, IoT & Industry 4.0</h3>
+            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Innovative solutions leveraging AI, IoT, and smart factory technologies.</p>
+          </div>
+          <div className="glass-card">
+            <HeartPulse size={40} color="#a046b4" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>2. Healthcare & Assistive Tech</h3>
+            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Tools to improve healthcare delivery, monitoring, and accessibility.</p>
+          </div>
+          <div className="glass-card">
+            <Network size={40} color="#a046b4" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>3. Smart Cities & Mobility</h3>
+            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Enhance urban infrastructure, transport, and civic systems.</p>
+          </div>
+          <div className="glass-card">
+            <Lightbulb size={40} color="#a046b4" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>4. Open Innovation</h3>
+            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>If your idea solves a real problem innovatively, this is your track.</p>
+          </div>
+          <div className="glass-card">
+            <Leaf size={40} color="#a046b4" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>5. Sustainable Technology</h3>
+            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Solutions promoting sustainability and green energy efficiency.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Guidelines Section */}
+      <section id="guidelines" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <h2 className="section-title">GUIDELINES</h2>
+          <div className="section-divider">
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
+          </div>
+        </div>
+
+        <div className="guidelines-grid">
+          <div>
+            <ul className="checklist">
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>Maximum team capacity is 3 members.</span>
+              </li>
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>Registration fee: ₹200/- per team.</span>
+              </li>
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>If any one participant is a part of IET, registration is <strong>free</strong>.</span>
+              </li>
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>Problem statement must relate to the thematic tracks.</span>
+              </li>
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>Presentation should not contain more than 10 slides.</span>
+              </li>
+              <li>
+                <CheckCircle2 className="checklist-icon" size={20} />
+                <span>File should be named as team.ppt (e.g., algo_rangers.ppt).</span>
+              </li>
             </ul>
           </div>
-        </div>
 
-        {/* Registration Fee */}
-        <div className="info-box-container registration-fee-section">
-          <div className="content-box animate-section animate-right">
-            <div className="content-heading">Registration Fee</div>
-            <div className="two-column">
-              <div className="animate-section animate-left">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>IET Member Team</h4>
-                <ul className="content-list">
-                  <li><span className="bullet-point"><strong>Fee:</strong> ₹300</span></li>
-                  <li><span className="bullet-point"><em>(At least one team member must be a current IET student member to avail this rate)</em></span></li>
-                </ul>
+          <div style={{ padding: '20px' }}>
+            <div className="clipboard-illustration">
+              <div className="clipboard-clip"></div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '20px' }}>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', width: '100%', borderRadius: '2px' }}></div>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', width: '80%', borderRadius: '2px' }}></div>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', width: '90%', borderRadius: '2px' }}></div>
+                <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', width: '60%', borderRadius: '2px' }}></div>
               </div>
-              <div className="animate-section animate-right">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>Non-Member Team</h4>
-                <ul className="content-list">
-                  <li><span className="bullet-point"><strong>Fee:</strong> ₹600</span></li>
-                </ul>
+              <div className="clipboard-shield">
+                <ShieldCheck size={48} color="#a046b4" strokeWidth={1.5} />
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Awards & Recognition */}
-        <div className="info-box-container awards-recognition-section">
-          <div className="content-box animate-section animate-bottom">
-            <div className="content-heading">Awards & Recognition</div>
-            <div className="two-column">
-              <div className="animate-section animate-left">
-                <h4 className="main-prizes" style={{ color: '#a046b4', marginBottom: '0.5rem' }}>Main Prizes</h4>
-                <ul className="content-list">
-                  <li><span className="bullet-point"><strong>1st Prize:</strong> ₹10,000</span></li>
-                  <li><span className="bullet-point"><strong>2nd Prize:</strong> ₹5,000</span></li>
-                </ul>
-              </div>
-              <div className="animate-section animate-right">
-                <h4 className="additional-benefits" style={{ color: '#a046b4', marginBottom: '0.5rem' }}>Additional Benefits</h4>
-                <ul className="content-list">
-                  <li><span className="bullet-point">All finalists receive Certificates of Merit from IET Hyderabad LN</span></li>
-                  <li><span className="bullet-point">Top teams will present at the Future Technology Conclave 2026</span></li>
-                </ul>
-              </div>
+      {/* Official PPT Section */}
+      <section id="template" className="section-container animate-on-scroll">
+        <div className="glass-card horizontal-banner">
+          <div className="banner-content">
+            <div className="banner-icon">
+              <FileText size={48} strokeWidth={1.5} />
             </div>
+            <div>
+              <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>OFFICIAL PPT TEMPLATE</h3>
+              <p style={{ color: '#A0A0A0', fontSize: '14px', margin: 0 }}>
+                Download the official template before submission (coming soon).
+              </p>
+            </div>
+          </div>
+          <a href="#" className="btn btn-primary" style={{ flexShrink: 0 }}>
+            <Download size={20} style={{ marginRight: '8px' }} /> DOWNLOAD PPT TEMPLATE
+          </a>
+        </div>
+      </section>
+
+      {/* Competition Flow */}
+      <section id="finale" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <h2 className="section-title">COMPETITION FLOW</h2>
+          <div className="section-divider" style={{ marginTop: '24px' }}>
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
           </div>
         </div>
 
-        <div className="spacing"></div>
-
-        {/* Contact Information */}
-        <div className="info-box-container contact-information-section">
-          <div className="content-box animate-section animate-left">
-            <div className="content-heading">Contact Information</div>
-            <div className="two-column">
-              <div className="animate-section animate-left">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>Event Coordinators</h4>
-                <ul className="content-list" style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                  <li>
-                    <span className="social-icon">
-                      <Users size={24} strokeWidth={2} /> John Doe: +91 9876543210
-                    </span>
-                  </li>
-                  <li>
-                    <span className="social-icon">
-                      <Users size={24} strokeWidth={2} /> Jane Smith: +91 8765432109
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div className="animate-section animate-right">
-                <h4 style={{ color: '#a046b4', marginBottom: '0.5rem', fontSize: '24px' }}>Email & Social</h4>
-                <ul className="content-list" style={{ listStyleType: 'none', paddingLeft: 0 }}>
-                  <li>
-                    <span className="social-icon">
-                      <Mail size={24} strokeWidth={2} /> protoplanet@college.edu
-                    </span>
-                  </li>
-                  <li>
-                    <span className="social-icon">
-                      <Instagram size={24} strokeWidth={2} /> @protoplanet_official
-                    </span>
-                  </li>
-                  <li>
-                    <span className="social-icon">
-                      <Twitter size={24} strokeWidth={2} /> @protoplanet
-                    </span>
-                  </li>
-                </ul>
-              </div>
+        <div className="grid-3">
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Flag size={40} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <h3 style={{ fontSize: '16px', marginBottom: '4px' }}>Round 1: Online Submission</h3>
+              <p style={{ margin: 0, fontWeight: 400, color: '#A0A0A0', fontSize: '14px' }}>Last Date: 14th August 2026</p>
+            </div>
+          </div>
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Laptop size={40} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <h3 style={{ fontSize: '16px', marginBottom: '4px' }}>Round 2: On-Site Presentation</h3>
+              <p style={{ margin: 0, fontWeight: 400, color: '#A0A0A0', fontSize: '14px' }}>22nd August 2026 at VIT-AP</p>
+            </div>
+          </div>
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Trophy size={40} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <h3 style={{ fontSize: '16px', marginBottom: '4px' }}>Grand Finale</h3>
+              <p style={{ margin: 0, fontWeight: 400, color: '#A0A0A0', fontSize: '14px' }}>Top 5 teams selected to represent</p>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Register Now Button */}
-        <button onClick={handleRegister} className="register-btn animate-section animate-bottom">
-          Register Now <ArrowRight size={20} />
-        </button>
+      {/* Winners */}
+      <section className="section-container animate-on-scroll" style={{ marginTop: '60px' }}>
+        <div className="winners-banner">
+          <div className="winners-left-icon">
+            <Trophy size={64} color="#FFD700" strokeWidth={1.5} />
+          </div>
+          <div className="winners-center">
+            <h2 className="winners-title">AWARDS & RECOGNITION</h2>
+            <p className="winners-desc">
+              Winning teams will receive <span className="winners-highlight">attractive cash prizes</span>. Certificates of merit will be provided to all participants from IET Hyderabad LN.
+            </p>
+          </div>
+          <div className="winners-right">
+            <img src="https://api.iconify.design/mdi:crowd.svg?color=%23ffffff" style={{ width: '400px' }} alt="Crowd" />
+          </div>
+        </div>
+      </section>
 
-        {/* Back to Top Button */}
-        <button
-          onClick={handleBackToTop}
-          className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
-          aria-label="Back to top"
-        >
-          <ArrowUp size={20} />
-        </button>
-      </div>
+      {/* Contact Section */}
+      <section id="contact" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <h2 className="section-title">CONTACT</h2>
+          <p className="section-subtitle">Event Coordinators</p>
+          <div className="section-divider" style={{ marginTop: '24px' }}>
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
+          </div>
+        </div>
+
+        <div className="grid-3">
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Mail size={32} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Email</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>iet.oncampus@vitap.ac.in</p>
+            </div>
+          </div>
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Phone size={32} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Phone (Bhanu Bhargavi)</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>+91 81431 27444</p>
+            </div>
+          </div>
+          <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <Instagram size={32} color="#a046b4" strokeWidth={1.5} />
+            <div>
+              <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Instagram</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>@iet.oncampus.vitap</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="section-container" style={{ textAlign: 'center', paddingBottom: '120px', paddingTop: '60px' }}>
+        <Link to="/protoplanet/register" className="btn btn-primary" style={{ width: '100%', maxWidth: '600px', height: '64px', fontSize: '20px' }}>
+          <Users size={24} style={{ marginRight: '12px' }} /> REGISTER NOW
+        </Link>
+      </section>
+
+      {/* Back to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className={`back-to-top ${showBackToTop ? 'visible' : ''}`}
+        aria-label="Back to top"
+      >
+        <ArrowUp size={20} />
+      </button>
+
+      {/* Global Footer */}
       <Footer />
-    </>
+    </div>
   );
 };
 

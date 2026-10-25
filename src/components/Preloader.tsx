@@ -126,8 +126,8 @@ const Preloader = () => {
             transition={{ delay: 2.3, duration: 0.6 }}
             className="absolute bottom-20 left-0 right-0 text-center"
           >
-            <p className="text-white/40 text-sm tracking-[0.3em] uppercase font-light">
-              Future Tech Conclave
+            <p className="text-white/70 text-sm md:text-base tracking-[0.25em] uppercase font-semibold">
+              IET 360° &bull; One Platform. Infinite Possibilities.
             </p>
             <div className="flex items-center justify-center gap-2 mt-3">
               <motion.div

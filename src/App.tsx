@@ -12,11 +12,13 @@ import ProtoPlanetLanding from "./pages/ProtoPlanetLanding";
 import ProtoPlanet from "./pages/ProtoPlanet";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
+import Awards from "./pages/Awards";
 
 import AppAstralLanding from "./pages/AppAstralLanding";
 import AppAstral from "./pages/AppAstral";
 import InnothonLanding from "./pages/InnothonLanding";
 import Innothon from "./pages/Innothon";
+import Agenda from "./pages/Agenda";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import PageTransition from "./components/PageTransition";
 import Preloader from "./components/Preloader";
@@ -34,7 +36,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<PageTransition><Index /></PageTransition>} />
         <Route path="/patn" element={<PageTransition><PATN /></PageTransition>} />
         <Route path="/patn/register" element={<PageTransition><PATNRegistration /></PageTransition>} />
-        {/* TEMPORARILY DISABLED EVENT ROUTES - REVERT TO THIS IN THE FUTURE
+        {/* PROTOPLANET ROUTES - ACTIVE */}
         <Route path="/protoplanet" element={<PageTransition><ProtoPlanetLanding /></PageTransition>} />
         <Route path="/protoplanet/register" element={<PageTransition><ProtoPlanet /></PageTransition>} />
 
@@ -43,20 +45,9 @@ const AnimatedRoutes = () => {
         
         <Route path="/innothon" element={<PageTransition><InnothonLanding /></PageTransition>} />
         <Route path="/innothon/register" element={<PageTransition><Innothon /></PageTransition>} />
-        */}
-
-        {/* COMING SOON EVENT ROUTES */}
-        <Route path="/protoplanet" element={<PageTransition><ComingSoon pageName="ProtoPlanet" /></PageTransition>} />
-        <Route path="/protoplanet/register" element={<PageTransition><ComingSoon pageName="ProtoPlanet Registration" /></PageTransition>} />
-
-        <Route path="/appastral" element={<PageTransition><ComingSoon pageName="AppAstral" /></PageTransition>} />
-        <Route path="/appastral/register" element={<PageTransition><ComingSoon pageName="AppAstral Registration" /></PageTransition>} />
-        
-        <Route path="/innothon" element={<PageTransition><ComingSoon pageName="Innothon" /></PageTransition>} />
-        <Route path="/innothon/register" element={<PageTransition><ComingSoon pageName="Innothon Registration" /></PageTransition>} />
         
         <Route path="/agenda" element={<PageTransition><ComingSoon pageName="Agenda" /></PageTransition>} />
-        <Route path="/awards" element={<PageTransition><ComingSoon pageName="Awards" /></PageTransition>} />
+        <Route path="/awards" element={<PageTransition><Awards /></PageTransition>} />
         <Route path="/committee" element={<PageTransition><ComingSoon pageName="Committee" /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ComingSoon pageName="Contact" /></PageTransition>} />
 

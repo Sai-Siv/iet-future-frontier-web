@@ -94,9 +94,7 @@ const Navigation = () => {
       href: '#events',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'PATN', href: '/patn' },
         { name: 'InnoThon', href: '/innothon' },
-        { name: 'ProtoPlanet', href: '/protoplanet' },
         { name: 'AppAstral', href: '/appastral' }
       ]
     },
@@ -106,10 +104,10 @@ const Navigation = () => {
   ];
 
   const announcements = [
-    { id: 1, text: "Registration is now open!" },
-    { id: 2, text: "Agenda will be released soon" },
-    { id: 3, text: "Awards nominations are live" },
-    { id: 4, text: "Keynote speakers to be announced" },
+    { id: 1, text: "Registration open for IET 360° (4 & 5 December 2026 at VIT-AP University)!" },
+    { id: 2, text: "Innothon (Ideathon) & Appastral 24-Hour Challenge registrations live!" },
+    { id: 3, text: "Student and Professional Awards nominations are open!" },
+    { id: 4, text: "Industry Talks: Emerging Technologies & Sustainable Solutions" },
   ];
   const marqueeItems = [...announcements, ...announcements, ...announcements];
 
@@ -361,7 +359,7 @@ const Navigation = () => {
 
               {/* Mobile Footer */}
               <div className="px-5 py-4 border-t border-white/10">
-                <p className="text-[11px] text-white/40 text-center">© 2025 Future Technology Conclave</p>
+                <p className="text-[11px] text-white/40 text-center">© 2026 IET 360° | IET Hyderabad Local Network</p>
               </div>
             </div>
           </div>

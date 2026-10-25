@@ -14,6 +14,9 @@ const upload = multer({
 });
 
 const cpUpload = upload.fields([
+    { name: 'member1Payment', maxCount: 1 },
+    { name: 'member2Payment', maxCount: 1 },
+    { name: 'member3Payment', maxCount: 1 },
     { name: 'prototypeScreens', maxCount: 1 },
     { name: 'paymentScreenshot', maxCount: 1 }
 ]);
@@ -35,28 +38,44 @@ router.post('/register', cpUpload, async (req, res) => {
         }
 
         // Validate required fields
-        const requiredFields = ['teamName', 'institutionName', 'cityState', 'prototypeTool', 'appSyncDescription', 'feeType', 'transactionId'];
+        const requiredFields = ['teamName', 'institutionName', 'cityState'];
         const missingFields = requiredFields.filter(f => !formData[f]);
         if (missingFields.length > 0) {
             return res.status(400).json({ success: false, message: `Missing required fields: ${missingFields.join(', ')}` });
         }
 
-        // Upload prototype screens to Cloudinary
+        if (!formData.member1?.name || !formData.member2?.name) {
+            return res.status(400).json({ success: false, message: 'Team Leader and Member 2 details are required' });
+        }
+
+        // Upload prototype screens if provided
         const screensFile = req.files?.['prototypeScreens']?.[0];
         if (screensFile) {
             console.log('Uploading AppAstral prototype screens to Cloudinary...');
             screensUrl = await uploadToCloudinary(screensFile.buffer, 'innoverse/appastral/designs', screensFile.mimetype);
-        } else {
-            return res.status(400).json({ success: false, message: 'Prototype screens/PDF upload is required' });
         }
 
-        // Upload payment screenshot to Cloudinary
+        // Upload member payment screenshots
+        let member1PaymentUrl = null;
+        let member2PaymentUrl = null;
+        let member3PaymentUrl = null;
+
+        const m1File = req.files?.['member1Payment']?.[0];
+        if (m1File) {
+            member1PaymentUrl = await uploadToCloudinary(m1File.buffer, 'innoverse/appastral/payments', m1File.mimetype);
+        }
+        const m2File = req.files?.['member2Payment']?.[0];
+        if (m2File) {
+            member2PaymentUrl = await uploadToCloudinary(m2File.buffer, 'innoverse/appastral/payments', m2File.mimetype);
+        }
+        const m3File = req.files?.['member3Payment']?.[0];
+        if (m3File) {
+            member3PaymentUrl = await uploadToCloudinary(m3File.buffer, 'innoverse/appastral/payments', m3File.mimetype);
+        }
+
         const paymentFile = req.files?.['paymentScreenshot']?.[0];
         if (paymentFile) {
-            console.log('Uploading AppAstral payment screenshot to Cloudinary...');
             paymentUrl = await uploadToCloudinary(paymentFile.buffer, 'innoverse/appastral/payments', paymentFile.mimetype);
-        } else {
-            return res.status(400).json({ success: false, message: 'Payment screenshot is required' });
         }
 
         // Save to Firestore

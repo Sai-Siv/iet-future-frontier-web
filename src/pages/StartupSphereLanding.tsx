@@ -1218,7 +1218,7 @@ const StartupSphereLanding = () => {
             {/* Grand Finale */}
             <div className="level-card animate-section animate-delay-3">
               <div className="level-title">
-                <Trophy size={20} /> Grand Finale: Future Technology Conclave 2026
+                <Trophy size={20} /> Grand Finale: IET 360° (IET 360 Degree)
                 <div className="timeline-date">
                   <CalendarDays size={16} />
                   <span>October 11, 2025</span>
