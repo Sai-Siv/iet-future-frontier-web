@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUsers } from 'react-icons/fa';
 import axios from 'axios';
+import { API_BASE_URL } from '@/config/api';
 
 const PATNRegistration = () => {
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ const PATNRegistration = () => {
 
     try {
       // Make API call to backend
-      const response = await axios.post('https://iet-future-frontier-web.onrender.com/api/patn/register', formData);
+      const response = await axios.post(`${API_BASE_URL}/api/patn/register`, formData);
       if (response.data.success) {
         setShowSuccess(true);
       } else {

@@ -3,6 +3,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { Users, UserPlus, Lightbulb, CreditCard, Copy } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
+import { API_BASE_URL } from '@/config/api';
 
 interface TeamMember {
   name: string;
@@ -349,7 +350,7 @@ const ProtoPlanet = () => {
         message: 'Uploading registration data...'
       });
 
-      const response = await fetch('https://iet-future-frontier-web.onrender.com/api/protoplan/register', {
+      const response = await fetch(`${API_BASE_URL}/api/protoplan/register`, {
         method: 'POST',
         body: submitData
       });

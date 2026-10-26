@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 // Enable CORS
 app.use(cors(corsOptions));
 
-// Service registry with environment variable overrides (supporting Docker / container networks)
+// Service registry with environment variable overrides
 const SERVICES = {
   protoplan: {
     target: process.env.PROTOPLANET_SERVICE_URL || 'http://localhost:5001',

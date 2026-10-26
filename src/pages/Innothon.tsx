@@ -3,6 +3,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { Users, UserPlus, Smartphone, CreditCard, CheckCircle, Copy, Linkedin, Mail, Phone, User, Book, Briefcase, MessageSquare, Shield } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
+import { API_BASE_URL } from '@/config/api';
 
 interface TeamMember {
   name: string;
@@ -332,7 +333,7 @@ const InnothonRegistration = () => {
       });
 
       // Make real API call to backend
-      const response = await fetch('https://iet-future-frontier-web.onrender.com/api/innothon/register', {
+      const response = await fetch(`${API_BASE_URL}/api/innothon/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
