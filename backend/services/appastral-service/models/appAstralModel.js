@@ -5,7 +5,14 @@ import crypto from 'crypto';
 export class AppAstralModel {
   static COLLECTION = 'appastral-registrations';
 
-  static formatEntity(formData, { screensUrl = null, paymentUrl = null, member1PaymentUrl = null, member2PaymentUrl = null, member3PaymentUrl = null } = {}) {
+  static formatEntity(formData, {
+    member1PaymentUrl = null,
+    member2PaymentUrl = null,
+    member3PaymentUrl = null,
+    member1AccommodationPaymentUrl = null,
+    member2AccommodationPaymentUrl = null,
+    member3AccommodationPaymentUrl = null
+  } = {}) {
     const registrationId = `AA-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
     return {
       registrationId,
@@ -27,9 +34,11 @@ export class AppAstralModel {
           yearBranch: formData.member1?.yearBranch || '',
           isIETMember: formData.member1?.isIETMember ? 'yes' : 'no',
           ietMembershipId: formData.member1?.ietMembershipId || '',
-          accommodation: formData.member1?.accommodation || 'no',
           transactionId: formData.member1?.transactionId || '',
-          paymentUrl: member1PaymentUrl || paymentUrl || ''
+          paymentUrl: member1PaymentUrl || '',
+          accommodation: formData.member1?.accommodation || 'no',
+          accommodationTransactionId: formData.member1?.accommodationTransactionId || '',
+          accommodationPaymentUrl: member1AccommodationPaymentUrl || ''
         },
         member2: {
           name: formData.member2?.name || '',
@@ -38,9 +47,11 @@ export class AppAstralModel {
           yearBranch: formData.member2?.yearBranch || '',
           isIETMember: formData.member2?.isIETMember ? 'yes' : 'no',
           ietMembershipId: formData.member2?.ietMembershipId || '',
-          accommodation: formData.member2?.accommodation || 'no',
           transactionId: formData.member2?.transactionId || '',
-          paymentUrl: member2PaymentUrl || ''
+          paymentUrl: member2PaymentUrl || '',
+          accommodation: formData.member2?.accommodation || 'no',
+          accommodationTransactionId: formData.member2?.accommodationTransactionId || '',
+          accommodationPaymentUrl: member2AccommodationPaymentUrl || ''
         },
         member3: formData.member3?.name ? {
           name: formData.member3.name,
@@ -49,27 +60,12 @@ export class AppAstralModel {
           yearBranch: formData.member3.yearBranch || '',
           isIETMember: formData.member3.isIETMember ? 'yes' : 'no',
           ietMembershipId: formData.member3.ietMembershipId || '',
-          accommodation: formData.member3.accommodation || 'no',
           transactionId: formData.member3.transactionId || '',
-          paymentUrl: member3PaymentUrl || ''
+          paymentUrl: member3PaymentUrl || '',
+          accommodation: formData.member3.accommodation || 'no',
+          accommodationTransactionId: formData.member3.accommodationTransactionId || '',
+          accommodationPaymentUrl: member3AccommodationPaymentUrl || ''
         } : null
-      },
-
-      // Prototype / Project Details (optional if provided)
-      prototypeDetails: {
-        prototypeTool: formData.prototypeTool || '',
-        otherTool: formData.otherTool || '',
-        prototypeLink: formData.prototypeLink || '',
-        appSyncDescription: formData.appSyncDescription || '',
-        additionalNotes: formData.additionalNotes || '',
-        screensUrl
-      },
-
-      // Payment Details summary
-      paymentDetails: {
-        feeType: formData.feeType || 'per-member',
-        transactionId: formData.transactionId || formData.member1?.transactionId || '',
-        screenshotUrl: paymentUrl || member1PaymentUrl || ''
       },
 
       // Metadata

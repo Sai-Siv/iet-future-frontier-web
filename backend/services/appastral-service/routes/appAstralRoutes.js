@@ -9,14 +9,19 @@ const upload = multer({
   limits: { fileSize: 15 * 1024 * 1024 } // 15MB
 });
 
-const cpUpload = upload.fields([
-  { name: 'member1Payment', maxCount: 1 },
-  { name: 'member2Payment', maxCount: 1 },
-  { name: 'member3Payment', maxCount: 1 },
-  { name: 'paymentScreenshot', maxCount: 1 },
-  { name: 'prototypeScreens', maxCount: 1 }
-]);
-
-router.post('/register', cpUpload, AppAstralController.register);
+// Use upload.any() to accept any uploaded payment/accommodation files without Multer throwing "Unexpected field"
+router.post('/register', upload.any(), (req, res, next) => {
+  if (Array.isArray(req.files)) {
+    const filesMap = {};
+    req.files.forEach(file => {
+      if (!filesMap[file.fieldname]) {
+        filesMap[file.fieldname] = [];
+      }
+      filesMap[file.fieldname].push(file);
+    });
+    req.files = filesMap;
+  }
+  next();
+}, AppAstralController.register);
 
 export default router;

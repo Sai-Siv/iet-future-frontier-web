@@ -16,6 +16,9 @@ interface TeamMember {
   transactionId: string;
   paymentScreenshot: File | null;
   paymentScreenshotPreview: string | null;
+  accommodationTransactionId: string;
+  accommodationPaymentScreenshot: File | null;
+  accommodationPaymentScreenshotPreview: string | null;
 }
 
 interface FormData {
@@ -81,6 +84,16 @@ const AppAstral = () => {
     member3: member3PaymentRef
   };
 
+  const member1AccommodationRef = useRef<HTMLInputElement>(null);
+  const member2AccommodationRef = useRef<HTMLInputElement>(null);
+  const member3AccommodationRef = useRef<HTMLInputElement>(null);
+
+  const memberAccommodationRefs: Record<MemberKey, React.RefObject<HTMLInputElement>> = {
+    member1: member1AccommodationRef,
+    member2: member2AccommodationRef,
+    member3: member3AccommodationRef
+  };
+
   const createInitialMember = (): TeamMember => ({
     name: '',
     email: '',
@@ -91,7 +104,10 @@ const AppAstral = () => {
     accommodation: '',
     transactionId: '',
     paymentScreenshot: null,
-    paymentScreenshotPreview: null
+    paymentScreenshotPreview: null,
+    accommodationTransactionId: '',
+    accommodationPaymentScreenshot: null,
+    accommodationPaymentScreenshotPreview: null
   });
 
   const [formData, setFormData] = useState<FormData>({
@@ -160,6 +176,39 @@ const AppAstral = () => {
     }
   };
 
+  const handleMemberAccommodationUploadClick = (memberKey: MemberKey) => {
+    memberAccommodationRefs[memberKey].current?.click();
+  };
+
+  const handleMemberAccommodationFileUpload = (memberKey: MemberKey, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      if (!validTypes.includes(file.type)) {
+        alert('Please upload a PNG or JPG image for the accommodation payment screenshot');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFormData(prev => ({
+          ...prev,
+          [memberKey]: {
+            ...prev[memberKey],
+            accommodationPaymentScreenshot: file,
+            accommodationPaymentScreenshotPreview: e.target?.result as string
+          }
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const validateForm = () => {
     const missingFields: string[] = [];
 
@@ -180,10 +229,18 @@ const AppAstral = () => {
       }
     } else {
       if (!formData.member1.transactionId.trim()) {
-        missingFields.push('Team Leader - Transaction Reference Number');
+        missingFields.push('Team Leader - Registration Transaction Reference Number');
       }
       if (!formData.member1.paymentScreenshot) {
-        missingFields.push('Team Leader - Transaction Screenshot');
+        missingFields.push('Team Leader - Registration Transaction Screenshot');
+      }
+    }
+    if (formData.member1.accommodation === 'yes') {
+      if (!formData.member1.accommodationTransactionId.trim()) {
+        missingFields.push('Team Leader - Accommodation Transaction Reference Number');
+      }
+      if (!formData.member1.accommodationPaymentScreenshot) {
+        missingFields.push('Team Leader - Accommodation Payment Screenshot');
       }
     }
 
@@ -199,10 +256,18 @@ const AppAstral = () => {
       }
     } else {
       if (!formData.member2.transactionId.trim()) {
-        missingFields.push('Member 2 - Transaction Reference Number');
+        missingFields.push('Member 2 - Registration Transaction Reference Number');
       }
       if (!formData.member2.paymentScreenshot) {
-        missingFields.push('Member 2 - Transaction Screenshot');
+        missingFields.push('Member 2 - Registration Transaction Screenshot');
+      }
+    }
+    if (formData.member2.accommodation === 'yes') {
+      if (!formData.member2.accommodationTransactionId.trim()) {
+        missingFields.push('Member 2 - Accommodation Transaction Reference Number');
+      }
+      if (!formData.member2.accommodationPaymentScreenshot) {
+        missingFields.push('Member 2 - Accommodation Payment Screenshot');
       }
     }
 
@@ -218,10 +283,18 @@ const AppAstral = () => {
         }
       } else {
         if (!formData.member3.transactionId.trim()) {
-          missingFields.push('Member 3 - Transaction Reference Number');
+          missingFields.push('Member 3 - Registration Transaction Reference Number');
         }
         if (!formData.member3.paymentScreenshot) {
-          missingFields.push('Member 3 - Transaction Screenshot');
+          missingFields.push('Member 3 - Registration Transaction Screenshot');
+        }
+      }
+      if (formData.member3.accommodation === 'yes') {
+        if (!formData.member3.accommodationTransactionId.trim()) {
+          missingFields.push('Member 3 - Accommodation Transaction Reference Number');
+        }
+        if (!formData.member3.accommodationPaymentScreenshot) {
+          missingFields.push('Member 3 - Accommodation Payment Screenshot');
         }
       }
     }
@@ -290,6 +363,7 @@ const AppAstral = () => {
         isIETMember: formData.member1.isIETMember,
         ietMembershipId: formData.member1.ietMembershipId,
         accommodation: formData.member1.accommodation,
+        accommodationTransactionId: formData.member1.accommodationTransactionId,
         transactionId: formData.member1.transactionId
       };
       submitData.append('member1', JSON.stringify(m1Data));
@@ -302,6 +376,7 @@ const AppAstral = () => {
         isIETMember: formData.member2.isIETMember,
         ietMembershipId: formData.member2.ietMembershipId,
         accommodation: formData.member2.accommodation,
+        accommodationTransactionId: formData.member2.accommodationTransactionId,
         transactionId: formData.member2.transactionId
       };
       submitData.append('member2', JSON.stringify(m2Data));
@@ -315,6 +390,7 @@ const AppAstral = () => {
           isIETMember: formData.member3.isIETMember,
           ietMembershipId: formData.member3.ietMembershipId,
           accommodation: formData.member3.accommodation,
+          accommodationTransactionId: formData.member3.accommodationTransactionId,
           transactionId: formData.member3.transactionId
         };
         submitData.append('member3', JSON.stringify(m3Data));
@@ -322,7 +398,7 @@ const AppAstral = () => {
 
       submitData.append('termsAccepted', formData.termsAccepted.toString());
 
-      // Append file attachments for each member who uploaded a payment screenshot
+      // Append registration payment screenshots
       if (formData.member1.paymentScreenshot) {
         submitData.append('member1Payment', formData.member1.paymentScreenshot);
       }
@@ -331,6 +407,17 @@ const AppAstral = () => {
       }
       if (formData.member3.paymentScreenshot) {
         submitData.append('member3Payment', formData.member3.paymentScreenshot);
+      }
+
+      // Append accommodation payment screenshots
+      if (formData.member1.accommodationPaymentScreenshot) {
+        submitData.append('member1AccommodationPayment', formData.member1.accommodationPaymentScreenshot);
+      }
+      if (formData.member2.accommodationPaymentScreenshot) {
+        submitData.append('member2AccommodationPayment', formData.member2.accommodationPaymentScreenshot);
+      }
+      if (formData.member3.accommodationPaymentScreenshot) {
+        submitData.append('member3AccommodationPayment', formData.member3.accommodationPaymentScreenshot);
       }
 
       setSubmissionStatus({
@@ -371,6 +458,10 @@ const AppAstral = () => {
         if (member1PaymentRef.current) member1PaymentRef.current.value = '';
         if (member2PaymentRef.current) member2PaymentRef.current.value = '';
         if (member3PaymentRef.current) member3PaymentRef.current.value = '';
+
+        if (member1AccommodationRef.current) member1AccommodationRef.current.value = '';
+        if (member2AccommodationRef.current) member2AccommodationRef.current.value = '';
+        if (member3AccommodationRef.current) member3AccommodationRef.current.value = '';
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setCurrentStep('team-details');
@@ -637,9 +728,86 @@ const AppAstral = () => {
             </button>
           </div>
           {member.accommodation === 'yes' && (
-            <p className="text-xs text-blue-300/80 mt-1.5">
-              ℹ️ Accommodation details and check-in instructions will be shared via email prior to the event.
-            </p>
+            <div className="mt-4 space-y-4 p-4 rounded-xl bg-white/[0.04] border border-[#22bbe0]/30">
+              {/* Payment Link Banner */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-lg bg-[#003A66]/40 border border-[#22bbe0]/30">
+                <div>
+                  <div className="font-semibold text-white flex items-center gap-2">
+                    <span>Accommodation Fee: ₹300</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#22bbe0]/20 text-[#22bbe0] font-medium">Per Person</span>
+                  </div>
+                  <p className="text-xs text-gray-300 mt-0.5">Please pay the accommodation fee using the online payment link (Applicable to both IET & Non-IET members)</p>
+                </div>
+                <a
+                  href="https://payment.iet360.org/pay-appastral"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-[#22bbe0] to-[#003A66] hover:brightness-110 shadow-md transition-all flex-shrink-0"
+                >
+                  <span>Pay Accommodation Fee</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+
+              {/* Accommodation Transaction Reference Number */}
+              <div>
+                <label className="block text-white font-medium mb-1">
+                  Accommodation Transaction Reference Number <span style={{ color: '#22bbe0' }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter UTR / Transaction ID after payment"
+                  value={member.accommodationTransactionId}
+                  onChange={(e) => handleMemberChange(memberKey, 'accommodationTransactionId', e.target.value)}
+                  className="w-full px-3 py-2 bg-white/10 border border-blue-500/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+                <p className="text-gray-400 text-xs mt-1">Enter the transaction ID received after completing your accommodation payment</p>
+              </div>
+
+              {/* Upload Accommodation Transaction Screenshot */}
+              <div>
+                <label className="block text-white font-medium mb-1">
+                  Upload Accommodation Payment Screenshot <span style={{ color: '#22bbe0' }}>*</span>
+                </label>
+                <div 
+                  onClick={() => handleMemberAccommodationUploadClick(memberKey)}
+                  className="border-2 border-dashed border-[#22BBE0]/30 rounded-lg p-5 hover:border-[#22BBE0] transition-colors cursor-pointer bg-white/5"
+                >
+                  <input
+                    type="file"
+                    ref={memberAccommodationRefs[memberKey]}
+                    onChange={(e) => handleMemberAccommodationFileUpload(memberKey, e)}
+                    accept="image/png,image/jpeg,image/jpg"
+                    className="hidden"
+                  />
+                  <div className="flex flex-col items-center justify-center text-center">
+                    {member.accommodationPaymentScreenshotPreview ? (
+                      <div className="w-full">
+                        <img 
+                          src={member.accommodationPaymentScreenshotPreview} 
+                          alt="Accommodation Screenshot" 
+                          className="max-h-40 mx-auto mb-2 rounded-lg border border-white/10"
+                        />
+                        <div className="flex items-center justify-center gap-1.5 text-green-400 text-sm font-medium">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Accommodation screenshot uploaded (Click to change)</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <span className="text-2xl mb-1">⬆️</span>
+                        <div className="text-white font-medium text-sm">Click to upload accommodation payment screenshot</div>
+                        <div className="text-gray-400 text-xs mt-0.5">PNG, JPG up to 10MB</div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-blue-300/80">
+                ℹ️ Accommodation details and check-in instructions will be shared via email prior to the event.
+              </p>
+            </div>
           )}
         </div>
       </div>

@@ -13,20 +13,20 @@ const upload = multer({
     limits: { fileSize: 15 * 1024 * 1024 } // 15MB
 });
 
-const cpUpload = upload.fields([
-    { name: 'member1Payment', maxCount: 1 },
-    { name: 'member2Payment', maxCount: 1 },
-    { name: 'member3Payment', maxCount: 1 },
-    { name: 'prototypeScreens', maxCount: 1 },
-    { name: 'paymentScreenshot', maxCount: 1 }
-]);
-
-router.post('/register', cpUpload, async (req, res) => {
+router.post('/register', upload.any(), async (req, res) => {
     console.log('=== AppAstral Registration ===');
     try {
+        if (Array.isArray(req.files)) {
+            const filesMap = {};
+            req.files.forEach(file => {
+                if (!filesMap[file.fieldname]) {
+                    filesMap[file.fieldname] = [];
+                }
+                filesMap[file.fieldname].push(file);
+            });
+            req.files = filesMap;
+        }
         const formData = req.body;
-        let screensUrl = null;
-        let paymentUrl = null;
 
         // Parse JSON strings
         try {
@@ -48,13 +48,6 @@ router.post('/register', cpUpload, async (req, res) => {
             return res.status(400).json({ success: false, message: 'Team Leader and Member 2 details are required' });
         }
 
-        // Upload prototype screens if provided
-        const screensFile = req.files?.['prototypeScreens']?.[0];
-        if (screensFile) {
-            console.log('Uploading AppAstral prototype screens to Cloudinary...');
-            screensUrl = await uploadToCloudinary(screensFile.buffer, 'innoverse/appastral/designs', screensFile.mimetype);
-        }
-
         // Upload member payment screenshots
         let member1PaymentUrl = null;
         let member2PaymentUrl = null;
@@ -73,9 +66,27 @@ router.post('/register', cpUpload, async (req, res) => {
             member3PaymentUrl = await uploadToCloudinary(m3File.buffer, 'innoverse/appastral/payments', m3File.mimetype);
         }
 
+        // Upload member accommodation payment screenshots
+        let member1AccommodationPaymentUrl = null;
+        let member2AccommodationPaymentUrl = null;
+        let member3AccommodationPaymentUrl = null;
+
+        const m1AccFile = req.files?.['member1AccommodationPayment']?.[0];
+        if (m1AccFile) {
+            member1AccommodationPaymentUrl = await uploadToCloudinary(m1AccFile.buffer, 'innoverse/appastral/accommodation', m1AccFile.mimetype);
+        }
+        const m2AccFile = req.files?.['member2AccommodationPayment']?.[0];
+        if (m2AccFile) {
+            member2AccommodationPaymentUrl = await uploadToCloudinary(m2AccFile.buffer, 'innoverse/appastral/accommodation', m2AccFile.mimetype);
+        }
+        const m3AccFile = req.files?.['member3AccommodationPayment']?.[0];
+        if (m3AccFile) {
+            member3AccommodationPaymentUrl = await uploadToCloudinary(m3AccFile.buffer, 'innoverse/appastral/accommodation', m3AccFile.mimetype);
+        }
+
         const paymentFile = req.files?.['paymentScreenshot']?.[0];
-        if (paymentFile) {
-            paymentUrl = await uploadToCloudinary(paymentFile.buffer, 'innoverse/appastral/payments', paymentFile.mimetype);
+        if (paymentFile && !member1PaymentUrl) {
+            member1PaymentUrl = await uploadToCloudinary(paymentFile.buffer, 'innoverse/appastral/payments', paymentFile.mimetype);
         }
 
         // Save to Firestore
@@ -100,30 +111,43 @@ router.post('/register', cpUpload, async (req, res) => {
                     phone: formData.member1?.phone || '',
                     yearBranch: formData.member1?.yearBranch || '',
                     isIETMember: formData.member1?.isIETMember ? 'yes' : 'no',
-                    ietMembershipId: formData.member1?.ietMembershipId || ''
+                    ietMembershipId: formData.member1?.ietMembershipId || '',
+                    transactionId: formData.member1?.transactionId || '',
+                    paymentUrl: member1PaymentUrl || '',
+                    accommodation: formData.member1?.accommodation || 'no',
+                    accommodationTransactionId: formData.member1?.accommodationTransactionId || '',
+                    accommodationPaymentUrl: member1AccommodationPaymentUrl || ''
                 },
-                member2: formData.member2 || {},
-                member3: formData.member3 || {}
-            },
-
-            // Step 3: Prototype / Project Details
-            prototypeDetails: {
-                prototypeTool: formData.prototypeTool,
-                otherTool: formData.otherTool || '',
-                prototypeLink: formData.prototypeLink || '',
-                appSyncDescription: formData.appSyncDescription,
-                additionalNotes: formData.additionalNotes || '',
-                screensUrl
-            },
-
-            // Step 4: Payment Details
-            paymentDetails: {
-                feeType: formData.feeType,
-                transactionId: formData.transactionId,
-                screenshotUrl: paymentUrl
+                member2: {
+                    name: formData.member2?.name || '',
+                    email: formData.member2?.email || '',
+                    phone: formData.member2?.phone || '',
+                    yearBranch: formData.member2?.yearBranch || '',
+                    isIETMember: formData.member2?.isIETMember ? 'yes' : 'no',
+                    ietMembershipId: formData.member2?.ietMembershipId || '',
+                    transactionId: formData.member2?.transactionId || '',
+                    paymentUrl: member2PaymentUrl || '',
+                    accommodation: formData.member2?.accommodation || 'no',
+                    accommodationTransactionId: formData.member2?.accommodationTransactionId || '',
+                    accommodationPaymentUrl: member2AccommodationPaymentUrl || ''
+                },
+                member3: formData.member3?.name ? {
+                    name: formData.member3.name,
+                    email: formData.member3.email || '',
+                    phone: formData.member3.phone || '',
+                    yearBranch: formData.member3.yearBranch || '',
+                    isIETMember: formData.member3.isIETMember ? 'yes' : 'no',
+                    ietMembershipId: formData.member3.ietMembershipId || '',
+                    transactionId: formData.member3.transactionId || '',
+                    paymentUrl: member3PaymentUrl || '',
+                    accommodation: formData.member3.accommodation || 'no',
+                    accommodationTransactionId: formData.member3.accommodationTransactionId || '',
+                    accommodationPaymentUrl: member3AccommodationPaymentUrl || ''
+                } : null
             },
 
             // Metadata
+            termsAccepted: formData.termsAccepted === 'true' || formData.termsAccepted === true,
             submittedAt: new Date().toISOString(),
             status: 'submitted',
             lastUpdated: new Date().toISOString()
@@ -142,8 +166,7 @@ router.post('/register', cpUpload, async (req, res) => {
                 details: [
                     { label: 'Team Name', value: registrationData.teamDetails.teamName },
                     { label: 'Institution Name', value: registrationData.teamDetails.institutionName },
-                    { label: 'Prototype Tool', value: registrationData.prototypeDetails.prototypeTool },
-                    { label: 'Transaction ID', value: registrationData.paymentDetails.transactionId }
+                    { label: 'Accommodation (Leader)', value: registrationData.teamMembers.leader.accommodation === 'yes' ? 'Yes' : 'No' }
                 ]
             }).catch(err => console.error('Error sending confirmation email:', err));
         }

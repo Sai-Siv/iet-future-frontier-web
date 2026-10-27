@@ -8,8 +8,6 @@ export class AppAstralController {
     console.log('=== AppAstral Registration (Microservice) ===');
     try {
       const formData = req.body;
-      let screensUrl = null;
-      let paymentUrl = null;
 
       // Parse JSON strings
       try {
@@ -31,13 +29,6 @@ export class AppAstralController {
 
       if (!formData.member1?.name || !formData.member2?.name) {
         return AppAstralView.renderValidationError(res, 'Team Leader and Member 2 details are required');
-      }
-
-      // Optional upload prototype screens to Cloudinary (if provided)
-      const screensFile = req.files?.['prototypeScreens']?.[0];
-      if (screensFile) {
-        console.log('Uploading AppAstral prototype screens to Cloudinary...');
-        screensUrl = await uploadToCloudinary(screensFile.buffer, 'innoverse/appastral/designs', screensFile.mimetype);
       }
 
       // Upload member payment screenshots to Cloudinary
@@ -63,19 +54,43 @@ export class AppAstralController {
         member3PaymentUrl = await uploadToCloudinary(m3File.buffer, 'innoverse/appastral/payments', m3File.mimetype);
       }
 
+      // Upload member accommodation payment screenshots to Cloudinary
+      let member1AccommodationPaymentUrl = null;
+      let member2AccommodationPaymentUrl = null;
+      let member3AccommodationPaymentUrl = null;
+
+      const m1AccFile = req.files?.['member1AccommodationPayment']?.[0];
+      if (m1AccFile) {
+        console.log('Uploading Member 1 accommodation payment screenshot to Cloudinary...');
+        member1AccommodationPaymentUrl = await uploadToCloudinary(m1AccFile.buffer, 'innoverse/appastral/accommodation', m1AccFile.mimetype);
+      }
+
+      const m2AccFile = req.files?.['member2AccommodationPayment']?.[0];
+      if (m2AccFile) {
+        console.log('Uploading Member 2 accommodation payment screenshot to Cloudinary...');
+        member2AccommodationPaymentUrl = await uploadToCloudinary(m2AccFile.buffer, 'innoverse/appastral/accommodation', m2AccFile.mimetype);
+      }
+
+      const m3AccFile = req.files?.['member3AccommodationPayment']?.[0];
+      if (m3AccFile) {
+        console.log('Uploading Member 3 accommodation payment screenshot to Cloudinary...');
+        member3AccommodationPaymentUrl = await uploadToCloudinary(m3AccFile.buffer, 'innoverse/appastral/accommodation', m3AccFile.mimetype);
+      }
+
       // Legacy fallback payment file
       const paymentFile = req.files?.['paymentScreenshot']?.[0];
-      if (paymentFile) {
-        paymentUrl = await uploadToCloudinary(paymentFile.buffer, 'innoverse/appastral/payments', paymentFile.mimetype);
+      if (paymentFile && !member1PaymentUrl) {
+        member1PaymentUrl = await uploadToCloudinary(paymentFile.buffer, 'innoverse/appastral/payments', paymentFile.mimetype);
       }
 
       // Format Entity via Model
       const registrationData = AppAstralModel.formatEntity(formData, {
-        screensUrl,
-        paymentUrl,
         member1PaymentUrl,
         member2PaymentUrl,
-        member3PaymentUrl
+        member3PaymentUrl,
+        member1AccommodationPaymentUrl,
+        member2AccommodationPaymentUrl,
+        member3AccommodationPaymentUrl
       });
 
       // Save to Firestore via Model
