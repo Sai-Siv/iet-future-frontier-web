@@ -29,6 +29,7 @@ const { InnothonModel } = await import('../src/models/InnothonModel.js');
 const { PatnModel } = await import('../src/models/PatnModel.js');
 const { ProtoPlanetModel } = await import('../src/models/ProtoPlanetModel.js');
 const { renderConfirmationEmail } = await import('../src/views/emails/confirmationEmail.js');
+const { normalizePrivateKey } = await import('../src/utils/privateKey.js');
 
 const PNG = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(32)]);
 const PDF = Buffer.from('%PDF-1.4\nfake body\n%%EOF\n');
@@ -353,6 +354,36 @@ test('confirmation email escapes user input', () => {
   assert.equal(html.includes('<script>x'), false);
   assert.equal(html.includes('&lt;img src=x'), true);
   assert.equal(html.includes('ID-1'), true);
+});
+
+test('private key is accepted however the dashboard stored it', () => {
+  const escaped = privateKey.trim().replace(/\n/g, '\\n');
+  const variants = {
+    'real line breaks': privateKey,
+    'literal \\n': escaped,
+    'double quotes': `"${escaped}"`,
+    'single quotes': `'${escaped}'`,
+    'JSON line with trailing comma': `"${escaped}",`,
+    'double-escaped \\n': privateKey.trim().replace(/\n/g, '\\\\n'),
+    'Windows line breaks': privateKey.replace(/\n/g, '\r\n'),
+    'literal \\r\\n': privateKey.trim().replace(/\n/g, '\\r\\n'),
+    'spaces instead of line breaks': privateKey.trim().replace(/\n/g, ' '),
+    'surrounding whitespace': `  ${privateKey}  `,
+  };
+  for (const [label, value] of Object.entries(variants)) {
+    assert.doesNotThrow(() => crypto.createPrivateKey(normalizePrivateKey(value)), label);
+  }
+});
+
+test('an incomplete private key gives a clear error that hides the key', () => {
+  const truncated = privateKey.slice(0, 200);
+  assert.throws(() => normalizePrivateKey(truncated), (error) => {
+    assert.match(error.message, /incomplete/);
+    assert.match(error.message, /END line present: false/);
+    assert.equal(error.message.includes(truncated.slice(40, 80)), false);
+    return true;
+  });
+  assert.throws(() => normalizePrivateKey(''), /incomplete/);
 });
 
 // Keep last: this uses up the registration allowance for the test client.
