@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 import { requiredText, requiredEmail, optionalEmail } from './common.js';
-import { QUESTION_IDS as Q } from '../models/AwardsModel.js';
+import { QUESTION_IDS as Q, findAward } from '../models/AwardsModel.js';
 
 export const appAstralRules = [
   requiredText('teamName', 'Team name'),
@@ -54,4 +54,7 @@ export const awardsRules = [
     .if(body(Q.isIETMember).equals('Yes'))
     .exists({ values: 'falsy' }).withMessage('IET membership number is required'),
   body(Q.category).isIn(['Student', 'Professional']).withMessage('Category is required'),
+  body('awardCategoryTitle')
+    .custom((title, { req }) => Boolean(findAward(req.body[Q.category], title)))
+    .withMessage('Please choose an award from the list'),
 ];

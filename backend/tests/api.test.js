@@ -83,6 +83,9 @@ const postForm = (path, fields, files = {}) => {
   return fetch(`${base}${path}`, { method: 'POST', body: form });
 };
 
+const answerTo = (entity, question, section) =>
+  entity.answers.find((entry) => entry.question === question && (!section || entry.section === section))?.answer;
+
 const AWARD_ANSWERS = {
   1508358313: 'Asha',
   6064807: 'asha@example.com',
@@ -91,10 +94,10 @@ const AWARD_ANSWERS = {
   384312110: 'VIT-AP',
   1622581677: 'No',
   1063768476: 'Student',
-  'student-award-category': 'Best Student',
+  'student-award-category': 'Outstanding Academic Performance',
   isStudent: 'true',
   isProfessional: 'false',
-  awardCategoryTitle: 'Best Student',
+  awardCategoryTitle: 'Outstanding Academic Performance',
 };
 
 const INNOTHON = {
@@ -167,15 +170,62 @@ test('awards: a complete application with a PDF is saved', async () => {
   assert.equal(saved.length, 1);
   assert.equal(saved[0].email, 'asha@example.com');
   assert.equal(saved[0].isStudent, true);
-  assert.equal(saved[0].awardCategoryTitle, 'Best Student');
-  assert.equal(saved[0].responses.isStudent, undefined);
-  assert.match(saved[0].responses['1137808243'], /innoverse\/awards\/documents/);
+  assert.equal(saved[0].awardCategoryTitle, 'Outstanding Academic Performance');
+  assert.equal(saved[0].responses, undefined);
+  assert.equal(answerTo(saved[0], 'State', 'General Information'), 'Telangana');
+  assert.equal(answerTo(saved[0], 'Student Awards Category'), 'Outstanding Academic Performance');
+  assert.match(answerTo(saved[0], 'Kindly Provide Documentary Proof'), /innoverse\/awards\/documents/);
 });
 
-test('awards: checkbox answers sent as JSON are restored to arrays', async () => {
-  const res = await postForm('/api/awards/register', { ...AWARD_ANSWERS, 555: ['A', 'B'] });
+test('awards: answers keep the form order and only include questions the applicant was asked', async () => {
+  const res = await postForm(
+    '/api/awards/register',
+    { ...AWARD_ANSWERS, 963333536: 'Yes', 555: 'stray answer', 269701494: 'from another award' },
+    { 1137808243: pdf, 269701494: pdf }
+  );
   assert.equal(res.status, 200);
-  assert.deepEqual(saved[0].responses['555'], ['A', 'B']);
+  const { answers } = saved[0];
+  assert.equal(answers[0].question, 'Name');
+  assert.deepEqual([...new Set(answers.map((entry) => entry.section))], [
+    'General Information',
+    'Award Category',
+    'Outstanding Academic Performance',
+  ]);
+  assert.equal(answerTo(saved[0], 'Have you published any research papers, patents, or technical reports?'), 'Yes');
+  assert.equal(JSON.stringify(answers).includes('stray answer'), false);
+  assert.equal(JSON.stringify(answers).includes('from another award'), false);
+  assert.equal(uploads.length, 1, 'file for another award is not uploaded');
+  assert.equal(answers.filter((entry) => entry.question === 'Kindly Provide Documentary Proof').length, 2);
+});
+
+test('awards: typed text cannot pose as an uploaded file', async () => {
+  const res = await postForm('/api/awards/register', { ...AWARD_ANSWERS, 1137808243: 'https://evil.example/x.pdf' });
+  assert.equal(res.status, 200);
+  assert.equal(answerTo(saved[0], 'Kindly Provide Documentary Proof'), '');
+});
+
+test('awards: the award must exist in the chosen category', async () => {
+  for (const awardCategoryTitle of ['Made Up Award', 'Woman Engineer of the Year']) {
+    const res = await postForm('/api/awards/register', { ...AWARD_ANSWERS, awardCategoryTitle });
+    assert.equal(res.status, 400, awardCategoryTitle);
+  }
+  assert.equal(saved.length, 0);
+});
+
+test('awards: the category comes from the answer, not a separate flag', async () => {
+  await postForm('/api/awards/register', { ...AWARD_ANSWERS, isStudent: 'false', isProfessional: 'true' });
+  assert.equal(saved[0].isStudent, true);
+  assert.equal(saved[0].isProfessional, false);
+});
+
+test('award questions match the website form', async () => {
+  const website = await import('../../src/data/awardsData.ts');
+  const { GENERAL_QUESTIONS, STUDENT_AWARDS, PROFESSIONAL_AWARDS } = await import('../src/data/awardForm.js');
+  const question = ({ id, title, type }) => ({ id: String(id), title: title.trim(), type });
+  const award = ({ title, questions }) => ({ title: title.trim(), questions: questions.map(question) });
+  assert.deepEqual(GENERAL_QUESTIONS, website.generalInformation.map(question));
+  assert.deepEqual(STUDENT_AWARDS, website.studentAwards.map(award));
+  assert.deepEqual(PROFESSIONAL_AWARDS, website.professionalAwards.map(award));
 });
 
 test('awards: general information is compulsory on the server too', async () => {
@@ -190,6 +240,9 @@ test('awards: membership number is required only for IET members', async () => {
   const member = { ...AWARD_ANSWERS, 1622581677: 'Yes' };
   assert.equal((await postForm('/api/awards/register', member)).status, 400);
   assert.equal((await postForm('/api/awards/register', { ...member, 1608733035: 'M123' })).status, 200);
+  assert.equal(answerTo(saved[0], 'If Yes, Provide Your IET Membership Number If No, NA'), 'M123');
+  await postForm('/api/awards/register', AWARD_ANSWERS);
+  assert.equal(answerTo(saved[1], 'If Yes, Provide Your IET Membership Number If No, NA'), undefined);
 });
 
 test('awards: invalid email is rejected', async () => {
@@ -222,7 +275,7 @@ test('uploads: disallowed type, disguised content, bad field and oversize are re
 
 test('awards: PDF, PNG and JPEG files are all accepted', async () => {
   const jpeg = { buffer: Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 0]), type: 'image/jpeg', name: 'x.jpg' };
-  const res = await postForm('/api/awards/register', AWARD_ANSWERS, { 1: pdf, 2: png, 3: jpeg });
+  const res = await postForm('/api/awards/register', AWARD_ANSWERS, { 1137808243: pdf, 2119154875: png, 33858741: jpeg });
   assert.equal(res.status, 200);
   assert.equal(uploads.length, 3);
 });
@@ -238,6 +291,11 @@ test('appastral: registration with payment and accommodation files is saved', as
   assert.match(member2.accommodationPaymentUrl, /appastral\/accommodation/);
   assert.equal(member3, null);
   assert.equal(saved[0].termsAccepted, true);
+  assert.equal(answerTo(saved[0], 'Team Name'), 'Team');
+  assert.equal(answerTo(saved[0], 'Full Name', 'Member 2'), 'Ravi');
+  assert.equal(answerTo(saved[0], 'I/We agree to the above terms and declarations'), 'Yes');
+  assert.match(answerTo(saved[0], 'Upload Transaction Screenshot', 'Team Leader'), /appastral\/payments/);
+  assert.equal(saved[0].answers.some((entry) => entry.section === 'Member 3'), false);
 });
 
 test('appastral: missing second member and malformed JSON are rejected', async () => {
@@ -260,6 +318,8 @@ test('protoplanet: registration is saved and the title cannot be overridden', as
   assert.equal(res.status, 200);
   assert.equal(saved[0].projectDetails.projectTitle, 'Robot');
   assert.equal(saved[0].projectDetails.track, 'Hardware');
+  assert.equal(answerTo(saved[0], 'Select Your Track'), 'Hardware');
+  assert.equal(answerTo(saved[0], 'Project Title'), 'Robot');
   assert.match(saved[0].paymentDetails.screenshotUrl, /protoplanet\/payments/);
 });
 
@@ -273,6 +333,10 @@ test('innothon: registration with a base64 screenshot is saved', async () => {
   assert.match((await res.json()).data.registrationId, /^INN-/);
   assert.equal(uploads[0].buffer.equals(PNG), true);
   assert.equal(saved[0].teamMembers.member2.name, 'Ravi');
+  assert.equal(answerTo(saved[0], 'Phone Number (WhatsApp)'), '9000000000');
+  assert.equal(answerTo(saved[0], 'Short Motivation Statement'), 'Because');
+  assert.equal(answerTo(saved[0], 'I consent to photos/videos for publicity'), 'No');
+  assert.match(answerTo(saved[0], 'Upload Transaction Screenshot'), /innothon\/payments/);
   assert.equal(JSON.stringify(saved[0]).includes('base64'), false);
 });
 

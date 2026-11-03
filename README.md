@@ -74,7 +74,8 @@ The API deliberately has no endpoints for reading registrations. Organizers use 
 The dashboard for viewing registrations is a separate static site in its own repository: [Sai-Siv/iet360-admin](https://github.com/Sai-Siv/iet360-admin).
 
 - **Access:** sign-in with a username and password. `firestore.rules` in this repository allows read-only access for accounts marked as admins. To create an account or change a password, run `node scripts/adminUser.js <username>` from the `backend` folder.
-- **Award questions:** `awardQuestions.js` in the dashboard repository is a copy of the question text. Update it if `src/data/awardsData.ts` changes.
+- **Saved answers:** each registration has an `answers` list of `{ section, question, answer }` entries in the order of the form, which the dashboard displays as saved.
+- **Changing a form's questions:** update the wording in that form's model in `backend/src/models/`. For Awards, update `backend/src/data/awardForm.js` to match `src/data/awardsData.ts`; `npm test` in `backend` fails if they differ.
 
 ## Security
 
