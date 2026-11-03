@@ -1,13 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { User, Layers, FileText, CheckCircle } from 'lucide-react';
+import { User, Layers, FileText, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { FormField } from '@/components/awards/FormFields';
+import AwardsPosterModal from '@/components/awards/AwardsPosterModal';
 import { generalInformation, studentAwards, professionalAwards, AwardCategory } from '@/data/awardsData';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { API_BASE_URL } from '@/config/api';
 
 const Awards = () => {
+  const [isPosterOpen, setIsPosterOpen] = useState(true);
+  const closePoster = useCallback(() => setIsPosterOpen(false), []);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -204,6 +207,14 @@ const Awards = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-gray-300 mb-4">
                 Student &amp; Professional Awards &bull; Recognising Excellence, Leadership &amp; Contributions
               </h2>
+              <button
+                type="button"
+                onClick={() => setIsPosterOpen(true)}
+                className="mt-2 inline-flex items-center gap-2 rounded-full border border-[#a046b4]/50 bg-[#a046b4]/10 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#a046b4]/25"
+              >
+                <ImageIcon className="h-4 w-4" />
+                View Awards Poster
+              </button>
             </div>
           </div>
 
@@ -410,6 +421,7 @@ const Awards = () => {
         </div>
       </main>
       <Footer />
+      <AwardsPosterModal open={isPosterOpen} onClose={closePoster} />
     </div>
   );
 };
