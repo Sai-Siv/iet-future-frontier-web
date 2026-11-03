@@ -22,17 +22,6 @@ const Navigation = () => {
         textActive: 'text-[#AAC81E]',
         logoSrc: '/iet_new_logo_green.png'
       };
-    } else if (p.includes('startupsphere')) {
-      return {
-        gradient: 'from-[#EE7520] to-[#671F20]',
-        textHover: 'hover:text-[#EE7520]',
-        text: 'text-[#EE7520]',
-        border: 'border-[#EE7520]/30',
-        shadow: 'shadow-[0_4px_25px_rgba(238,117,32,0.15)]',
-        mobileMenuShadow: 'shadow-[-8px_0_30px_rgba(238,117,32,0.1)]',
-        textActive: 'text-[#EE7520]',
-        logoSrc: '/iet_new_logo_orange.png'
-      };
     } else if (p.includes('appastral') || p.includes('patn')) {
       return {
         gradient: 'from-[#22BBE0] to-[#003A66]',

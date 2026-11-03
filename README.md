@@ -1,100 +1,80 @@
-# IET Hyderabad Local network Future Frontier Web
+# IET 360° Website
 
-## Environment Setup
+Website and registration API for IET 360° (4 & 5 December 2026, VIT-AP University), organized by IET Hyderabad Local Network.
 
-### Backend Setup (.env)
-Create a `.env` file in the `backend` directory with the following variables:
+- **Frontend:** React, TypeScript, Vite and Tailwind, deployed on Vercel
+- **Backend:** Express with an MVC structure, deployed on Render
+- **Services:** Firestore (data), Cloudinary (uploaded files), Resend (confirmation emails)
 
-```env
-PORT=5000
-MONGODB_URI=mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD_HERE@cluster0.p1pxurw.mongodb.net/your_database_name?retryWrites=true&w=majority
-CORS_ORIGIN=http://localhost:8080
+## Project structure
+
+```
+├── src/                     # Frontend
+│   ├── components/          # Shared and page-section components (ui/ holds shadcn primitives)
+│   ├── config/              # API base URL
+│   ├── data/                # Static content, such as the award questions
+│   ├── pages/               # One component per route
+│   └── styles/              # Global CSS
+├── public/                  # Static assets
+├── firestore.rules          # Denies all direct database access
+├── vercel.json              # Frontend routing and security headers
+└── backend/
+    ├── server.js            # Entry point: starts the HTTP server
+    ├── tests/               # API tests (no real external services are called)
+    └── src/
+        ├── app.js           # Express app and middleware order
+        ├── config/          # Environment, CORS, Firebase, Cloudinary
+        ├── routes/          # URL to middleware and controller mapping
+        ├── middlewares/     # Rate limiting, uploads, sanitizing, validation, errors
+        ├── validators/      # Field rules for each registration form
+        ├── controllers/     # Request handling for each event
+        ├── models/          # Record format and Firestore access
+        ├── views/           # JSON responses and the confirmation email
+        ├── services/        # Cloudinary uploads and email sending
+        └── utils/           # Small shared helpers
 ```
 
-Replace `YOUR_PASSWORD_HERE` with your actual MongoDB password.
+A request flows through `routes` → `middlewares` and `validators` → `controllers` → `models` and `services` → `views`.
 
-## Installation
+## Setup
 
-### Frontend
 ```bash
-# Install dependencies
+# Frontend
+cp .env.example .env
 npm install
+npm run dev              # http://localhost:8080
 
-# Start development server
-npm run dev
-```
-
-### Backend
-```bash
-# Navigate to backend directory
+# Backend
 cd backend
-
-# Install dependencies
+cp .env.example .env     # then fill in the values
 npm install
-
-# Start development server
-npm run dev
+npm run dev              # http://localhost:5000
+npm test
 ```
 
-## Available Scripts
+The backend refuses to start if a required environment variable is missing. See [backend/.env.example](backend/.env.example) for the full list.
 
-### Frontend
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
+## API
 
-### Backend
-- `npm run dev` - Start development server with hot reload
-- `npm start` - Start production server
+| Method | Path | Body |
+|--------|------|------|
+| POST | `/api/appastral/register` | Multipart form |
+| POST | `/api/awards/register` | Multipart form |
+| POST | `/api/innothon/register` | JSON, with a base64 screenshot |
+| POST | `/api/patn/register` | JSON |
+| POST | `/api/protoplan/register` | Multipart form |
+| GET | `/health` | None |
 
-## Project Structure
+Responses have the shape `{ "success": boolean, "message": string, "data"?: object }`.
 
-```
-IET Hyderabad Local network-future-frontier-web/
-├── src/                    # Frontend source files
-│   ├── components/        # React components
-│   ├── pages/            # Page components
-│   └── ...
-├── backend/               # Backend source files
-│   ├── models/           # MongoDB models
-│   ├── routes/           # API routes
-│   ├── config/           # Configuration files
-│   └── server.js         # Express server setup
-├── .env                  # Environment variables (frontend)
-└── backend/.env          # Environment variables (backend)
-```
+There are deliberately no endpoints for reading registrations. Organizers view them in the Firebase Console.
 
-## Environment Variables
+## Security
 
-### Backend (.env)
-| Variable | Description | Default |
-|----------|-------------|---------|
-| PORT | Port number for the backend server | 5000 |
-| MONGODB_URI | MongoDB connection string | mongodb+srv://... |
-| CORS_ORIGIN | Allowed origin for CORS | http://localhost:8080 |
+- **Database:** only the backend can access Firestore, through the Admin SDK. `firestore.rules` denies everything else.
+- **Input:** every form is validated on the server, unsafe keys are dropped, and answer sizes are limited.
+- **Uploads:** 10 MB per file, with an allowed-type list. File contents are checked against the declared type.
+- **Abuse protection:** rate limits per IP address, an origin allowlist for CORS, and Helmet security headers.
+- **Errors and logs:** unexpected errors return a generic message, and registrant data is not logged.
 
-## API Endpoints
-
-### Registration
-- **POST** `/api/register`
-  - Register a new participant
-  - Body:
-    ```json
-    {
-      "title": "string",
-      "fullName": "string",
-      "category": "string",
-      "department": "string",
-      "instituteName": "string",
-      "isIETMember": "boolean",
-      "mobileNumber": "string",
-      "emailAddress": "string",
-      "zoneVenue": "string",
-      "youtubeLink": "string"
-    }
-    ```
-
-## Security Notes
-- Never commit `.env` files to version control
-- Keep your MongoDB password secure
-- Use environment variables for all sensitive information
+Never commit `.env` files or Firebase service account keys. Uploaded files are served from public Cloudinary URLs with random names.

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Question } from '@/data/awardsData';
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
 interface FormFieldProps {
   question: Question;
   value: any;
@@ -60,8 +62,26 @@ export const FormField: React.FC<FormFieldProps> = ({ question, value, onChange 
       case 'File Upload':
         return (
           <div className="space-y-2">
-            <input id={`q-${id}`} type="file" onChange={(e) => onChange(e.target.files?.[0] || null)} required={required} className={`${inputClasses} file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500/20 file:text-purple-300 hover:file:bg-purple-500/30`} />
-            <p className="text-xs text-gray-400">Please upload the required documentary proof.</p>
+            {/* A file input resets when the step unmounts, so the kept file must not be required again. */}
+            <input
+              id={`q-${id}`}
+              type="file"
+              accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp,.heic"
+              onChange={(e) => {
+                const file = e.target.files?.[0] || null;
+                if (file && file.size > MAX_FILE_SIZE) {
+                  alert('File size must be less than 10MB');
+                  e.target.value = '';
+                  onChange(null);
+                  return;
+                }
+                onChange(file);
+              }}
+              required={required && !(value instanceof File)}
+              className={`${inputClasses} file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500/20 file:text-purple-300 hover:file:bg-purple-500/30`}
+            />
+            {value instanceof File && <p className="text-xs text-green-400">Selected: {value.name}</p>}
+            <p className="text-xs text-gray-400">Please upload the required documentary proof (PDF, Word or image, up to 10MB).</p>
           </div>
         );
       

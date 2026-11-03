@@ -20,14 +20,14 @@ export interface AwardCategory {
 }
 
 export const generalInformation: Question[] = [
-  { id: 1508358313, title: "Name", type: 'Short Answer', required: false },
-  { id: 6064807, title: "Email Address", type: 'Short Answer', required: false },
-  { id: 62587424, title: "State", type: 'Short Answer', required: false },
-  { id: 952420036, title: "Mobile Number(WhatsApp)", type: 'Short Answer', required: false },
-  { id: 384312110, title: "University/College/Organization Name", type: 'Short Answer', required: false },
-  { id: 1622581677, title: "Are you Currently Member of IET ?", type: 'Multiple Choice', required: false, options: [{ value: "Yes" }, { value: "No" }] },
-  { id: 1608733035, title: "If Yes, Provide Your IET Membership Number If No, NA", type: 'Short Answer', required: false },
-  { id: 1063768476, title: "Category", type: 'Dropdown', required: false, options: [{ value: "Student" }, { value: "Professional" }] },
+  { id: 1508358313, title: "Name", type: 'Short Answer', required: true },
+  { id: 6064807, title: "Email Address", type: 'Short Answer', required: true },
+  { id: 62587424, title: "State", type: 'Short Answer', required: true },
+  { id: 952420036, title: "Mobile Number(WhatsApp)", type: 'Short Answer', required: true },
+  { id: 384312110, title: "University/College/Organization Name", type: 'Short Answer', required: true },
+  { id: 1622581677, title: "Are you Currently Member of IET ?", type: 'Multiple Choice', required: true, options: [{ value: "Yes" }, { value: "No" }] },
+  { id: 1608733035, title: "If Yes, Provide Your IET Membership Number If No, NA", type: 'Short Answer', required: true },
+  { id: 1063768476, title: "Category", type: 'Dropdown', required: true, options: [{ value: "Student" }, { value: "Professional" }] },
 ];
 
 export const studentAwards: AwardCategory[] = [

@@ -60,11 +60,19 @@ const Awards = () => {
   }
 
   const nextStep = () => {
-    if (currentStep === 1 && !categoryValue) {
-      alert('Please select a Category (Student or Professional) before proceeding.');
-      return;
+    if (currentStep === 1) {
+      // The Next button is outside a <form>, so `required` is not enforced by the browser.
+      const missing = generalInformation.filter(q => {
+        if (q.id === 1608733035 && formData['1622581677'] !== 'Yes') return false; // hidden field
+        return q.required && !String(formData[q.id] ?? '').trim();
+      });
+      if (missing.length > 0) {
+        alert(`Please fill in the following before proceeding:\n\n${missing.map(q => `• ${q.title}`).join('\n')}`);
+        return;
+      }
     }
-    
+
+
     if (currentStep === 2) {
       if (isStudent && !formData['student-award-category']) {
         alert('Please select a Student Award Category.');
@@ -93,6 +101,7 @@ const Awards = () => {
       // Append all form data
       Object.keys(formData).forEach(key => {
         const value = formData[key];
+        if (value === null || value === undefined) return; // e.g. file picker cancelled
         if (value instanceof File) {
           submitData.append(key, value, value.name);
         } else if (Array.isArray(value)) {
