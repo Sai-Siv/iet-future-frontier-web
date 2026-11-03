@@ -6,13 +6,99 @@ import {
   Calendar, MapPin, Users, Trophy, Clock,
   Settings, ClipboardCheck, Smartphone, Zap,
   MonitorSmartphone, ShieldCheck, Mail, Phone, LifeBuoy,
-  ArrowUp, Download, CheckCircle2, ChevronRight,
-  FileText, Megaphone, Lock, Bell, Code, MessageSquare, Play, Lightbulb, Presentation, MonitorPlay
+  ArrowUp, CheckCircle2, ChevronRight,
+  FileText, Megaphone, Lock, Bell, Code, MessageSquare, Play, Lightbulb, Presentation, MonitorPlay,
+  Sparkles, Utensils, Coffee
 } from 'lucide-react';
 
 const AppAstralLanding = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [activeScheduleDay, setActiveScheduleDay] = useState<1 | 2>(1);
+
+  const day1Schedule = [
+    {
+      time: '2:00 PM – 2:30 PM',
+      tag: 'Check-In',
+      title: 'Participant Registration and Welcome',
+      desc: 'Check-in, badge collection, verification, and event orientation at VIT-AP University campus.',
+      icon: CheckCircle2
+    },
+    {
+      time: '2:30 PM',
+      tag: 'Sprint Kick-Off',
+      title: 'Problem Statement Reveal',
+      desc: 'Live disclosure of the official competition problem statement. The 24-hour AppAstral app design sprint officially begins!',
+      icon: Sparkles,
+      highlight: true
+    },
+    {
+      time: '4:30 PM – 6:00 PM',
+      tag: 'Round 1 Checkpoint',
+      title: 'Evaluation – Round 1',
+      desc: 'First review round with jury: Problem understanding, system architecture, UI/UX wireframes, and module roadmap.',
+      perk: 'Tea and Snacks will be provided during Evaluation – Round 1',
+      icon: Code
+    },
+    {
+      time: '7:30 PM – 8:30 PM',
+      tag: 'Campus Dinner',
+      title: 'Dinner Break at the Hostel',
+      desc: 'Dinner hosted at the VIT-AP University hostel mess for all participants.',
+      icon: Utensils
+    },
+    {
+      time: '11:00 PM – 12:30 AM (05 Dec)',
+      tag: 'Round 2 Midnight Review',
+      title: 'Evaluation – Round 2',
+      desc: 'Midnight evaluation: Working prototype functionality, API integrations, and code progress review with the panel.',
+      perk: 'Tea and Snacks will be provided during Evaluation – Round 2',
+      icon: MonitorSmartphone,
+      highlight: true
+    }
+  ];
+
+  const day2Schedule = [
+    {
+      time: '3:00 AM',
+      tag: 'Late Night Boost',
+      title: 'Midnight Refreshments – Tea and Snacks',
+      desc: 'Midnight refreshments, hot tea, and energy snacks provided to keep hacking teams going strong through the sprint.',
+      perk: 'Tea and Snacks served to all sprinting teams',
+      icon: Coffee
+    },
+    {
+      time: '6:00 AM – 8:00 AM',
+      tag: 'Morning Break',
+      title: 'Fresh-up Break and Breakfast at the Hostel',
+      desc: 'Fresh-up break and breakfast buffet hosted at the hostel dining facility.',
+      icon: Utensils
+    },
+    {
+      time: '9:00 AM – 10:00 AM',
+      tag: 'Grand Jury Round',
+      title: 'Final Evaluation Round',
+      desc: 'Final round of comprehensive judging: Live application demonstration, design elegance, and technical defense.',
+      perk: 'Snacks and Fruity Drinks will be provided during Final Evaluation',
+      icon: Trophy,
+      highlight: true
+    },
+    {
+      time: '10:30 AM',
+      tag: 'Keynote Session',
+      title: 'Guest Talk for All Participants',
+      desc: 'Special address and keynote talk by invited industry leaders and distinguished guests for all participants.',
+      icon: Presentation
+    },
+    {
+      time: '12:00 PM',
+      tag: 'Valedictory & Awards',
+      title: 'Valedictory Session',
+      desc: 'Grand valedictory ceremony: Announcement of winning teams, presentation of cash prizes, and certificates of excellence.',
+      icon: Zap,
+      highlight: true
+    }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -618,6 +704,126 @@ const AppAstralLanding = () => {
           }
         }
 
+        /* Schedule Tabs & Timeline */
+        .schedule-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          margin-bottom: 32px;
+          flex-wrap: wrap;
+        }
+        .schedule-tab-btn {
+          padding: 14px 28px;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(21, 21, 24, 0.6);
+          color: #A0A0A0;
+          font-weight: 700;
+          font-size: 15px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-family: inherit;
+        }
+        .schedule-tab-btn:hover {
+          color: white;
+          border-color: rgba(34, 187, 224, 0.4);
+          background: rgba(34, 187, 224, 0.08);
+        }
+        .schedule-tab-btn.active {
+          border-color: #22BBE0;
+          background: rgba(34, 187, 224, 0.15);
+          color: #22BBE0;
+          box-shadow: 0 0 25px rgba(34, 187, 224, 0.25);
+        }
+        .timeline-card {
+          background: #151518;
+          border: 1px solid rgba(34, 187, 224, 0.2);
+          border-radius: 14px;
+          padding: 22px 24px;
+          margin-bottom: 16px;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: flex-start;
+          gap: 20px;
+        }
+        .timeline-card:hover {
+          border-color: rgba(34, 187, 224, 0.5);
+          box-shadow: 0 6px 24px rgba(34, 187, 224, 0.12);
+          transform: translateX(4px);
+        }
+        .timeline-card.highlight {
+          border-color: rgba(34, 187, 224, 0.6);
+          background: linear-gradient(90deg, rgba(34, 187, 224, 0.1) 0%, #151518 100%);
+          box-shadow: 0 0 30px rgba(34, 187, 224, 0.15);
+        }
+        .time-badge {
+          background: rgba(34, 187, 224, 0.12);
+          color: #22BBE0;
+          border: 1px solid rgba(34, 187, 224, 0.3);
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 700;
+          white-space: nowrap;
+          min-width: 170px;
+          text-align: center;
+        }
+        .tag-badge {
+          display: inline-block;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-weight: 700;
+          padding: 3px 10px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #A0A0A0;
+          margin-bottom: 6px;
+        }
+        .tag-badge.special {
+          background: rgba(34, 187, 224, 0.2);
+          color: #22BBE0;
+          border: 1px solid rgba(34, 187, 224, 0.4);
+        }
+        .activity-title {
+          font-size: 18px;
+          font-weight: 700;
+          color: #FFFFFF;
+          margin-bottom: 4px;
+        }
+        .activity-desc {
+          font-size: 14px;
+          color: #A0A0A0;
+          margin: 0;
+          line-height: 1.5;
+        }
+        .perk-note {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 10px;
+          font-size: 12px;
+          color: #22BBE0;
+          background: rgba(34, 187, 224, 0.08);
+          padding: 5px 12px;
+          border-radius: 6px;
+          border-left: 3px solid #22BBE0;
+        }
+        @media (max-width: 768px) {
+          .timeline-card {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .time-badge {
+            min-width: auto;
+            width: 100%;
+            text-align: left;
+          }
+        }
+
         /* Animations */
         .app-footer {
           background: #0a0a0c;
@@ -705,14 +911,15 @@ const AppAstralLanding = () => {
             <h1 className="hero-title">APPASTRAL<br />2026</h1>
             <h2 className="hero-subtitle">Build. Create. Transform.</h2>
             <p className="hero-desc">
-              A two-round mobile application development competition organized by IET Hyderabad Local Network.
+              A 24-hour mobile application development competition organized by IET Hyderabad Local Network at VIT-AP University.
               Design innovative applications that solve real-world challenges and build impactful digital solutions.
             </p>
-            <div className="hero-buttons">
+            <div className="hero-buttons" style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <Link to="/appastral/register" className="btn btn-primary">REGISTER NOW</Link>
-              <a href="/IET_Appastral_PPT_Template.pptx" download className="btn btn-outline">
-                <Download size={18} style={{ marginRight: '8px' }} /> DOWNLOAD PPT TEMPLATE
-              </a>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 20px', borderRadius: '8px', background: 'rgba(34, 187, 224, 0.1)', border: '1px solid rgba(34, 187, 224, 0.35)' }}>
+                <Clock size={16} color="#22BBE0" />
+                <span style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 600 }}>Last Date to Register: <span style={{ color: '#22BBE0' }}>20 November 2026</span></span>
+              </div>
             </div>
           </div>
 
@@ -740,16 +947,21 @@ const AppAstralLanding = () => {
           </div>
         </div>
 
-        <div className="grid-5">
+        <div className="grid-5" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
           <div className="glass-card stat-card">
             <Calendar className="stat-icon" size={32} />
-            <h3 className="stat-title">Date</h3>
-            <p className="stat-value">August 22, 2026</p>
+            <h3 className="stat-title">Event Dates</h3>
+            <p className="stat-value">4–5 December 2026</p>
+          </div>
+          <div className="glass-card stat-card" style={{ border: '1px solid rgba(34, 187, 224, 0.5)', background: 'linear-gradient(145deg, rgba(34,187,224,0.08), rgba(21,21,24,0.8))' }}>
+            <Clock className="stat-icon" size={32} />
+            <h3 className="stat-title">Last Date to Register</h3>
+            <p className="stat-value" style={{ color: '#22BBE0' }}>20 November 2026</p>
           </div>
           <div className="glass-card stat-card">
             <MapPin className="stat-icon" size={32} />
             <h3 className="stat-title">Venue</h3>
-            <p className="stat-value">To be Announced</p>
+            <p className="stat-value">VIT-AP University</p>
           </div>
           <div className="glass-card stat-card">
             <Users className="stat-icon" size={32} />
@@ -759,21 +971,21 @@ const AppAstralLanding = () => {
           <div className="glass-card stat-card">
             <Trophy className="stat-icon" size={32} />
             <h3 className="stat-title">Competition Format</h3>
-            <p className="stat-value">Two Rounds</p>
+            <p className="stat-value">24-Hour Sprint (3 Rounds)</p>
           </div>
           <div className="glass-card stat-card">
             <Clock className="stat-icon" size={32} />
             <h3 className="stat-title">Time</h3>
-            <p className="stat-value">To be Announced</p>
+            <p className="stat-value">Starts 2:00 PM (4 Dec)</p>
           </div>
         </div>
       </section>
 
-      {/* Theme Section */}
-      <section id="theme" className="section-container animate-on-scroll">
+      {/* The Challenge Highlights */}
+      <section id="challenge" className="section-container animate-on-scroll">
         <div className="section-title-wrapper">
-          <h2 className="section-title">THEME (COMPULSORY)</h2>
-          <p className="section-subtitle">All teams must develop their mobile application based on the following mandatory modules:</p>
+          <h2 className="section-title">THE CHALLENGE</h2>
+          <p className="section-subtitle">A high-intensity 24-hour mobile app development sprint solving real-world challenges</p>
           <div className="section-divider" style={{ marginTop: '24px' }}>
             <div className="divider-line"></div>
             <div className="divider-dot"></div>
@@ -781,32 +993,101 @@ const AppAstralLanding = () => {
           </div>
         </div>
 
-        <div className="grid-5">
-          <div className="glass-card">
-            <Calendar size={40} color="#22BBE0" style={{ marginBottom: '16px' }} />
-            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>1. Event Calendar</h3>
-            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Filterable real-time listing of events.</p>
+        <div className="grid-3">
+          <div className="glass-card" style={{ padding: '28px' }}>
+            <Sparkles size={36} color="#22BBE0" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '18px', marginBottom: '10px' }}>Problem Statement Reveal</h3>
+            <p style={{ fontSize: '14px', color: '#A0A0A0', lineHeight: 1.6, margin: 0 }}>
+              The official problem statement is revealed live on Day 1 at 2:30 PM. All teams start fresh on equal footing to ideate and create impactful digital solutions.
+            </p>
           </div>
-          <div className="glass-card">
-            <FileText size={40} color="#22BBE0" style={{ marginBottom: '16px' }} />
-            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>2. Event Registration</h3>
-            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Integrated registration portal.</p>
+          <div className="glass-card" style={{ padding: '28px' }}>
+            <Code size={36} color="#22BBE0" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '18px', marginBottom: '10px' }}>24-Hour Intensive Sprint</h3>
+            <p style={{ fontSize: '14px', color: '#A0A0A0', lineHeight: 1.6, margin: 0 }}>
+              Teams design, develop, and test functional mobile applications with continuous support, overnight refreshments, and high-energy developer vibes.
+            </p>
           </div>
-          <div className="glass-card">
-            <Megaphone size={40} color="#22BBE0" style={{ marginBottom: '16px' }} />
-            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>3. Announcements & Results</h3>
-            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Competition updates and results.</p>
+          <div className="glass-card" style={{ padding: '28px' }}>
+            <Trophy size={36} color="#22BBE0" style={{ marginBottom: '16px' }} />
+            <h3 style={{ fontSize: '18px', marginBottom: '10px' }}>3-Round Rigorous Evaluation</h3>
+            <p style={{ fontSize: '14px', color: '#A0A0A0', lineHeight: 1.6, margin: 0 }}>
+              Progress through Round 1 (architecture & wireframes), Round 2 (midnight prototype check), and the Final Evaluation Round before industry judges.
+            </p>
           </div>
-          <div className="glass-card">
-            <Lock size={40} color="#22BBE0" style={{ marginBottom: '16px' }} />
-            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>4. User Authentication</h3>
-            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Secure registration and login.</p>
+        </div>
+      </section>
+
+      {/* Programme Schedule Section */}
+      <section id="schedule" className="section-container animate-on-scroll">
+        <div className="section-title-wrapper">
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 18px', borderRadius: '9999px', background: 'rgba(34, 187, 224, 0.1)', border: '1px solid rgba(34, 187, 224, 0.3)', marginBottom: '16px' }}>
+            <Calendar size={16} color="#22BBE0" />
+            <span style={{ fontSize: '13px', color: '#22BBE0', fontWeight: 700, letterSpacing: '1px' }}>4–5 DECEMBER 2026 • VIT-AP UNIVERSITY</span>
           </div>
-          <div className="glass-card">
-            <Bell size={40} color="#22BBE0" style={{ marginBottom: '16px' }} />
-            <h3 style={{ fontSize: '16px', marginBottom: '8px' }}>5. Notifications</h3>
-            <p style={{ fontSize: '13px', color: '#A0A0A0' }}>Push notifications for reminders and updates.</p>
+          <h2 className="section-title">PROGRAMME SCHEDULE</h2>
+          <p className="section-subtitle">
+            IET 360° App Design Competition — Full 24-hour sprint agenda organized by IET Hyderabad Local Network
+          </p>
+          <div className="section-divider" style={{ marginTop: '24px' }}>
+            <div className="divider-line"></div>
+            <div className="divider-dot"></div>
+            <div className="divider-line"></div>
           </div>
+        </div>
+
+        {/* Schedule Day Selector Tabs */}
+        <div className="schedule-tabs">
+          <button
+            type="button"
+            onClick={() => setActiveScheduleDay(1)}
+            className={`schedule-tab-btn ${activeScheduleDay === 1 ? 'active' : ''}`}
+          >
+            <Clock size={18} />
+            <span>DAY 1 — Friday, 4 December 2026</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveScheduleDay(2)}
+            className={`schedule-tab-btn ${activeScheduleDay === 2 ? 'active' : ''}`}
+          >
+            <Clock size={18} />
+            <span>DAY 2 — Saturday, 5 December 2026</span>
+          </button>
+        </div>
+
+        {/* Schedule Timeline List */}
+        <div>
+          {(activeScheduleDay === 1 ? day1Schedule : day2Schedule).map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <div key={index} className={`timeline-card ${item.highlight ? 'highlight' : ''}`}>
+                <div className="time-badge">
+                  {item.time}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                    <span className={`tag-badge ${item.highlight ? 'special' : ''}`}>
+                      {item.tag}
+                    </span>
+                  </div>
+                  <h3 className="activity-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <IconComponent size={20} color="#22BBE0" style={{ flexShrink: 0 }} />
+                    <span>{item.title}</span>
+                  </h3>
+                  <p className="activity-desc">
+                    {item.desc}
+                  </p>
+                  {item.perk && (
+                    <div className="perk-note">
+                      <span>☕</span>
+                      <span>{item.perk}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -830,23 +1111,23 @@ const AppAstralLanding = () => {
               </li>
               <li>
                 <CheckCircle2 className="checklist-icon" size={20} />
-                <span>Submit official PPT and Figma prototype.</span>
+                <span>Develop and showcase functional mobile application &amp; interactive prototype.</span>
               </li>
               <li>
                 <CheckCircle2 className="checklist-icon" size={20} />
-                <span>Use any framework or API.</span>
+                <span>Use any framework (React Native, Flutter, Kotlin, Swift, etc.) or APIs.</span>
               </li>
               <li>
                 <CheckCircle2 className="checklist-icon" size={20} />
-                <span>Include at least 3 innovative features.</span>
+                <span>Include at least 3 innovative and well-engineered features.</span>
               </li>
               <li>
                 <CheckCircle2 className="checklist-icon" size={20} />
-                <span>Original work only.</span>
+                <span>Original work created during the 24-hour competition duration only.</span>
               </li>
               <li>
                 <CheckCircle2 className="checklist-icon" size={20} />
-                <span>Only shortlisted teams qualify.</span>
+                <span>Teams must participate in all 3 evaluation checkpoints to qualify for awards.</span>
               </li>
             </ul>
           </div>
@@ -865,26 +1146,6 @@ const AppAstralLanding = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Official PPT Section */}
-      <section id="template" className="section-container animate-on-scroll">
-        <div className="glass-card horizontal-banner">
-          <div className="banner-content">
-            <div className="banner-icon">
-              <FileText size={48} strokeWidth={1.5} />
-            </div>
-            <div>
-              <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>OFFICIAL PPT TEMPLATE</h3>
-              <p style={{ color: '#A0A0A0', fontSize: '14px', margin: 0 }}>
-                Download the official template before submission.
-              </p>
-            </div>
-          </div>
-          <a href="/IET_Appastral_PPT_Template.pptx" download className="btn btn-primary" style={{ flexShrink: 0 }}>
-            <Download size={20} style={{ marginRight: '8px' }} /> DOWNLOAD PPT TEMPLATE
-          </a>
         </div>
       </section>
 
@@ -976,11 +1237,11 @@ const AppAstralLanding = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact & Faculty Coordinators Section */}
       <section id="contact" className="section-container animate-on-scroll">
         <div className="section-title-wrapper">
-          <h2 className="section-title">CONTACT</h2>
-          <p className="section-subtitle">Event Coordinators</p>
+          <h2 className="section-title">COORDINATORS &amp; CONTACT</h2>
+          <p className="section-subtitle">Event Faculty Coordinators — VIT-AP University</p>
           <div className="section-divider" style={{ marginTop: '24px' }}>
             <div className="divider-line"></div>
             <div className="divider-dot"></div>
@@ -988,6 +1249,42 @@ const AppAstralLanding = () => {
           </div>
         </div>
 
+        {/* Coordinators Profile Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+          <div className="glass-card" style={{ padding: '28px', border: '1px solid rgba(34, 187, 224, 0.35)', background: 'linear-gradient(145deg, rgba(21,21,24,0.9), rgba(13,13,15,0.95))' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(34, 187, 224, 0.12)', border: '1px solid rgba(34, 187, 224, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22BBE0', flexShrink: 0 }}>
+                <Users size={28} />
+              </div>
+              <div>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#22BBE0', fontWeight: 700 }}>Faculty Coordinator</span>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '4px 0 2px 0', color: '#FFFFFF' }}>Dr. Devulapalli Sudheer</h3>
+                <p style={{ color: '#22BBE0', fontSize: '13px', margin: '0 0 6px 0', fontWeight: 600 }}>Emp ID: 70641</p>
+                <p style={{ color: '#E0E0E0', fontSize: '14px', margin: '0 0 4px 0' }}>Assistant Professor - Senior Grade – 2</p>
+                <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 2px 0' }}>School of Computer Science and Engineering (SCOPE)</p>
+                <p style={{ color: '#888888', fontSize: '12px', margin: 0 }}>VIT-AP University – Amaravathi</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="glass-card" style={{ padding: '28px', border: '1px solid rgba(34, 187, 224, 0.35)', background: 'linear-gradient(145deg, rgba(21,21,24,0.9), rgba(13,13,15,0.95))' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(34, 187, 224, 0.12)', border: '1px solid rgba(34, 187, 224, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22BBE0', flexShrink: 0 }}>
+                <Users size={28} />
+              </div>
+              <div>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#22BBE0', fontWeight: 700 }}>Faculty Coordinator</span>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '4px 0 2px 0', color: '#FFFFFF' }}>Dr. Karrothu Aravind</h3>
+                <p style={{ color: '#22BBE0', fontSize: '13px', margin: '0 0 6px 0', fontWeight: 600 }}>Emp ID: 70740</p>
+                <p style={{ color: '#E0E0E0', fontSize: '14px', margin: '0 0 4px 0' }}>Assistant Professor - Senior Grade – 2</p>
+                <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 2px 0' }}>School of Computer Science and Engineering (SCOPE)</p>
+                <p style={{ color: '#888888', fontSize: '12px', margin: 0 }}>VIT-AP University – Amaravathi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* General Support & Venue Contacts */}
         <div className="grid-3">
           <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <Mail size={32} color="#22BBE0" strokeWidth={1.5} />
@@ -997,17 +1294,17 @@ const AppAstralLanding = () => {
             </div>
           </div>
           <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <Phone size={32} color="#22BBE0" strokeWidth={1.5} />
+            <MapPin size={32} color="#22BBE0" strokeWidth={1.5} />
             <div>
-              <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Phone (Arpitha)</p>
-              <p style={{ margin: 0, fontWeight: 500 }}>+91 98765 43210</p>
+              <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Location</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>VIT-AP University, Amaravati</p>
             </div>
           </div>
           <div className="glass-card" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <LifeBuoy size={32} color="#22BBE0" strokeWidth={1.5} />
             <div>
               <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 4px 0' }}>Support</p>
-              <p style={{ margin: 0, fontWeight: 500 }}>For technical issues</p>
+              <p style={{ margin: 0, fontWeight: 500 }}>Technical &amp; Registration Inquiries</p>
             </div>
           </div>
         </div>

@@ -408,7 +408,7 @@ const InnothonRegistration = () => {
 
           <div className="text-center mb-16 pt-8">
             <div className="inline-flex items-center gap-2 backdrop-blur-sm border rounded-full px-4 py-2 mb-6" style={{ background: '#AAC81E', borderColor: '#AAC81E' }}>
-              <span className="text-sm text-black font-semibold">🚀 Innovation Challenge 2025</span>
+              <span className="text-sm text-black font-semibold">🚀 Ideathon &amp; Innovation Challenge 2026</span>
             </div>
 
             <div className="mb-6">
@@ -417,19 +417,19 @@ const InnothonRegistration = () => {
                 <span style={{ color: '#AAC81E' }}>thon</span>
               </h1>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-300 mb-4">
-                Innovation & Entrepreneurship Challenge
+                Innovation &amp; Entrepreneurship Challenge 2026
               </h2>
             </div>
 
             <div className="flex items-center justify-center gap-2 mb-6">
               <span className="inline-flex items-center gap-2 text-white">
                 <span className="text-xl">💡</span>
-                Innovate. Collaborate. Create.
+                Think. Innovate. Transform.
               </span>
             </div>
 
             <div className="inline-flex items-center gap-2 backdrop-blur-sm border rounded-full px-6 py-3" style={{ background: '#AAC81E', borderColor: '#AAC81E' }}>
-              <span className="text-black font-medium">Registration Deadline: 15 August 2025</span>
+              <span className="text-black font-semibold">Event Dates: 4–5 December 2026 | Registration Deadline: 20 November 2026</span>
             </div>
           </div>
 

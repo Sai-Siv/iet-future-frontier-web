@@ -844,7 +844,7 @@ const AppAstral = () => {
                 <span style={{ color: '#22bbe0' }}>Astral</span>
               </h1>
               <h2 className="text-2xl md:text-3xl font-bold text-gray-300 mb-4">
-                Mobile App Design & Innovation Sprint 2025
+                Mobile App Design & Innovation Sprint 2026
               </h2>
             </div>
 
@@ -856,7 +856,7 @@ const AppAstral = () => {
             </div>
 
             <div className="inline-flex items-center gap-2 backdrop-blur-sm border rounded-full px-6 py-3" style={{ background: '#003A66', borderColor: '#22bbe0', borderWidth: 1 }}>
-              <span className="text-white font-medium">Registration Deadline: 15 August 2025</span>
+              <span className="text-white font-medium">Event Dates: 4–5 December 2026 | Registration Deadline: 20 November 2026</span>
             </div>
           </div>
 
