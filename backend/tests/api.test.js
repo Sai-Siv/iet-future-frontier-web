@@ -26,7 +26,6 @@ const { default: cloudinary } = await import('../src/config/cloudinary.js');
 const { AppAstralModel } = await import('../src/models/AppAstralModel.js');
 const { AwardsModel } = await import('../src/models/AwardsModel.js');
 const { InnothonModel } = await import('../src/models/InnothonModel.js');
-const { PatnModel } = await import('../src/models/PatnModel.js');
 const { ProtoPlanetModel } = await import('../src/models/ProtoPlanetModel.js');
 const { renderConfirmationEmail } = await import('../src/views/emails/confirmationEmail.js');
 const { normalizePrivateKey } = await import('../src/utils/privateKey.js');
@@ -39,7 +38,6 @@ let server;
 let base;
 let saved;
 let uploads;
-let patnEmailExists;
 
 before(async () => {
   cloudinary.uploader.upload_stream = (options, callback) => ({
@@ -48,13 +46,12 @@ before(async () => {
       callback(null, { secure_url: `https://cdn.test/${options.folder}/${uploads.length}` });
     },
   });
-  for (const Model of [AppAstralModel, AwardsModel, InnothonModel, PatnModel, ProtoPlanetModel]) {
+  for (const Model of [AppAstralModel, AwardsModel, InnothonModel, ProtoPlanetModel]) {
     Model.create = async (entity) => {
       saved.push(entity);
       return entity;
     };
   }
-  PatnModel.existsByEmail = async () => patnEmailExists;
   await new Promise((resolve) => {
     server = app.listen(0, resolve);
   });
@@ -66,7 +63,6 @@ after(() => server.close());
 beforeEach(() => {
   saved = [];
   uploads = [];
-  patnEmailExists = false;
 });
 
 const postJson = (path, body) =>
@@ -114,17 +110,6 @@ const INNOTHON = {
   transactionId: 'TXN1',
   member2: { name: 'Ravi', email: 'ravi@example.com' },
   transactionScreenshot: `data:image/png;base64,${PNG.toString('base64')}`,
-};
-
-const PATN = {
-  title: 'Mr',
-  fullName: 'Asha',
-  department: 'CSE',
-  instituteName: 'VIT-AP',
-  isIETMember: 'no',
-  mobileNumber: '9000000000',
-  emailAddress: 'asha@example.com',
-  youtubeLink: 'https://youtu.be/abc',
 };
 
 const TEAM = {
@@ -219,6 +204,10 @@ test('uploads: disallowed type, disguised content, bad field and oversize are re
       111: { buffer: Buffer.from('<html><script>alert(1)</script>%PDF-1.4</html>'), type: 'application/pdf', name: 'x.pdf' },
     },
     'non-question field name': { evil: pdf },
+    'Word document': { 111: { buffer: Buffer.from([0x50, 0x4b, 0x03, 0x04, 0, 0]), type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', name: 'x.docx' } },
+    'old Word document': { 111: { buffer: Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0, 0]), type: 'application/msword', name: 'x.doc' } },
+    'WEBP image': { 111: { buffer: Buffer.from('RIFF0000WEBPVP8 '), type: 'image/webp', name: 'x.webp' } },
+    'HEIC image': { 111: { buffer: Buffer.from('0000ftypheic0000'), type: 'image/heic', name: 'x.heic' } },
     oversize: {
       111: { buffer: Buffer.concat([PDF, Buffer.alloc(10 * 1024 * 1024)]), type: 'application/pdf', name: 'big.pdf' },
     },
@@ -229,6 +218,13 @@ test('uploads: disallowed type, disguised content, bad field and oversize are re
   }
   assert.equal(uploads.length, 0);
   assert.equal(saved.length, 0);
+});
+
+test('awards: PDF, PNG and JPEG files are all accepted', async () => {
+  const jpeg = { buffer: Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 0]), type: 'image/jpeg', name: 'x.jpg' };
+  const res = await postForm('/api/awards/register', AWARD_ANSWERS, { 1: pdf, 2: png, 3: jpeg });
+  assert.equal(res.status, 200);
+  assert.equal(uploads.length, 3);
 });
 
 test('appastral: registration with payment and accommodation files is saved', async () => {
@@ -283,6 +279,7 @@ test('innothon: registration with a base64 screenshot is saved', async () => {
 test('innothon: bad screenshots are rejected', async () => {
   const bad = [
     undefined,
+    `data:image/webp;base64,${Buffer.from('RIFF0000WEBPVP8 ').toString('base64')}`,
     `data:image/svg+xml;base64,${HTML.toString('base64')}`,
     `data:image/png;base64,${HTML.toString('base64')}`,
     `data:image/png;base64,${Buffer.concat([PNG, Buffer.alloc(10 * 1024 * 1024)]).toString('base64')}`,
@@ -312,34 +309,26 @@ test('malformed JSON gets a clean 400', async () => {
   assert.deepEqual(await res.json(), { success: false, message: 'The submitted data is not valid.' });
 });
 
-test('patn: registration is saved with the normalized institution', async () => {
-  const res = await postJson('/api/patn/register', { ...PATN, isIETMember: 'yes', ietMembershipId: 'M123' });
-  assert.equal(res.status, 201);
-  assert.equal(saved[0].participantDetails.institutionName, 'VIT-AP');
-  assert.equal(saved[0].participantDetails.ietMembershipId, 'M123');
-});
-
-test('patn: duplicate email and non-YouTube links are rejected', async () => {
-  assert.equal((await postJson('/api/patn/register', { ...PATN, youtubeLink: 'https://evil.example/x' })).status, 400);
-  patnEmailExists = true;
-  const res = await postJson('/api/patn/register', PATN);
-  assert.equal(res.status, 400);
-  assert.match((await res.json()).message, /already registered/);
+test('patn: registration is closed', async () => {
+  const res = await postJson('/api/patn/register', { fullName: 'Asha', emailAddress: 'asha@example.com' });
+  assert.equal(res.status, 403);
+  assert.match((await res.json()).message, /registration is closed/);
+  assert.equal(saved.length, 0);
 });
 
 test('unexpected errors do not leak details', async () => {
-  const original = PatnModel.create;
+  const original = InnothonModel.create;
   const consoleError = console.error;
   console.error = () => {};
-  PatnModel.create = async () => {
+  InnothonModel.create = async () => {
     throw new Error('secret firestore path');
   };
   try {
-    const res = await postJson('/api/patn/register', PATN);
+    const res = await postJson('/api/innothon/register', INNOTHON);
     assert.equal(res.status, 500);
     assert.equal(JSON.stringify(await res.json()).includes('secret'), false);
   } finally {
-    PatnModel.create = original;
+    InnothonModel.create = original;
     console.error = consoleError;
   }
 });

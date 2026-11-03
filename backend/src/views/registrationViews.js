@@ -20,13 +20,5 @@ export const renderInnothonSuccess = (res, entity) =>
     submittedAt: entity.submittedAt,
   });
 
-export const renderPatnSuccess = (res, entity) =>
-  renderSuccess(
-    res,
-    'Registration successful',
-    { registrationId: entity.registrationId, email: entity.participantDetails?.emailAddress },
-    201
-  );
-
 export const renderAwardsSuccess = (res, entity) =>
   renderSuccess(res, 'Application submitted successfully', { registrationId: entity.registrationId });

@@ -2,12 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Index from "./pages/Index";
 import PATN from "./pages/PATN";
-import PATNRegistration from "./pages/PATNRegistration";
 import ProtoPlanetLanding from "./pages/ProtoPlanetLanding";
 import ProtoPlanet from "./pages/ProtoPlanet";
 import NotFound from "./pages/NotFound";
@@ -35,7 +34,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Index /></PageTransition>} />
         <Route path="/patn" element={<PageTransition><PATN /></PageTransition>} />
-        <Route path="/patn/register" element={<PageTransition><PATNRegistration /></PageTransition>} />
+        <Route path="/patn/register" element={<Navigate to="/patn" replace />} />
         {/* PROTOPLANET ROUTES - ACTIVE */}
         <Route path="/protoplanet" element={<PageTransition><ProtoPlanetLanding /></PageTransition>} />
         <Route path="/protoplanet/register" element={<PageTransition><ProtoPlanet /></PageTransition>} />

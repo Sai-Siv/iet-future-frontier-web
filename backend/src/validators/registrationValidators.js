@@ -43,24 +43,6 @@ export const innothonRules = [
   requiredText('transactionId', 'Transaction ID'),
 ];
 
-// Same pattern the registration form applies in the browser.
-const YOUTUBE_URL = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
-
-export const patnRules = [
-  // The form sends instituteName, while stored records use institutionName.
-  body('institutionName').customSanitizer((value, { req }) => value || req.body.instituteName),
-  requiredText('title', 'Title'),
-  requiredText('fullName', 'Full name'),
-  requiredText('department', 'Department'),
-  requiredText('institutionName', 'Institution name'),
-  body('isIETMember').exists({ values: 'falsy' }).withMessage('IET membership status is required'),
-  requiredText('mobileNumber', 'Mobile number'),
-  requiredEmail('emailAddress', 'Email address'),
-  requiredText('youtubeLink', 'YouTube link')
-    .bail()
-    .matches(YOUTUBE_URL).withMessage('YouTube link must be a valid YouTube URL'),
-];
-
 export const awardsRules = [
   requiredText(Q.name, 'Name'),
   requiredEmail(Q.email, 'Email address'),

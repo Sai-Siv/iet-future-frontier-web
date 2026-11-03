@@ -85,7 +85,7 @@ const Preloader = () => {
             {/* IET Logo - Moves Left or Top */}
             <motion.div
               initial={{ opacity: 0, scale: 0.6, x: 0, y: 0 }}
-              animate={{ opacity: 1, scale: 1, x: isMobile ? 0 : -160, y: isMobile ? -80 : 0 }}
+              animate={{ opacity: 1, scale: 1, x: isMobile ? 0 : -120, y: isMobile ? -80 : 0 }}
               transition={{
                 opacity: { duration: 0.5, ease: "easeOut" },
                 scale: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] },
@@ -114,6 +114,33 @@ const Preloader = () => {
                 className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-light"
               >
                 IET
+              </motion.span>
+            </motion.div>
+
+            {/* VIT-AP Logo - Emerges from behind IET and moves Right or Bottom */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6, x: 0, y: 0 }}
+              animate={{ opacity: 1, scale: 1, x: isMobile ? 0 : 200, y: isMobile ? 80 : 0 }}
+              transition={{
+                opacity: { delay: 1.2, duration: 0.5, ease: "easeOut" },
+                scale: { delay: 1.2, duration: 1.1, ease: [0.25, 0.9, 0.4, 1] },
+                x: { delay: 1.2, duration: 1.1, ease: [0.25, 0.9, 0.4, 1] },
+                y: { delay: 1.2, duration: 1.1, ease: [0.25, 0.9, 0.4, 1] }
+              }}
+              className="absolute z-0 flex flex-col items-center gap-2"
+            >
+              <img
+                src="/vitap_logo.png"
+                alt="VIT-AP University Logo"
+                className="h-16 md:h-20 object-contain"
+              />
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 0.7, y: 0 }}
+                transition={{ delay: 1.8, duration: 0.5 }}
+                className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-light"
+              >
+                VIT-AP
               </motion.span>
             </motion.div>
 

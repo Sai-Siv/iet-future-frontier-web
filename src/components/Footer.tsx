@@ -19,7 +19,13 @@ const Footer = () => {
                 <img
                   src="/iet_new_logo_purple.png"
                   alt="IET Logo"
-                  className="h-12 w-auto object-contain drop-shadow-lg"
+                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-lg"
+                />
+                <span className="w-px h-10 bg-white/20" aria-hidden="true"></span>
+                <img
+                  src="/vitap_logo.png"
+                  alt="VIT-AP University Logo"
+                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-lg"
                 />
               </div>
               <p className="text-white/70 text-base leading-relaxed mb-6 max-w-sm">

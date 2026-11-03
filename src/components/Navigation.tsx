@@ -177,7 +177,13 @@ const Navigation = () => {
                   <img
                     src={theme.logoSrc}
                     alt="IET Logo"
-                    className="h-10 w-auto object-contain drop-shadow-md"
+                    className="h-7 sm:h-10 w-auto object-contain drop-shadow-md"
+                  />
+                  <span className="w-px h-7 sm:h-9 bg-white/20" aria-hidden="true"></span>
+                  <img
+                    src="/vitap_logo.png"
+                    alt="VIT-AP University Logo"
+                    className="h-7 sm:h-10 w-auto object-contain drop-shadow-md"
                   />
                 </Link>
 

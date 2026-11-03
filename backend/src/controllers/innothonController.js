@@ -12,7 +12,7 @@ const decodeScreenshot = (dataUrl) => {
 
   const [prefix, mimetype] = match;
   if (!IMAGE_TYPES.includes(mimetype)) {
-    throw new HttpError(400, 'Only PNG, JPG or WEBP files are allowed.');
+    throw new HttpError(400, 'Only PNG, JPG or JPEG files are allowed.');
   }
 
   const buffer = Buffer.from(dataUrl.slice(prefix.length), 'base64');

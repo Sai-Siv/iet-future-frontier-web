@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ScrollReveal from 'scrollreveal';
 import { Calendar, MapPin, Trophy } from 'lucide-react';
 
 const PATNHeroSection = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     // Configure ScrollReveal animations
     ScrollReveal().reveal('.patn-event-badge', {
@@ -230,8 +227,8 @@ const PATNHeroSection = () => {
               <span> Muffakham Jah College of Engineering and Technology, Hyderabad </span>
             </div>
           </div>
-          <button className="patn-btn-register" onClick={() => navigate('/patn/register')}>
-            Register Now - Free Entry
+          <button className="patn-btn-register" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+            Registration Closed
           </button>
         </div>
       </div>

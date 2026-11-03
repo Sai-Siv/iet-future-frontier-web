@@ -18,12 +18,12 @@ const createUpload = ({ allowedTypes, typeLabel, maxFiles, isAllowedField = () =
   });
 
 export const imageUpload = (maxFiles = 1) =>
-  createUpload({ allowedTypes: IMAGE_TYPES, typeLabel: 'PNG, JPG or WEBP', maxFiles });
+  createUpload({ allowedTypes: IMAGE_TYPES, typeLabel: 'PNG, JPG or JPEG', maxFiles });
 
 // Award questions are identified by numeric IDs, which are used as the file field names.
 export const awardDocumentUpload = createUpload({
   allowedTypes: DOCUMENT_TYPES,
-  typeLabel: 'PDF, Word, or image',
+  typeLabel: 'PDF, PNG, JPG or JPEG',
   maxFiles: 20,
   isAllowedField: (name) => /^\d{1,15}$/.test(name),
 });

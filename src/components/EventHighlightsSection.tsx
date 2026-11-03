@@ -33,7 +33,7 @@ const EventHighlightsSection = () => {
       category: 'Presentation Competition',
       desc: 'A global competition that challenges participants to demonstrate their presentation skills and technical knowledge. Open to all years and streams of Engineering.',
       icon: Presentation,
-      badge: 'Free Entry',
+      badge: 'Registration Closed',
       href: '/patn'
     },
     {

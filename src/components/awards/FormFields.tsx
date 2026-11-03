@@ -2,6 +2,7 @@ import React from 'react';
 import { Question } from '@/data/awardsData';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const ALLOWED_FILE_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 
 interface FormFieldProps {
   question: Question;
@@ -66,9 +67,15 @@ export const FormField: React.FC<FormFieldProps> = ({ question, value, onChange 
             <input
               id={`q-${id}`}
               type="file"
-              accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp,.heic"
+              accept=".pdf,.png,.jpg,.jpeg"
               onChange={(e) => {
                 const file = e.target.files?.[0] || null;
+                if (file && !ALLOWED_FILE_TYPES.includes(file.type)) {
+                  alert('Only PDF, JPG, JPEG or PNG files are allowed');
+                  e.target.value = '';
+                  onChange(null);
+                  return;
+                }
                 if (file && file.size > MAX_FILE_SIZE) {
                   alert('File size must be less than 10MB');
                   e.target.value = '';
@@ -81,7 +88,7 @@ export const FormField: React.FC<FormFieldProps> = ({ question, value, onChange 
               className={`${inputClasses} file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500/20 file:text-purple-300 hover:file:bg-purple-500/30`}
             />
             {value instanceof File && <p className="text-xs text-green-400">Selected: {value.name}</p>}
-            <p className="text-xs text-gray-400">Please upload the required documentary proof (PDF, Word or image, up to 10MB).</p>
+            <p className="text-xs text-gray-400">Please upload the required documentary proof (PDF, JPG, JPEG or PNG, up to 10MB).</p>
           </div>
         );
       

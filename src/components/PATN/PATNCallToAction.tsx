@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { useNavigate } from 'react-router-dom';
 
 const PATNCallToAction: React.FC = () => {
-  const navigate = useNavigate();
   useEffect(() => {
     ScrollReveal().reveal('.patn-container', {
       origin: 'bottom',
@@ -14,10 +12,6 @@ const PATNCallToAction: React.FC = () => {
       reset: false,
     });
   }, []);
-
-  const handleRegisterClick = () => {
-    window.location.href = 'patnregistration.html';
-  };
 
   return (
     <>
@@ -70,12 +64,12 @@ const PATNCallToAction: React.FC = () => {
       </style>
 
       <div className="patn-container">
-        <h1 className="patn-title">Ready to Showcase Your Talent?</h1>
+        <h1 className="patn-title">PATN 2026 Registration Has Closed</h1>
         <p className="patn-lead">
-          Join passionate engineers from across Andhra Pradesh, Telangana, and Chhattisgarh in this exciting knowledge-sharing competition
+          The registration deadline was July 21, 2026. New registrations are no longer being accepted.
         </p>
-        <button className="patn-btn-register" onClick={() => navigate('/patn/register')}>
-            Register Now - Free Entry
+        <button className="patn-btn-register" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+            Registration Closed
           </button>
         
       </div>

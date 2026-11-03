@@ -61,7 +61,7 @@ The backend refuses to start if a required environment variable is missing. See 
 | POST | `/api/appastral/register` | Multipart form |
 | POST | `/api/awards/register` | Multipart form |
 | POST | `/api/innothon/register` | JSON, with a base64 screenshot |
-| POST | `/api/patn/register` | JSON |
+| POST | `/api/patn/register` | Closed: always returns 403 |
 | POST | `/api/protoplan/register` | Multipart form |
 | GET | `/health` | None |
 
@@ -73,7 +73,7 @@ There are deliberately no endpoints for reading registrations. Organizers view t
 
 - **Database:** only the backend can access Firestore, through the Admin SDK. `firestore.rules` denies everything else.
 - **Input:** every form is validated on the server, unsafe keys are dropped, and answer sizes are limited.
-- **Uploads:** 10 MB per file, with an allowed-type list. File contents are checked against the declared type.
+- **Uploads:** only PDF, JPG, JPEG and PNG, up to 10 MB per file. Payment screenshots must be images. File contents are checked against the declared type.
 - **Abuse protection:** rate limits per IP address, an origin allowlist for CORS, and Helmet security headers.
 - **Errors and logs:** unexpected errors return a generic message, and registrant data is not logged.
 

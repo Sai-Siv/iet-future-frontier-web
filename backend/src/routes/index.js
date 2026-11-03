@@ -6,7 +6,6 @@ import {
   appAstralRules,
   awardsRules,
   innothonRules,
-  patnRules,
   protoPlanetRules,
 } from '../validators/registrationValidators.js';
 import { APPASTRAL_FILE_FIELDS, registerAppAstral } from '../controllers/appAstralController.js';
@@ -49,7 +48,7 @@ router.post(
   registerInnothon
 );
 
-router.post('/patn/register', sanitizeBody(), patnRules, validate, registerPatn);
+router.post('/patn/register', registerPatn);
 
 router.post(
   '/protoplan/register',
