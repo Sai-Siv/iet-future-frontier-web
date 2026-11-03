@@ -16,7 +16,7 @@ Website and registration API for IET 360° (4 & 5 December 2026, VIT-AP Universi
 │   ├── pages/               # One component per route
 │   └── styles/              # Global CSS
 ├── public/                  # Static assets
-├── firestore.rules          # Denies all direct database access
+├── firestore.rules          # Read-only access for approved admins, everything else denied
 ├── vercel.json              # Frontend routing and security headers
 └── backend/
     ├── server.js            # Entry point: starts the HTTP server
@@ -67,11 +67,18 @@ The backend refuses to start if a required environment variable is missing. See 
 
 Responses have the shape `{ "success": boolean, "message": string, "data"?: object }`.
 
-There are deliberately no endpoints for reading registrations. Organizers view them in the Firebase Console.
+The API deliberately has no endpoints for reading registrations. Organizers use the admin dashboard.
+
+## Admin dashboard
+
+The dashboard for viewing registrations is a separate static site in its own repository: [Sai-Siv/iet360-admin](https://github.com/Sai-Siv/iet360-admin).
+
+- **Access:** sign-in with a username and password. `firestore.rules` in this repository allows read-only access for accounts marked as admins. To create an account or change a password, run `node scripts/adminUser.js <username>` from the `backend` folder.
+- **Award questions:** `awardQuestions.js` in the dashboard repository is a copy of the question text. Update it if `src/data/awardsData.ts` changes.
 
 ## Security
 
-- **Database:** only the backend can access Firestore, through the Admin SDK. `firestore.rules` denies everything else.
+- **Database:** only the backend can write to Firestore, through the Admin SDK. `firestore.rules` allows read-only access for admin accounts and denies everything else.
 - **Input:** every form is validated on the server, unsafe keys are dropped, and answer sizes are limited.
 - **Uploads:** only PDF, JPG, JPEG and PNG, up to 10 MB per file. Payment screenshots must be images. File contents are checked against the declared type.
 - **Abuse protection:** rate limits per IP address, an origin allowlist for CORS, and Helmet security headers.

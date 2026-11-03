@@ -1,12 +1,19 @@
 rules_version = '2';
 
-// All reads and writes go through the backend, which uses the Firebase Admin SDK.
-// The Admin SDK is not subject to these rules, so nothing else needs direct access.
-// Publish only AFTER the Admin SDK backend is deployed, or registrations will fail.
+// The website saves registrations through the backend (Firebase Admin SDK), which these
+// rules do not apply to. The only direct access is read-only, for the admin dashboard,
+// and only for username and password accounts marked as admins by backend/scripts/adminUser.js.
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'password'
+        && request.auth.token.admin == true;
+    }
+
     match /{document=**} {
-      allow read, write: if false;
+      allow read: if isAdmin();
+      allow write: if false;
     }
   }
 }
