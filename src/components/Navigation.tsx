@@ -84,7 +84,8 @@ const Navigation = () => {
       hasDropdown: true,
       dropdownItems: [
         { name: 'InnoThon', href: '/innothon' },
-        { name: 'AppAstral', href: '/appastral' }
+        { name: 'AppAstral', href: '/appastral' },
+        { name: 'PATN', href: '/patn' }
       ]
     },
     { name: 'Awards', href: '/awards' },

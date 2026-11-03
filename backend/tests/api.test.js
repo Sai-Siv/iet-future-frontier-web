@@ -313,9 +313,10 @@ test('malformed JSON gets a clean 400', async () => {
 });
 
 test('patn: registration is saved with the normalized institution', async () => {
-  const res = await postJson('/api/patn/register', PATN);
+  const res = await postJson('/api/patn/register', { ...PATN, isIETMember: 'yes', ietMembershipId: 'M123' });
   assert.equal(res.status, 201);
   assert.equal(saved[0].participantDetails.institutionName, 'VIT-AP');
+  assert.equal(saved[0].participantDetails.ietMembershipId, 'M123');
 });
 
 test('patn: duplicate email and non-YouTube links are rejected', async () => {

@@ -27,6 +27,7 @@ export class PatnModel extends RegistrationModel {
         department: body.department,
         institutionName: body.institutionName,
         isIETMember: body.isIETMember,
+        ietMembershipId: body.ietMembershipId || '',
         mobileNumber: body.mobileNumber,
         emailAddress: body.emailAddress,
       },

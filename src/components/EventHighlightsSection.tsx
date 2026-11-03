@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Lightbulb, Smartphone, Users, Trophy, Music, 
-  Award, Sparkles, CheckCircle2, ArrowRight, ExternalLink, Calendar, MapPin
+  Award, Sparkles, CheckCircle2, ArrowRight, ExternalLink, Calendar, MapPin, Presentation
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -26,6 +26,15 @@ const EventHighlightsSection = () => {
       icon: Smartphone,
       badge: '24-Hr Hackathon',
       href: '/appastral'
+    },
+    {
+      id: 'patn',
+      title: 'PATN (Present Around The Network)',
+      category: 'Presentation Competition',
+      desc: 'A global competition that challenges participants to demonstrate their presentation skills and technical knowledge. Open to all years and streams of Engineering.',
+      icon: Presentation,
+      badge: 'Free Entry',
+      href: '/patn'
     },
     {
       id: 'industry-talk',
