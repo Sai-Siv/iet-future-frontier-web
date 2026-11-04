@@ -406,7 +406,7 @@ const Awards = () => {
                 </div>
                 <h2 className="text-3xl font-bold text-white">Application Submitted!</h2>
                 <p className="text-lg text-gray-400 max-w-md mx-auto">
-                  Thank you for applying to the FTC Awards 2025. We have received your application and will review it shortly.
+                  Thank you for applying to the IET HLN Achievement Awards 2026. We have received your application and will review it shortly.
                 </p>
                 <button 
                   onClick={() => window.location.reload()} 
