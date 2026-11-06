@@ -1,9 +1,11 @@
 import React, { useState, useRef, FormEvent } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Users, UserPlus, Smartphone, CreditCard, CheckCircle, Copy, Linkedin, Mail, Phone, User, Book, Briefcase, MessageSquare, Shield } from 'lucide-react';
+import { Users, UserPlus, Smartphone, CreditCard, CheckCircle, Copy, Linkedin, Mail, Phone, User, Book, Briefcase, MessageSquare, MessageCircle, Shield } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { API_BASE_URL } from '@/config/api';
+
+const INNOTHON_WHATSAPP_URL = 'https://chat.whatsapp.com/Gd8NdRbcYkhFRwbfGz7TH7';
 
 interface TeamMember {
   name: string;
@@ -504,6 +506,27 @@ const InnothonRegistration = () => {
               {!isMobile && <span>Payment</span>}
             </button>
           </div>
+
+          {/* WhatsApp Group Banner */}
+          {currentStep !== 'confirmation' && (
+            <div className="w-full max-w-4xl mx-auto mb-8 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-full bg-[#25D366]/20 flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="w-6 h-6 text-[#25D366]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-white">Join the Innothon WhatsApp Group</p>
+                <p className="text-sm text-gray-300">Please join the official WhatsApp group for more information and the latest updates.</p>
+              </div>
+              <a
+                href={INNOTHON_WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] hover:bg-[#1ebe5b] text-black font-semibold transition-colors flex-shrink-0 w-full sm:w-auto"
+              >
+                <MessageCircle className="w-4 h-4" /> Join Group
+              </a>
+            </div>
+          )}
 
           {/* Form Section */}
           <div className={`bg-[#000] backdrop-blur-sm rounded-2xl p-4 sm:p-8 md:p-12 shadow-[0_19px_38px_#AAC81E,0_15px_12px_#AAC81E] w-full max-w-4xl mx-auto overflow-x-auto min-h-[650px] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
@@ -1341,7 +1364,7 @@ const InnothonRegistration = () => {
                     <CheckCircle className="w-16 h-16 text-[#AAC81E]" />
                   </div>
                   <h2 className="text-3xl font-bold text-white mb-2">Registration Successful!</h2>
-                  <p className="text-gray-300 mb-6">Thank you for registering for Innothon 2025</p>
+                  <p className="text-gray-300 mb-6">Thank you for registering for Innothon 2026</p>
                 </div>
 
                 <div className="bg-white/5 rounded-xl p-6 mb-8 border border-[#AAC81E]/30">
@@ -1383,9 +1406,17 @@ const InnothonRegistration = () => {
                     </li>
                     <li className="flex gap-2 items-start">
                       <span className="text-[#AAC81E] mt-1">•</span>
-                      <span>Join our WhatsApp group for updates (link in your email)</span>
+                      <span>Join our WhatsApp group for more information and updates</span>
                     </li>
                   </ul>
+                  <a
+                    href={INNOTHON_WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#25D366] hover:bg-[#1ebe5b] text-black font-semibold transition-colors"
+                  >
+                    <MessageCircle className="w-5 h-5" /> Join the Innothon WhatsApp Group
+                  </a>
                 </div>
 
                 <div className="mt-12">
