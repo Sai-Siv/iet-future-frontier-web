@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { imageUpload, awardDocumentUpload, verifyFileContents } from '../middlewares/upload.js';
 import { sanitizeBody, parseJsonFields, parseJsonLikeFields } from '../middlewares/sanitizeBody.js';
 import { validate } from '../middlewares/validate.js';
+import { registrationGate } from '../middlewares/registrationGate.js';
 import {
   appAstralRules,
   awardsRules,
@@ -20,6 +21,7 @@ const router = Router();
 
 router.post(
   '/appastral/register',
+  registrationGate('AppAstral', 'APPASTRAL_REGISTRATION_OPEN'),
   imageUpload(APPASTRAL_FILE_FIELDS.length).fields(APPASTRAL_FILE_FIELDS.map((name) => ({ name, maxCount: 1 }))),
   verifyFileContents,
   parseJsonFields(MEMBER_FIELDS),
@@ -42,6 +44,7 @@ router.post(
 
 router.post(
   '/innothon/register',
+  registrationGate('Innothon', 'INNOTHON_REGISTRATION_OPEN'),
   sanitizeBody({ exempt: ['transactionScreenshot'] }),
   innothonRules,
   validate,

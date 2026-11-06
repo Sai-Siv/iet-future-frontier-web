@@ -95,7 +95,7 @@ const Navigation = () => {
 
   const announcements = [
     { id: 1, text: "Registration open for IET 360° (4 & 5 December 2026 at VIT-AP University)!" },
-    { id: 2, text: "Innothon (Ideathon) & Appastral 24-Hour Challenge registrations live!" },
+    { id: 2, text: "Innothon (Ideathon) & Appastral 24-Hour Challenge registrations starting soon!" },
     { id: 3, text: "Student and Professional Awards nominations are open!" },
     { id: 4, text: "Industry Talks: Emerging Technologies & Sustainable Solutions" },
   ];

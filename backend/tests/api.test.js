@@ -19,6 +19,8 @@ Object.assign(process.env, {
   CLOUDINARY_API_SECRET: 'test',
   RESEND_API_KEY: '',
   TRUST_PROXY_HOPS: '0',
+  INNOTHON_REGISTRATION_OPEN: 'true',
+  APPASTRAL_REGISTRATION_OPEN: 'true',
 });
 
 const { default: app } = await import('../src/app.js');
@@ -441,6 +443,24 @@ test('an incomplete private key gives a clear error that hides the key', () => {
 });
 
 // Keep last: this uses up the registration allowance for the test client.
+test('innothon and appastral: registration is refused while the event is not open', async () => {
+  const flags = ['INNOTHON_REGISTRATION_OPEN', 'APPASTRAL_REGISTRATION_OPEN'];
+  const previous = flags.map((flag) => process.env[flag]);
+  flags.forEach((flag) => delete process.env[flag]);
+  try {
+    const innothon = await postJson('/api/innothon/register', INNOTHON);
+    assert.equal(innothon.status, 403);
+    const appastral = await postForm('/api/appastral/register', { ...TEAM, termsAccepted: 'true' }, {
+      member1Payment: png,
+    });
+    assert.equal(appastral.status, 403);
+    assert.equal(saved.length, 0);
+    assert.equal(uploads.length, 0);
+  } finally {
+    flags.forEach((flag, i) => { process.env[flag] = previous[i]; });
+  }
+});
+
 test('registration attempts are rate limited', async () => {
   let last;
   for (let i = 0; i < 70; i += 1) {

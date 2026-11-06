@@ -1,9 +1,10 @@
 import React, { useState, useRef, FormEvent } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Users, UserPlus, CheckCircle, ExternalLink } from 'lucide-react';
+import { Users, UserPlus, CheckCircle, ExternalLink, MessageCircle } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { API_BASE_URL } from '@/config/api';
+const APPASTRAL_WHATSAPP_URL = 'https://chat.whatsapp.com/HbxjmtbnD7yIZTMtgHFbV7?s=qt&p=i&mlu=4&ilr=4&iam=2';
 
 interface TeamMember {
   name: string;
@@ -466,7 +467,7 @@ const AppAstral = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setCurrentStep('team-details');
 
-        alert('Registration successful! Confirmation has been sent to your email.');
+        alert('Registration successful! Confirmation has been sent to your email.\n\nPlease join the AppAstral WhatsApp group for more information.');
       } else {
         throw new Error(result.message || 'Registration failed');
       }
@@ -494,6 +495,16 @@ const AppAstral = () => {
     return (
       <div className={`p-4 rounded-lg mb-4 ${statusColors[submissionStatus.status]}`}>
         <p className="font-medium">{submissionStatus.message}</p>
+        {submissionStatus.status === 'success' && (
+          <a
+            href={APPASTRAL_WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] hover:bg-[#1ebe5b] text-black font-semibold transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" /> Join the AppAstral WhatsApp Group
+          </a>
+        )}
       </div>
     );
   };
@@ -897,8 +908,27 @@ const AppAstral = () => {
             </button>
           </div>
 
+          {/* WhatsApp Group Banner */}
+          <div className="w-full max-w-4xl mx-auto mb-8 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+            <div className="w-12 h-12 rounded-full bg-[#25D366]/20 flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-6 h-6 text-[#25D366]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-bold text-white">Join the AppAstral WhatsApp Group</p>
+              <p className="text-sm text-gray-300">Please join the official WhatsApp group for more information and the latest updates.</p>
+            </div>
+            <a
+              href={APPASTRAL_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] hover:bg-[#1ebe5b] text-black font-semibold transition-colors flex-shrink-0 w-full sm:w-auto"
+            >
+              <MessageCircle className="w-4 h-4" /> Join Group
+            </a>
+          </div>
+
           {/* Form Section */}
-          <div className={`bg-[#000] backdrop-blur-sm rounded-2xl p-4 sm:p-8 md:p-12 
+          <div className={`bg-[#000] backdrop-blur-sm rounded-2xl p-4 sm:p-8 md:p-12
             shadow-[0_19px_38px_#22bbe0,0_15px_12px_#22bbe0] w-full max-w-4xl mx-auto overflow-x-auto min-h-[550px] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
               {currentStep === 'team-details' ? (

@@ -15,9 +15,7 @@ import Awards from "./pages/Awards";
 import Committee from "./pages/Committee";
 
 import AppAstralLanding from "./pages/AppAstralLanding";
-import AppAstral from "./pages/AppAstral";
 import InnothonLanding from "./pages/InnothonLanding";
-import Innothon from "./pages/Innothon";
 import Agenda from "./pages/Agenda";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import PageTransition from "./components/PageTransition";
@@ -41,10 +39,12 @@ const AnimatedRoutes = () => {
         <Route path="/protoplanet/register" element={<PageTransition><ProtoPlanet /></PageTransition>} />
 
         <Route path="/appastral" element={<PageTransition><AppAstralLanding /></PageTransition>} />
-        <Route path="/appastral/register" element={<PageTransition><AppAstral /></PageTransition>} />
+        {/* Registration not open yet: re-add the AppAstral form route here when it opens */}
+        <Route path="/appastral/register" element={<Navigate to="/appastral" replace />} />
         
         <Route path="/innothon" element={<PageTransition><InnothonLanding /></PageTransition>} />
-        <Route path="/innothon/register" element={<PageTransition><Innothon /></PageTransition>} />
+        {/* Registration not open yet: re-add the Innothon form route here when it opens */}
+        <Route path="/innothon/register" element={<Navigate to="/innothon" replace />} />
         
         <Route path="/agenda" element={<PageTransition><ComingSoon pageName="Agenda" /></PageTransition>} />
         <Route path="/awards" element={<PageTransition><Awards /></PageTransition>} />

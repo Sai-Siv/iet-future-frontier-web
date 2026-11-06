@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import {
@@ -832,7 +831,7 @@ const InnothonLanding = () => {
               Transform breakthrough ideas into viable prototypes and pitch before industry leaders.
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <Link to="/innothon/register" className="btn btn-primary">REGISTER NOW</Link>
+              <button type="button" className="btn btn-primary" disabled aria-disabled="true" style={{ opacity: 0.6, cursor: 'not-allowed' }}>REGISTRATION STARTS SOON</button>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 20px', borderRadius: '8px', background: 'rgba(170, 200, 30, 0.1)', border: '1px solid rgba(170, 200, 30, 0.35)' }}>
                 <Clock size={16} color="#AAC81E" />
                 <span style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 600 }}>Last Date to Register: <span style={{ color: '#AAC81E' }}>20 November 2026</span></span>
@@ -1246,9 +1245,9 @@ const InnothonLanding = () => {
 
       {/* Final CTA */}
       <section className="section-container" style={{ textAlign: 'center', paddingBottom: '120px' }}>
-        <Link to="/innothon/register" className="btn btn-primary" style={{ width: '100%', maxWidth: '600px', height: '64px', fontSize: '20px' }}>
-          <Users size={24} style={{ marginRight: '12px' }} /> REGISTER NOW
-        </Link>
+        <button type="button" className="btn btn-primary" disabled aria-disabled="true" style={{ opacity: 0.6, cursor: 'not-allowed', width: '100%', maxWidth: '600px', height: '64px', fontSize: '20px' }}>
+          <Users size={24} style={{ marginRight: '12px' }} /> REGISTRATION STARTS SOON
+        </button>
       </section>
 
       {/* Back to Top Button */}
