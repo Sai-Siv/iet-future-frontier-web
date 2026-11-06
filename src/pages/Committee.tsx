@@ -17,7 +17,7 @@ const executiveCommittee: Member[] = [
 
 const ypTeam: Member[] = [
   { name: 'Er. Utkarsh Sakalle', role: 'Chair' },
-  { name: 'Ch. Siva Teja', role: 'Member' },
+  { name: 'Ch. Sai Siva Teja', role: 'Member' },
   { name: 'T. Teja Rama Lakshmi', role: 'Member' },
   { name: 'V. Harshitha', role: 'Member' },
   { name: 'M. Jashmitha', role: 'Member' },
