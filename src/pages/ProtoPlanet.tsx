@@ -1262,9 +1262,9 @@ const ProtoPlanet = () => {
         }
 
         @media (max-width: 768px) {
-          .container, .max-w-6xl, .md\:max-w-6xl {
-            max-width: 100vw !important;
-            width: 100vw !important;
+          main .container, main .max-w-6xl, main .md\:max-w-6xl {
+            max-width: 100% !important;
+            width: 100% !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
           }

@@ -171,19 +171,19 @@ const Navigation = () => {
             <div className={`h-[6px] w-full bg-gradient-to-r ${theme.gradient} rounded-t-lg`}></div>
 
             <nav className="bg-[#050505] text-white rounded-b-lg px-4 lg:px-6 relative">
-              <div className="flex items-center justify-between h-[65px] gap-8">
+              <div className="flex items-center justify-between h-[65px] gap-3 sm:gap-8">
                 {/* Logos */}
-                <Link to="/" className="flex items-center gap-3 shrink-0 pr-4">
+                <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0 sm:shrink-0 sm:pr-4">
                   <img
                     src={theme.logoSrc}
                     alt="IET Logo"
-                    className="h-7 sm:h-10 w-auto object-contain drop-shadow-md"
+                    className="h-7 sm:h-10 w-auto min-w-0 max-w-[45vw] sm:max-w-none object-contain object-left drop-shadow-md"
                   />
-                  <span className="w-px h-7 sm:h-9 bg-white/20" aria-hidden="true"></span>
+                  <span className="w-px h-7 sm:h-9 bg-white/20 shrink-0" aria-hidden="true"></span>
                   <img
                     src="/vitap_logo.png"
                     alt="VIT-AP University Logo"
-                    className="h-7 sm:h-10 w-auto object-contain drop-shadow-md"
+                    className="h-7 sm:h-10 w-auto min-w-0 max-w-[35vw] sm:max-w-none object-contain object-left drop-shadow-md"
                   />
                 </Link>
 
@@ -247,7 +247,8 @@ const Navigation = () => {
 
                 {/* Mobile Menu Button */}
                 <button
-                  className="lg:hidden p-2 text-white/80 hover:text-white transition-colors"
+                  className="lg:hidden p-2 -mr-2 shrink-0 text-white/80 hover:text-white transition-colors"
+                  aria-label="Open menu"
                   onClick={() => setIsMenuOpen(true)}
                 >
                   <Menu size={28} />

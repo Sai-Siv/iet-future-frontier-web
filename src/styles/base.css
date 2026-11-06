@@ -101,3 +101,11 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Prevent any stray element from causing sideways scrolling on mobile.
+   `clip` (unlike `hidden`) keeps position: sticky working. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}

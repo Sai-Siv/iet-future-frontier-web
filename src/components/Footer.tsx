@@ -15,17 +15,17 @@ const Footer = () => {
 
             {/* Column 1: Logos and Description */}
             <div className="md:col-span-5">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-3 sm:gap-4 mb-6 min-w-0">
                 <img
                   src="/iet_new_logo_purple.png"
                   alt="IET Logo"
-                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-lg"
+                  className="h-10 sm:h-12 w-auto min-w-0 max-w-[48%] sm:max-w-none object-contain object-left drop-shadow-lg"
                 />
-                <span className="w-px h-10 bg-white/20" aria-hidden="true"></span>
+                <span className="w-px h-10 bg-white/20 shrink-0" aria-hidden="true"></span>
                 <img
                   src="/vitap_logo.png"
                   alt="VIT-AP University Logo"
-                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-lg"
+                  className="h-10 sm:h-12 w-auto min-w-0 max-w-[45%] sm:max-w-none object-contain object-left drop-shadow-lg"
                 />
               </div>
               <p className="text-white/70 text-base leading-relaxed mb-6 max-w-sm">

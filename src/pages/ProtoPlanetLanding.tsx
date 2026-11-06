@@ -596,6 +596,22 @@ const ProtoPlanetLanding = () => {
             height: 3rem;
           }
         }
+              /* ===== Mobile overflow fixes ===== */
+        .hero-grid { grid-template-columns: minmax(0, 1fr); }
+        .hero-grid > * { min-width: 0; }
+        @media (min-width: 992px) {
+          .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+        }
+        .hero-title { font-size: clamp(2.2rem, 9.5vw, 4.2rem); overflow-wrap: break-word; }
+        .hero-subtitle { font-size: clamp(1.5rem, 7vw, 2.3rem); }
+        .hero-desc { overflow-wrap: break-word; }
+        @media (max-width: 576px) {
+          .section-container { padding-left: 16px; padding-right: 16px; }
+          .phone-body, .tech-body { transform: none; max-width: 100%; }
+          .phone-body { width: min(300px, 100%); height: auto; aspect-ratio: 1 / 1; }
+          .phone-screen { width: 87%; height: auto; aspect-ratio: 1 / 1; }
+          .winners-right { display: none; }
+        }
       `}</style>
 
       {/* Navigation */}

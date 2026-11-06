@@ -12,6 +12,7 @@ import ProtoPlanet from "./pages/ProtoPlanet";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
 import Awards from "./pages/Awards";
+import Committee from "./pages/Committee";
 
 import AppAstralLanding from "./pages/AppAstralLanding";
 import AppAstral from "./pages/AppAstral";
@@ -47,7 +48,7 @@ const AnimatedRoutes = () => {
         
         <Route path="/agenda" element={<PageTransition><ComingSoon pageName="Agenda" /></PageTransition>} />
         <Route path="/awards" element={<PageTransition><Awards /></PageTransition>} />
-        <Route path="/committee" element={<PageTransition><ComingSoon pageName="Committee" /></PageTransition>} />
+        <Route path="/committee" element={<PageTransition><Committee /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ComingSoon pageName="Contact" /></PageTransition>} />
 
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

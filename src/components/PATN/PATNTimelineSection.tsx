@@ -38,6 +38,7 @@ const PATNTimelineSection = () => {
           flex-direction: column;
           align-items: center;
           padding: 3rem 1rem;
+          overflow-x: clip;
           background: #000;
           color: white;
         }

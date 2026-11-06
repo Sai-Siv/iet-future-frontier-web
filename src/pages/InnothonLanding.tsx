@@ -798,6 +798,20 @@ const InnothonLanding = () => {
             height: 3rem;
           }
         }
+              /* ===== Mobile overflow fixes ===== */
+        .hero-grid { grid-template-columns: minmax(0, 1fr); }
+        .hero-grid > * { min-width: 0; }
+        @media (min-width: 992px) {
+          .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+        }
+        .hero-title { font-size: clamp(2.2rem, 12vw, 4.2rem); overflow-wrap: break-word; }
+        .hero-subtitle { font-size: clamp(1.5rem, 7vw, 2.3rem); }
+        .hero-desc { overflow-wrap: break-word; }
+        @media (max-width: 576px) {
+          .section-container { padding-left: 16px; padding-right: 16px; }
+          .phone-body, .tech-body { transform: none; max-width: 100%; }
+          .winners-right { display: none; }
+        }
       `}</style>
 
       {/* Navigation */}
@@ -1180,6 +1194,29 @@ const InnothonLanding = () => {
             <div className="divider-dot"></div>
             <div className="divider-line"></div>
           </div>
+        </div>
+
+        {/* Faculty Coordinator Profile Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '24px', marginBottom: '32px' }}>
+          {[
+            { name: 'Dr. Venkatesh B', role: 'Associate Professor Grade-1', school: 'School of Computer Science and Engineering (SCOPE)' },
+            { name: 'Dr. Ravi Kumar Poluru', role: 'Assistant Professor (Senior Grade 2)', school: 'School of Computer Science and Engineering (SCOPE)' },
+          ].map((c) => (
+            <div key={c.name} className="glass-card" style={{ padding: '28px', border: '1px solid rgba(170, 200, 30, 0.35)', background: 'linear-gradient(145deg, rgba(21,21,24,0.9), rgba(13,13,15,0.95))' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(170, 200, 30, 0.12)', border: '1px solid rgba(170, 200, 30, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#AAC81E', flexShrink: 0 }}>
+                  <Users size={28} />
+                </div>
+                <div>
+                  <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#AAC81E', fontWeight: 700 }}>Faculty Coordinator</span>
+                  <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '4px 0 6px 0', color: '#FFFFFF' }}>{c.name}</h3>
+                  <p style={{ color: '#E0E0E0', fontSize: '14px', margin: '0 0 4px 0' }}>{c.role}</p>
+                  <p style={{ color: '#A0A0A0', fontSize: '13px', margin: '0 0 2px 0' }}>{c.school}</p>
+                  <p style={{ color: '#888888', fontSize: '12px', margin: 0 }}>VIT-AP University</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="grid-3">
